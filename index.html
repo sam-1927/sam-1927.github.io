@@ -118,8 +118,10 @@
         <!-- Background Ambience -->
         <div class="fixed inset-0 bg-gradient-to-b from-[#FAF7F2] via-[#FDFBF7] to-[#F5EBE1] -z-10"></div>
         
-        <!-- Background Music Container -->
-        <div id="music-container" class="fixed top-[-1000px] left-[-1000px] w-[1px] h-[1px] overflow-hidden opacity-0 pointer-events-none"></div>
+        <!-- Local Background Music -->
+        <audio id="bg-music" loop>
+            <source src="./assets/music.mp3" type="audio/mpeg">
+        </audio>
 
         <!-- Floating Music Controller -->
         <button id="music-toggle" class="fixed top-6 right-6 z-50 p-3 rounded-full glass-card text-gray-800 hover:scale-110 transition-transform active:scale-95">
@@ -399,7 +401,6 @@
 
         // --- CONFIGURATION ---
         const PASSWORD = "sam27"; 
-        const YOUTUBE_VIDEO_ID = "l4szXetuE4M"; 
 
         // --- ELEMENTS ---
         const authScreen = document.getElementById('auth-screen');
@@ -408,12 +409,10 @@
         const passwordInput = document.getElementById('password-input');
         const loginCard = document.getElementById('login-card');
         
-        const musicContainer = document.getElementById('music-container');
+        const bgMusic = document.getElementById('bg-music');
         const musicToggleBtn = document.getElementById('music-toggle');
-        // const musicIcon = document.getElementById('music-icon');
 
         let isMusicPlaying = false;
-        let iframeInjected = false;
 
         // --- LOGIN LOGIC ---
         loginForm.addEventListener('submit', (e) => {
@@ -453,33 +452,16 @@
 
         // --- MUSIC LOGIC ---
         function toggleMusic() {
-            if (!iframeInjected) {
-                // Inject the iframe the first time music is played
-                musicContainer.innerHTML = `
-                    <iframe
-                        id="youtube-player"
-                        width="10"
-                        height="10"
-                        src="https://www.youtube.com/embed/${YOUTUBE_VIDEO_ID}?enablejsapi=1&autoplay=1&loop=1&playlist=${YOUTUBE_VIDEO_ID}&controls=0"
-                        allow="autoplay"
-                        title="Background Music"
-                    ></iframe>
-                `;
-                iframeInjected = true;
-                isMusicPlaying = true;
-                updateMusicIcon();
+            if (isMusicPlaying) {
+                bgMusic.pause();
+                isMusicPlaying = false;
             } else {
-                // Toggle play/pause via YouTube postMessage API
-                const iframe = document.getElementById('youtube-player').contentWindow;
-                if (isMusicPlaying) {
-                    iframe.postMessage('{"event":"command","func":"pauseVideo","args":""}', '*');
-                    isMusicPlaying = false;
-                } else {
-                    iframe.postMessage('{"event":"command","func":"playVideo","args":""}', '*');
-                    isMusicPlaying = true;
-                }
-                updateMusicIcon();
+                bgMusic.play().catch(error => {
+                    console.log("Autoplay was prevented by the browser.", error);
+                });
+                isMusicPlaying = true;
             }
+            updateMusicIcon();
         }
 
         function updateMusicIcon() {
