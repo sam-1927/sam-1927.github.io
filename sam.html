@@ -1,0 +1,1041 @@
+<!DOCTYPE html>
+
+<html lang="en">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Sam ❤️</title>
+
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700&family=Cormorant+Garamond:wght@400;500;600;700&display=swap" rel="stylesheet">
+
+  <style>
+    * {
+      margin: 0;
+      padding: 0;
+      box-sizing: border-box;
+      scroll-behavior: smooth;
+    }
+
+    :root {
+      --bg: #07010a;
+      --card: rgba(255,255,255,0.07);
+      --border: rgba(255,255,255,0.08);
+      --pink: #ff4fa3;
+      --pink2: #ff85c0;
+      --purple: #a855f7;
+      --text: #f8e9f3;
+    }
+
+    body {
+      background: radial-gradient(circle at top, #2a0b2e 0%, #120014 35%, #07010a 100%);
+      color: white;
+      font-family: 'Inter', sans-serif;
+      overflow-x: hidden;
+      position: relative;
+    }
+
+    h1,h2,h3,h4 {
+      font-family: 'Cormorant Garamond', serif;
+    }
+
+    body::before {
+      content: '';
+      position: fixed;
+      inset: 0;
+      background-image:
+        radial-gradient(circle at 20% 20%, rgba(255,79,163,0.12), transparent 30%),
+        radial-gradient(circle at 80% 30%, rgba(168,85,247,0.12), transparent 30%),
+        radial-gradient(circle at 50% 80%, rgba(255,133,192,0.1), transparent 30%);
+      z-index: -2;
+    }
+
+    .noise {
+      position: fixed;
+      inset: 0;
+      pointer-events: none;
+      opacity: 0.04;
+      z-index: 999;
+      background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='140' height='140' viewBox='0 0 140 140'%3E%3Cg fill='%23ffffff' fill-opacity='0.4'%3E%3Ccircle cx='12' cy='18' r='1'/%3E%3Ccircle cx='38' cy='54' r='1'/%3E%3Ccircle cx='92' cy='22' r='1'/%3E%3Ccircle cx='102' cy='86' r='1'/%3E%3C/g%3E%3C/svg%3E");
+    }
+
+    .glass {
+      background: rgba(255,255,255,0.06);
+      backdrop-filter: blur(18px);
+      border: 1px solid rgba(255,255,255,0.08);
+      box-shadow: 0 10px 40px rgba(0,0,0,0.3);
+    }
+
+    .glow {
+      box-shadow: 0 0 40px rgba(255,79,163,0.2);
+    }
+
+    .hero-title {
+      background: linear-gradient(90deg, #fff, #ff93cb);
+      background-clip: text;
+      -webkit-background-clip: text;
+      -webkit-text-fill-color: transparent;
+    }
+
+    .floating {
+      animation: float 6s ease-in-out infinite;
+    }
+
+    @keyframes float {
+      0% { transform: translateY(0px); }
+      50% { transform: translateY(-15px); }
+      100% { transform: translateY(0px); }
+    }
+
+    .pulse-heart {
+      animation: pulseHeart 1.8s infinite;
+    }
+
+    @keyframes pulseHeart {
+      0% { transform: scale(1); }
+      50% { transform: scale(1.15); }
+      100% { transform: scale(1); }
+    }
+
+    .fade-up {
+      opacity: 0;
+      transform: translateY(50px);
+      transition: 1s ease;
+    }
+
+    .fade-up.show {
+      opacity: 1;
+      transform: translateY(0);
+    }
+
+    .chat-bg {
+      background: linear-gradient(180deg,#7d093e,#2d001c);
+      overflow: hidden;
+      position: relative;
+    }
+
+    .chat-bg::before {
+      content:'';
+      position:absolute;
+      inset:0;
+      background-image:
+      radial-gradient(circle at 10% 20%, rgba(255,255,255,0.09), transparent 18%),
+      radial-gradient(circle at 80% 40%, rgba(255,255,255,0.08), transparent 18%),
+      radial-gradient(circle at 30% 80%, rgba(255,255,255,0.08), transparent 18%);
+      z-index:0;
+    }
+
+    .msg-left, .msg-right {
+      position: relative;
+      z-index: 2;
+      max-width: 78%;
+      padding: 12px 16px;
+      border-radius: 22px;
+      margin-bottom: 14px;
+      animation: msgIn 0.7s ease;
+    }
+
+    @keyframes msgIn {
+      from {
+        opacity: 0;
+        transform: translateY(15px);
+      }
+      to {
+        opacity: 1;
+        transform: translateY(0);
+      }
+    }
+
+    .msg-left {
+      background: rgba(0,0,0,0.4);
+      align-self: flex-start;
+    }
+
+    .msg-right {
+      background: linear-gradient(135deg,#ff8ec8,#ff5ea8);
+      color: black;
+      align-self: flex-end;
+    }
+
+    .star {
+      position: absolute;
+      width: 2px;
+      height: 2px;
+      background: white;
+      border-radius: 50%;
+      animation: twinkle 3s infinite;
+    }
+
+    @keyframes twinkle {
+      0%,100% { opacity: 0.2; }
+      50% { opacity: 1; }
+    }
+
+    .love-fill {
+      transition: height 0.5s ease;
+    }
+
+    .typewriter {
+      overflow: hidden;
+      white-space: nowrap;
+      border-right: 2px solid #fff;
+      width: 0;
+      animation: typing 5s steps(40,end) forwards;
+    }
+
+    @keyframes typing {
+      from { width: 0; }
+      to { width: 100%; }
+    }
+
+    .memory-card {
+    transition: transform 0.5s ease;
+    }
+
+    .memory-card:hover {
+    transform: translateY(-12px) scale(1.05) rotate(0deg);
+    z-index: 10;
+    }
+
+    .music-bars span {
+      width: 3px;
+      height: 10px;
+      background: white;
+      animation: bars 1s infinite ease-in-out;
+    }
+
+    .music-bars span:nth-child(2){animation-delay:0.2s}
+    .music-bars span:nth-child(3){animation-delay:0.4s}
+    .music-bars span:nth-child(4){animation-delay:0.6s}
+
+    @keyframes bars {
+      0%,100% { height: 8px; }
+      50% { height: 20px; }
+    }
+
+    .heart-float {
+      position: absolute;
+      font-size: 20px;
+      animation: floatHeart 4s linear forwards;
+    }
+
+    @keyframes floatHeart {
+      from {
+        transform: translateY(0) scale(1);
+        opacity: 1;
+      }
+      to {
+        transform: translateY(-200px) scale(1.8);
+        opacity: 0;
+      }
+    }
+  </style>
+
+</head>
+<body>
+
+<div class="noise"></div>
+
+<div id="lockscreen" class="fixed inset-0 z-50 flex items-center justify-center bg-black transition duration-1000">
+  <div class="w-[330px] h-[690px] rounded-[45px] overflow-hidden border border-white/10 relative shadow-2xl">
+
+<img src="./assets/7.jpeg" class="absolute inset-0 w-full h-full object-cover opacity-70">
+
+<div class="absolute inset-0 bg-black/30 backdrop-blur-[2px]"></div>
+
+<div class="relative z-10 flex flex-col h-full justify-between p-8">
+
+  <div class="text-center mt-10">
+    <p id="liveTime" class="text-6xl font-light">11:09</p>
+    <p class="text-white/80 mt-2">Tuesday, May 27</p>
+  </div>
+
+  <div>
+    <div id="notif" class="glass p-4 rounded-3xl mb-6 animate-pulse cursor-pointer">
+      <p class="text-xs text-white/60 mb-1">INSTAGRAM</p>
+      <div class="flex items-center gap-3">
+        <div class="w-10 h-10 rounded-full bg-black"></div>
+        <div>
+          <p class="font-semibold">🫧💍</p>
+          <p class="text-sm text-white/70">Sent you a message</p>
+        </div>
+      </div>
+    </div>
+
+    <p class="text-center text-white/60 text-sm mb-4">tap notification to open</p>
+  </div>
+</div>
+
+  </div>
+</div>
+
+<audio id="bgMusic" loop>
+  <source src="./assets/sam.mp3" type="audio/mp3">
+</audio>
+
+<button id="musicBtn" class="fixed top-5 right-5 z-40 glass rounded-full p-4 hidden">
+  <i data-lucide="pause"></i>
+</button>
+
+<div id="main" class="hidden">
+
+<section class="min-h-screen flex flex-col items-center justify-center text-center px-6 relative overflow-hidden">
+
+  <div class="absolute inset-0">
+    <div class="star" style="top:10%;left:20%"></div>
+    <div class="star" style="top:30%;left:70%"></div>
+    <div class="star" style="top:70%;left:50%"></div>
+    <div class="star" style="top:20%;left:90%"></div>
+    <div class="star" style="top:85%;left:10%"></div>
+  </div>
+
+  <div class="floating">
+    <div class="inline-flex items-center gap-2 px-5 py-2 rounded-full glass mb-8">
+      <span class="w-2 h-2 rounded-full bg-pink-400 pulse-heart"></span>
+      <p class="text-sm tracking-widest uppercase">Happy 5 Months</p>
+    </div>
+  </div>
+
+  <h1 class="hero-title text-6xl md:text-8xl font-bold leading-none mb-8">
+    My Love
+  </h1>
+
+  <div class="space-y-4 max-w-3xl">
+    <p class="text-2xl md:text-4xl font-light leading-relaxed">
+      5 Months.
+      <br>
+      151 Days.
+      <br>
+      Thousands Of Messages.
+    </p>
+
+<p class="text-white/70 text-lg md:text-2xl italic">
+  “And somehow... I still want to feel you close.”
+</p>
+
+  </div>
+
+  <div class="absolute bottom-10 animate-bounce">
+    <i data-lucide="chevrons-down"></i>
+  </div>
+</section>
+
+<section class="max-w-6xl mx-auto px-6 py-24 fade-up">
+
+  <div class="grid md:grid-cols-2 gap-8">
+
+<div class="glass rounded-[35px] p-8 glow">
+  <p class="text-pink-300 uppercase tracking-[4px] text-sm mb-4">Since We Became Us</p>
+  <h2 class="text-5xl mb-6">7 May 2026 ❤️</h2>
+
+  <div id="officialTimer" class="grid grid-cols-4 gap-4 text-center">
+    <div>
+      <h3 id="oDays" class="text-4xl font-bold">0</h3>
+      <p class="text-white/60">Days</p>
+    </div>
+    <div>
+      <h3 id="oHours" class="text-4xl font-bold">0</h3>
+      <p class="text-white/60">Hours</p>
+    </div>
+    <div>
+      <h3 id="oMinutes" class="text-4xl font-bold">0</h3>
+      <p class="text-white/60">Minutes</p>
+    </div>
+    <div>
+      <h3 id="oSeconds" class="text-4xl font-bold">0</h3>
+      <p class="text-white/60">Seconds</p>
+    </div>
+  </div>
+</div>
+
+<div class="glass rounded-[35px] p-8 glow">
+  <p class="text-pink-300 uppercase tracking-[4px] text-sm mb-4">Since 27th Dec 2025</p>
+  <h2 class="text-5xl mb-6">The Beginning ✨</h2>
+
+  <div id="meetTimer" class="grid grid-cols-4 gap-4 text-center">
+    <div>
+      <h3 id="mDays" class="text-4xl font-bold">0</h3>
+      <p class="text-white/60">Days</p>
+    </div>
+    <div>
+      <h3 id="mHours" class="text-4xl font-bold">0</h3>
+      <p class="text-white/60">Hours</p>
+    </div>
+    <div>
+      <h3 id="mMinutes" class="text-4xl font-bold">0</h3>
+      <p class="text-white/60">Minutes</p>
+    </div>
+    <div>
+      <h3 id="mSeconds" class="text-4xl font-bold">0</h3>
+      <p class="text-white/60">Seconds</p>
+    </div>
+  </div>
+</div>
+
+
+  </div>
+</section>
+
+<section class="max-w-5xl mx-auto px-5 py-24 fade-up">
+
+  <div class="text-center mb-16">
+    <p class="text-pink-300 tracking-[4px] uppercase text-sm mb-3">our chats</p>
+    <h2 class="text-6xl">Where We Became Us</h2>
+    <p class="text-white/60 mt-4">somewhere between reels, goodnight texts and random chaos...</p>
+  </div>
+
+  <div class="chat-bg rounded-[40px] p-6 md:p-10 glass min-h-[800px] flex flex-col">
+
+
+<div class="flex items-center justify-between mb-8 z-10 relative">
+<div class="flex items-center gap-3">
+  <img 
+    src="assets/profile.jpeg" 
+    alt="Profile Picture"
+    class="w-12 h-12 rounded-full object-cover"
+  />
+
+  <div>
+    <p class="font-semibold">💕</p>
+    <p class="text-sm text-white/60">active now</p>
+  </div>
+</div>
+
+  <div class="flex gap-3 text-white/70">
+    <i data-lucide="phone"></i>
+    <i data-lucide="video"></i>
+  </div>
+</div>
+
+<div class="flex flex-col gap-2 mt-10 relative z-10">
+
+  <div class="msg-right">
+    31st chi soy zaali 😭🤣
+  </div>
+
+  <div class="msg-left">
+    Hahha 🤣🤣🤣🤣
+  </div>
+
+  <div class="msg-left">
+    Happy New Year ❤️🧿🥂
+  </div>
+
+  <div class="msg-right">
+    Happy New Year ❤️✨🍻
+  </div>
+
+  <div class="msg-right">
+    You watch football? 🤨
+  </div>
+
+  <div class="msg-left">
+    Yea
+  </div>
+
+  <div class="msg-left">
+    Even my mom likes Ronaldo 😭
+  </div>
+
+  <div class="msg-right">
+    Who doesn't like Ronaldo 🤷
+  </div>
+
+  <div class="msg-right">
+    I really like you..
+  </div>
+
+  <div class="msg-left">
+    I found you cute.
+  </div>
+
+  <div class="msg-right">
+    I Love You ❤️
+  </div>
+
+  <div class="msg-left">
+    I Love You Moreee 🥺💋💋
+  </div>
+
+  <div class="msg-right">
+    for every 19th mess...
+  </div>
+
+  <div class="msg-left">
+    there's always our favourite 20 ❤️
+  </div>
+
+  <div class="msg-right">
+    and somewhere between all these texts...
+  </div>
+
+  <div class="msg-left">
+    i fell in love with you.
+  </div>
+
+</div>
+  </div>
+</section>
+
+<section class="max-w-6xl mx-auto px-6 py-24 fade-up">
+
+  <div class="text-center mb-16">
+    <h2 class="text-6xl mb-4">The Love Jar 🫙</h2>
+    <p class="text-white/60">click to fill our jar with more love</p>
+  </div>
+
+  <div class="flex flex-col items-center">
+
+
+<div class="relative w-[220px] h-[320px] border-4 border-white/20 rounded-b-[50px] rounded-t-[20px] overflow-hidden glass">
+
+  <div id="loveFill" class="love-fill absolute bottom-0 left-0 w-full bg-gradient-to-t from-pink-500 to-pink-300 h-0"></div>
+
+  <div class="absolute inset-0 flex items-center justify-center text-4xl z-10">
+    ❤️
+  </div>
+
+</div>
+
+<button id="fillBtn" class="mt-10 px-8 py-4 rounded-full bg-pink-500 hover:scale-105 transition font-semibold">
+  Add More Love
+</button>
+
+<p id="loveText" class="mt-6 text-white/70 text-center max-w-md">
+  our story is still filling up...
+</p>
+
+
+  </div>
+</section>
+
+<section class="max-w-5xl mx-auto px-6 py-24 fade-up">
+
+  <div class="text-center mb-16">
+    <h2 class="text-6xl">Play This When I Go Silent 🎧</h2>
+  </div>
+
+  <div class="glass rounded-[35px] p-8 glow">
+
+    <div class="flex items-center justify-between gap-4 flex-wrap">
+
+      <div class="flex items-center gap-5">
+        <button id="voiceBtn" class="w-20 h-20 rounded-full bg-pink-500 flex items-center justify-center">
+          <i data-lucide="play"></i>
+        </button>
+
+        <div>
+          <p class="text-xl font-semibold">Voice Note From Shona ❤️</p>
+          <p class="text-white/60 text-sm">0:30</p>
+        </div>
+      </div>
+
+      <div class="music-bars flex gap-1">
+        <span></span>
+        <span></span>
+        <span></span>
+        <span></span>
+      </div>
+
+    </div>
+
+    <audio id="voiceNote">
+      <source src="./assets/voice-note.mp3" type="audio/mp3">
+    </audio>
+
+  </div>
+</section>
+
+<section class="max-w-7xl mx-auto px-6 py-24 fade-up">
+
+  <div class="text-center mb-16">
+    <h2 class="text-6xl">Our Beautiful Mess 📸</h2>
+    <p class="text-white/60 mt-4">blurry. chaotic. perfect.</p>
+  </div>
+
+  <div class="grid grid-cols-2 md:grid-cols-4 gap-6">
+
+
+<div class="memory-card glass rounded-[30px] p-3 rotate-[-5deg] transition duration-500">
+  <img src="./assets/12.jpeg" class="rounded-[20px] h-[280px] w-full object-cover">
+</div>
+
+<div class="memory-card glass rounded-[30px] p-3 rotate-[4deg] transition duration-500">
+  <img src="./assets/2.jpeg" class="rounded-[20px] h-[280px] w-full object-cover">
+</div>
+
+<div class="memory-card glass rounded-[30px] p-3 rotate-[-2deg] transition duration-500">
+  <img src="./assets/3.jpeg" class="rounded-[20px] h-[280px] w-full object-cover">
+</div>
+
+<div class="memory-card glass rounded-[30px] p-3 rotate-[6deg] transition duration-500">
+  <img src="./assets/7.jpeg" class="rounded-[20px] h-[280px] w-full object-cover">
+</div>
+
+<div class="memory-card glass rounded-[30px] p-3 rotate-[2deg] transition duration-500">
+  <img src="./assets/5.jpeg" class="rounded-[20px] h-[280px] w-full object-cover">
+</div>
+
+<div class="memory-card glass rounded-[30px] p-3 rotate-[-4deg] transition duration-500">
+  <img src="./assets/14.jpeg" class="rounded-[20px] h-[280px] w-full object-cover">
+</div>
+
+<div class="memory-card glass rounded-[30px] p-3 rotate-[3deg] transition duration-500">
+  <img src="./assets/4.jpeg" class="rounded-[20px] h-[280px] w-full object-cover">
+</div>
+
+<div class="memory-card glass rounded-[30px] p-3 rotate-[-3deg] transition duration-500">
+  <img src="./assets/8.jpeg" class="rounded-[20px] h-[280px] w-full object-cover">
+</div>
+
+<div class="memory-card glass rounded-[30px] p-3 rotate-[5deg] transition duration-500">
+  <img src="./assets/9.jpeg" class="rounded-[20px] h-[280px] w-full object-cover">
+</div>
+
+<div class="memory-card glass rounded-[30px] p-3 rotate-[-6deg] transition duration-500">
+  <img src="./assets/10.jpeg" class="rounded-[20px] h-[280px] w-full object-cover">
+</div>
+
+<div class="memory-card glass rounded-[30px] p-3 rotate-[7deg] transition duration-500">
+  <img src="./assets/13.jpeg" class="rounded-[20px] h-[280px] w-full object-cover">
+</div>
+
+
+<div class="memory-card glass rounded-[30px] p-3 rotate-[2deg] transition duration-500">
+  <img src="./assets/15.jpeg" class="rounded-[20px] h-[280px] w-full object-cover">
+</div>
+
+  </div>
+</section>
+
+<section class="max-w-6xl mx-auto px-6 py-24 fade-up">
+
+  <div class="text-center mb-16">
+    <h2 class="text-6xl">Our Memories 🎬</h2>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-8">
+
+    <div class="glass rounded-[35px] p-4 h-[650px] flex items-center justify-center">
+      <video controls class="memory-video rounded-[25px] w-full h-full object-contain">
+        <source src="./assets/video1.mp4" type="video/mp4">
+      </video>
+    </div>
+
+    <div class="glass rounded-[35px] p-4 h-[650px] flex items-center justify-center">
+      <video controls class="memory-video rounded-[25px] w-full h-full object-contain">
+        <source src="./assets/video2.mp4" type="video/mp4">
+      </video>
+    </div>
+
+  </div>
+</section>
+
+<section class="max-w-5xl mx-auto px-6 py-24 fade-up">
+
+  <div class="text-center mb-16">
+    <h2 class="text-6xl">Reasons I Love You ❤️</h2>
+  </div>
+
+  <div class="grid md:grid-cols-2 gap-6">
+
+
+<div class="glass rounded-[30px] p-8">
+  <h3 class="text-3xl mb-4">Your chaos</h3>
+  <p class="text-white/70">because even your overthinking became something i wanted to stay for.</p>
+</div>
+
+<div class="glass rounded-[30px] p-8">
+  <h3 class="text-3xl mb-4">Your love</h3>
+  <p class="text-white/70">because nobody has ever loved me this loudly before.</p>
+</div>
+
+<div class="glass rounded-[30px] p-8">
+  <h3 class="text-3xl mb-4">Your anger</h3>
+  <p class="text-white/70">because even in your anger i still see care hidden underneath.</p>
+</div>
+
+<div class="glass rounded-[30px] p-8">
+  <h3 class="text-3xl mb-4">Your presence</h3>
+  <p class="text-white/70">because somehow every place feels softer when you're there.</p>
+</div>
+
+
+  </div>
+</section>
+
+<section class="max-w-5xl mx-auto px-6 py-24 fade-up">
+
+  <div class="glass rounded-[40px] p-10">
+
+    <p class="text-pink-300 uppercase tracking-[5px] mb-5 text-center">
+      someday
+    </p>
+
+    <h2 class="text-6xl mb-14 text-center">
+      Few Dreams With You 🌙
+    </h2>
+
+    <div class="grid md:grid-cols-2 gap-6">
+
+      <div class="glass rounded-[30px] p-8">
+        <h3 class="text-2xl mb-3">our lil' one's</h3>
+        <p class="text-white/70">
+          have kids with you, and be the best parents.
+        </p>
+      </div>
+
+      <div class="glass rounded-[30px] p-8">
+        <h3 class="text-2xl mb-3">the honeymoon</h3>
+        <p class="text-white/70">
+          a swiss honeymoon wouldn't hurt our pockets, ig!
+        </p>
+      </div>
+
+      <div class="glass rounded-[30px] p-8">
+        <h3 class="text-2xl mb-3">a date every week</h3>
+        <p class="text-white/70">
+          no matter how busy life gets even if its a small 5 min date I don't care
+        </p>
+      </div>
+
+      <div class="glass rounded-[30px] p-8">
+        <h3 class="text-2xl mb-3">a calm life</h3>
+        <p class="text-white/70">
+          where no matter how messy life gets, we still choose each other.
+        </p>
+      </div>
+
+    </div>
+
+  </div>
+</section>
+
+<section class="max-w-6xl mx-auto px-6 py-24 fade-up">
+
+  <div class="glass rounded-[45px] p-10 text-center">
+
+
+<h2 class="text-6xl mb-10">A Letter To You 💌</h2>
+
+<div class="max-w-3xl mx-auto text-white/75 leading-10 text-lg">
+
+  We are not perfect.
+  <br><br>
+  We were just two kids who fell into each other's world by destiny.
+  <br><br>
+  Willing to stay after misunderstandings.
+  <br>
+  Willing to choose each other again.
+  <br>
+  Willing to learn.
+  <br>
+  Willing to grow.
+  <br><br>
+  Somewhere between your chaos and my silence,
+  we built something real.
+  <br><br>
+  Maybe that's what love actually is.
+  <br><br>
+  Not perfection.
+  <br>
+  Just two kids continuing to choose each other again and again.
+  <br><br>
+  And if every 19th brings my mess...
+  then thank you for always giving me the 20.
+
+</div>
+
+
+  </div>
+</section>
+
+<section class="min-h-screen flex items-center justify-center text-center px-6 relative overflow-hidden">
+
+  <div class="absolute inset-0">
+    <div class="star" style="top:20%;left:30%"></div>
+    <div class="star" style="top:40%;left:60%"></div>
+    <div class="star" style="top:70%;left:20%"></div>
+    <div class="star" style="top:80%;left:80%"></div>
+  </div>
+
+  <div>
+    <p class="text-pink-300 tracking-[5px] uppercase mb-6">5 months down</p>
+
+
+<h1 class="hero-title text-6xl md:text-8xl leading-tight mb-10">
+  A Lifetime To Go.
+</h1>
+
+<p class="text-white/70 text-xl max-w-2xl mx-auto leading-9">
+  thank you for becoming my favorite notification,
+  my favorite person,
+  and my favorite chapter.<br>
+  Thank You For Helping me become a man
+</p>
+
+<p class="mt-20 text-white/40 italic">
+  — forever yours, shona ❤️
+</p>
+
+
+  </div>
+</section>
+
+</div>
+
+<script>
+
+lucide.createIcons();
+
+const lockscreen = document.getElementById('lockscreen');
+const notif = document.getElementById('notif');
+const main = document.getElementById('main');
+const musicBtn = document.getElementById('musicBtn');
+const bgMusic = document.getElementById('bgMusic');
+
+notif.addEventListener('click', () => {
+  lockscreen.style.opacity = '0';
+
+  setTimeout(() => {
+    lockscreen.style.display = 'none';
+    main.classList.remove('hidden');
+    musicBtn.classList.remove('hidden');
+
+    bgMusic.play().catch(()=>{});
+
+    reveal();
+  }, 900);
+});
+
+let musicPlaying = true;
+
+musicBtn.addEventListener('click', () => {
+  if(musicPlaying){
+    bgMusic.pause();
+    musicBtn.innerHTML = '<i data-lucide="play"></i>';
+  } else {
+    bgMusic.play();
+    musicBtn.innerHTML = '<i data-lucide="pause"></i>';
+  }
+
+  musicPlaying = !musicPlaying;
+  lucide.createIcons();
+});
+
+function updateTime(){
+  const now = new Date();
+  document.getElementById('liveTime').innerText = now.toLocaleTimeString([], {hour:'2-digit', minute:'2-digit'});
+}
+
+setInterval(updateTime,1000);
+updateTime();
+
+function startTimer(date, ids){
+  const now = new Date();
+  const diff = now - date;
+
+  const days = Math.floor(diff / (1000*60*60*24));
+  const hours = Math.floor((diff/(1000*60*60))%24);
+  const minutes = Math.floor((diff/(1000*60))%60);
+  const seconds = Math.floor((diff/1000)%60);
+
+  document.getElementById(ids.days).innerText = days;
+  document.getElementById(ids.hours).innerText = hours;
+  document.getElementById(ids.minutes).innerText = minutes;
+  document.getElementById(ids.seconds).innerText = seconds;
+}
+
+setInterval(()=>{
+  startTimer(new Date('2026-05-07T00:00:00'),{
+    days:'oDays',
+    hours:'oHours',
+    minutes:'oMinutes',
+    seconds:'oSeconds'
+  });
+
+  startTimer(new Date('2025-12-27T22:00:00'),{
+    days:'mDays',
+    hours:'mHours',
+    minutes:'mMinutes',
+    seconds:'mSeconds'
+  });
+},1000);
+
+const fillBtn = document.getElementById('fillBtn');
+const loveFill = document.getElementById('loveFill');
+const loveText = document.getElementById('loveText');
+
+let fill = 0;
+
+const messages = [
+  '1% more obsessed with you ❤️',
+  'one sip from your diet coke',
+  'still not enough love',
+  'last bite from your meal',
+  'more blushes',
+  'extra cheesy smile',
+  'mogu mogu lychee flavor kind of love'
+];
+
+fillBtn.addEventListener('click', () => {
+
+  if(fill < 100){
+    fill += 15;
+  }
+
+  loveFill.style.height = fill + '%';
+
+  const random = messages[Math.floor(Math.random()*messages.length)];
+  loveText.innerText = random;
+
+  const heart = document.createElement('div');
+  heart.innerText = '❤️';
+  heart.classList.add('heart-float');
+
+  heart.style.left = Math.random()*100 + '%';
+  heart.style.bottom = '100px';
+
+  document.body.appendChild(heart);
+
+  setTimeout(()=>heart.remove(),4000);
+
+  if(fill >= 100){
+    loveText.innerText = 'You filled my life the same way. ❤️';
+  }
+
+});
+
+function reveal(){
+  const reveals = document.querySelectorAll('.fade-up');
+
+  const observer = new IntersectionObserver(entries => {
+    entries.forEach(entry => {
+      if(entry.isIntersecting){
+        entry.target.classList.add('show');
+      }
+    });
+  },{threshold:0.1});
+
+  reveals.forEach(r => observer.observe(r));
+}
+
+const voiceBtn = document.getElementById('voiceBtn');
+const voiceNote = document.getElementById('voiceNote');
+
+let voicePlaying = false;
+let wasMusicPlaying = false;
+
+voiceBtn.addEventListener('click', () => {
+
+  if(voicePlaying){
+
+    voiceNote.pause();
+
+    // resume bg music after voice note pauses
+    if(wasMusicPlaying){
+      bgMusic.play();
+      musicBtn.innerHTML = '<i data-lucide="pause"></i>';
+      musicPlaying = true;
+    }
+
+    voiceBtn.innerHTML = '<i data-lucide="play"></i>';
+
+  } else {
+
+    // check if bg music is currently playing
+    wasMusicPlaying = !bgMusic.paused;
+
+    // pause bg music
+    bgMusic.pause();
+    musicBtn.innerHTML = '<i data-lucide="play"></i>';
+    musicPlaying = false;
+
+    // play voice note
+    voiceNote.play();
+    voiceBtn.innerHTML = '<i data-lucide="pause"></i>';
+
+  }
+
+  voicePlaying = !voicePlaying;
+  lucide.createIcons();
+
+});
+
+voiceNote.addEventListener('ended', () => {
+
+  voicePlaying = false;
+
+  voiceBtn.innerHTML = '<i data-lucide="play"></i>';
+
+  // resume bg music automatically
+  if(wasMusicPlaying){
+    bgMusic.play();
+    musicBtn.innerHTML = '<i data-lucide="pause"></i>';
+    musicPlaying = true;
+  }
+
+  lucide.createIcons();
+
+});
+
+const videos = document.querySelectorAll('.memory-video');
+
+videos.forEach(video => {
+
+  video.addEventListener('play', () => {
+
+    // pause voice note if playing
+    if(!voiceNote.paused){
+      voiceNote.pause();
+      voicePlaying = false;
+      voiceBtn.innerHTML = '<i data-lucide="play"></i>';
+    }
+
+    // pause background music
+    if(!bgMusic.paused){
+      bgMusic.pause();
+      musicBtn.innerHTML = '<i data-lucide="play"></i>';
+      musicPlaying = false;
+    }
+
+    lucide.createIcons();
+
+  });
+
+  video.addEventListener('pause', () => {
+
+    // resume bg music only if video actually ended/paused
+    if(bgMusic.paused){
+      bgMusic.play();
+      musicBtn.innerHTML = '<i data-lucide="pause"></i>';
+      musicPlaying = true;
+    }
+
+    lucide.createIcons();
+
+  });
+
+  video.addEventListener('ended', () => {
+
+    if(bgMusic.paused){
+      bgMusic.play();
+      musicBtn.innerHTML = '<i data-lucide="pause"></i>';
+      musicPlaying = true;
+    }
+
+    lucide.createIcons();
+
+  });
+
+});
+
+</script>
+
+</body>
+</html>
