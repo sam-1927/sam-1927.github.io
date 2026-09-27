@@ -1900,7 +1900,7 @@
         stage?.addEventListener('pointerleave', () => document.querySelectorAll('.person-card').forEach(c => { c.style.setProperty('--mx', '0px'); c.style.setProperty('--my', '0px') }));
 
         /* SIGNAL */
-        document.getElementById('sendSignal')?.addEventListener('click', () => { const msg = 'Hey, your signal is received. I miss you tooo ♥'; const status = document.getElementById('signalStatus'); if (WHATSAPP_NUMBER === 'YOUR_NUMBER_HERE') { status.textContent = 'add her number in WHATSAPP_NUMBER first.'; return; } window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener'); status.textContent = 'signal prepared — send it when WhatsApp opens.' });
+        document.getElementById('sendSignal')?.addEventListener('click', () => { const msg = 'Hey, your signal is received. Click send to receive a reply back ASAP!'; const status = document.getElementById('signalStatus'); if (WHATSAPP_NUMBER === 'YOUR_NUMBER_HERE') { status.textContent = 'add her number in WHATSAPP_NUMBER first.'; return; } window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener'); status.textContent = 'signal prepared — send it when WhatsApp opens.' });
 
         /* HOME PARALLAX */
         const home = document.getElementById('home'), orbit = document.querySelector('.home-orbit');
