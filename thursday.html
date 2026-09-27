@@ -1,0 +1,1911 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width,initial-scale=1.0,viewport-fit=cover">
+    <meta name="theme-color" content="#101010">
+    <meta name="description" content="Eight months. Two places. Still us.">
+    <title>VIII — Still Us</title>
+
+    <script>
+        (function () {
+            try {
+                if (localStorage.getItem('stillUsUnlocked') === 'yes') {
+                    document.documentElement.classList.add('gate-unlocked');
+                }
+            } catch (e) { }
+        })();
+    </script>
+
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=IBM+Plex+Mono:wght@300;400;500&display=swap" rel="stylesheet">
+
+    <style>
+        :root {
+            --bg: #101010;
+            --fg: #ededed;
+            --muted: #777;
+            --dim: #3d3d3d;
+            --line: #292929;
+            --pad: clamp(20px, 4vw, 58px);
+            --ease: cubic-bezier(.2, .75, .2, 1);
+        }
+
+        * {
+            box-sizing: border-box;
+            margin: 0;
+            padding: 0
+        }
+
+        html {
+            scroll-behavior: smooth;
+            background: var(--bg)
+        }
+
+        body {
+            color: var(--fg);
+            font-family: "IBM Plex Mono", monospace;
+            font-weight: 300;
+            -webkit-font-smoothing: antialiased;
+            overflow-x: hidden
+        }
+
+        button,
+        a {
+            font: inherit
+        }
+
+        a {
+            color: inherit
+        }
+
+        button {
+            color: inherit;
+            background: none;
+            border: 0
+        }
+
+        ::selection {
+            background: #eee;
+            color: #101010
+        }
+
+        /* GLOBAL DRAWN-PATTERN BACKDROP */
+        #globalPatternBg {
+            position: fixed;
+            inset: 0;
+            z-index: -1;
+            opacity: 0;
+            background-repeat: repeat;
+            background-size: 220px 220px;
+            transition: opacity .7s ease;
+            pointer-events: none
+        }
+
+        #globalPatternBg.visible {
+            opacity: .12
+        }
+
+        /* NAV */
+        .nav {
+            position: fixed;
+            z-index: 100;
+            top: 0;
+            left: 0;
+            width: 100%;
+            height: 68px;
+            padding: 0 var(--pad);
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            background: rgba(16, 16, 16, .74);
+            backdrop-filter: blur(16px);
+            -webkit-backdrop-filter: blur(16px);
+            border-bottom: 1px solid rgba(255, 255, 255, .06)
+        }
+
+        .nav-brand {
+            position: relative;
+            text-decoration: none;
+            color: #777;
+            font-size: 10px;
+            letter-spacing: .22em;
+            white-space: nowrap;
+            min-width: 94px
+        }
+
+        .nav-brand .brand-date {
+            transition: opacity .25s
+        }
+
+        .nav-brand .brand-love {
+            position: absolute;
+            left: 0;
+            top: 50%;
+            transform: translateY(-50%) scale(.9);
+            opacity: 0;
+            white-space: nowrap;
+            color: #eee;
+            transition: .35s var(--ease)
+        }
+
+        .nav-brand:hover .brand-date,
+        .nav-brand:focus-visible .brand-date {
+            opacity: 0
+        }
+
+        .nav-brand:hover .brand-love,
+        .nav-brand:focus-visible .brand-love {
+            opacity: 1;
+            transform: translateY(-50%) scale(1)
+        }
+
+        .nav-links {
+            display: flex;
+            gap: clamp(12px, 2.1vw, 30px);
+            list-style: none;
+            overflow-x: auto;
+            scrollbar-width: none
+        }
+
+        .nav-links::-webkit-scrollbar {
+            display: none
+        }
+
+        .nav-links a {
+            position: relative;
+            text-decoration: none;
+            color: #686868;
+            font-size: 9px;
+            letter-spacing: .13em;
+            text-transform: uppercase;
+            white-space: nowrap;
+            padding: 10px 0
+        }
+
+        .nav-links a:after {
+            content: "";
+            position: absolute;
+            left: 0;
+            right: 100%;
+            bottom: 2px;
+            height: 1px;
+            background: #eee;
+            transition: right .3s
+        }
+
+        .nav-links a:hover,
+        .nav-links a.active {
+            color: #eee
+        }
+
+        .nav-links a:hover:after,
+        .nav-links a.active:after {
+            right: 0
+        }
+
+        /* GLOBAL */
+        section {
+            position: relative;
+            min-height: 100svh;
+            border-top: 1px solid var(--line);
+            overflow: hidden
+        }
+
+        section:not(#home) {
+            opacity: 0;
+            transform: translateY(26px);
+            transition: opacity .9s var(--ease), transform .9s var(--ease)
+        }
+
+        section:not(#home).in-view {
+            opacity: 1;
+            transform: none
+        }
+
+        .section-inner {
+            width: min(1180px, calc(100% - 2*var(--pad)));
+            margin: auto
+        }
+
+        .label {
+            color: #666;
+            font-size: 9px;
+            letter-spacing: .23em;
+            text-transform: uppercase;
+            margin-bottom: 28px
+        }
+
+        .title {
+            font-size: clamp(42px, 7.2vw, 104px);
+            font-weight: 300;
+            line-height: .94;
+            letter-spacing: -.055em
+        }
+
+        .copy {
+            max-width: 590px;
+            color: #858585;
+            font-size: 12px;
+            line-height: 2;
+            letter-spacing: .04em
+        }
+
+        .meta {
+            color: #555;
+            font-size: 8px;
+            letter-spacing: .16em;
+            text-transform: uppercase
+        }
+
+        .mono-small {
+            font-size: 10px;
+            letter-spacing: .16em
+        }
+
+        /* HOME */
+        #home {
+            min-height: 100svh;
+            border-top: 0;
+            display: flex;
+            align-items: flex-end;
+            padding: 68px var(--pad) 42px
+        }
+
+        .home-grid {
+            position: absolute;
+            inset: 68px var(--pad) 42px;
+            pointer-events: none
+        }
+
+        .home-grid:before,
+        .home-grid:after {
+            content: "";
+            position: absolute;
+            background: rgba(255, 255, 255, .035)
+        }
+
+        .home-grid:before {
+            left: 0;
+            top: 0;
+            bottom: 0;
+            width: 1px
+        }
+
+        .home-grid:after {
+            right: 0;
+            left: 0;
+            bottom: 0;
+            height: 1px
+        }
+
+        .home-ghost {
+            position: absolute;
+            right: -.02em;
+            top: 50%;
+            transform: translateY(-55%);
+            font-size: min(43vw, 620px);
+            line-height: .7;
+            color: #171717;
+            font-weight: 500;
+            letter-spacing: -.09em;
+            pointer-events: none
+        }
+
+        .home-content {
+            position: relative;
+            z-index: 2;
+            width: 100%;
+            padding-bottom: 4vh
+        }
+
+        .home-topline {
+            display: flex;
+            align-items: center;
+            justify-content: space-between;
+            margin-bottom: clamp(70px, 14vh, 160px)
+        }
+
+        .live-dot {
+            display: inline-flex;
+            align-items: center;
+            gap: 9px;
+            color: #666;
+            font-size: 8px;
+            letter-spacing: .18em;
+            text-transform: uppercase
+        }
+
+        .live-dot i {
+            width: 5px;
+            height: 5px;
+            border-radius: 50%;
+            background: #aaa;
+            box-shadow: 0 0 0 0 rgba(255, 255, 255, .4);
+            animation: pulse 2s infinite
+        }
+
+        @keyframes pulse {
+            70% {
+                box-shadow: 0 0 0 7px transparent
+            }
+        }
+
+        .home-date {
+            font-size: clamp(11px, 1vw, 14px);
+            letter-spacing: .2em;
+            margin-bottom: 18px
+        }
+
+        .home-headline {
+            font-size: clamp(38px, 7.2vw, 106px);
+            font-weight: 300;
+            line-height: .91;
+            letter-spacing: -.06em;
+            max-width: 920px
+        }
+
+        .home-headline em {
+            font-style: normal;
+            color: #777
+        }
+
+        .home-bottom {
+            display: flex;
+            align-items: flex-end;
+            justify-content: space-between;
+            gap: 40px;
+            margin-top: clamp(55px, 10vh, 110px)
+        }
+
+        .countdown {
+            display: flex;
+            gap: clamp(18px, 4vw, 55px)
+        }
+
+        .count {
+            display: grid;
+            gap: 7px
+        }
+
+        .count strong {
+            font-size: clamp(26px, 3.5vw, 48px);
+            font-weight: 300;
+            letter-spacing: -.05em
+        }
+
+        .count span {
+            font-size: 7px;
+            color: #555;
+            letter-spacing: .2em;
+            text-transform: uppercase
+        }
+
+        .home-note {
+            max-width: 270px;
+            color: #666;
+            font-size: 9px;
+            line-height: 1.9;
+            letter-spacing: .09em;
+            text-align: right
+        }
+
+        .home-scroll {
+            position: absolute;
+            right: var(--pad);
+            bottom: 42px;
+            writing-mode: vertical-rl;
+            color: #444;
+            font-size: 8px;
+            letter-spacing: .25em;
+            text-transform: uppercase
+        }
+
+        .home-orbit {
+            position: absolute;
+            right: 10%;
+            top: 35%;
+            width: min(30vw, 380px);
+            aspect-ratio: 1;
+            border: 1px solid rgba(255, 255, 255, .035);
+            border-radius: 50%;
+            animation: orbit 22s linear infinite
+        }
+
+        .home-orbit:before {
+            content: "";
+            position: absolute;
+            width: 5px;
+            height: 5px;
+            background: #aaa;
+            border-radius: 50%;
+            left: 50%;
+            top: -3px;
+            box-shadow: 0 0 20px rgba(255, 255, 255, .35)
+        }
+
+        .home-orbit:after {
+            content: "VIII";
+            position: absolute;
+            left: 50%;
+            top: 50%;
+            transform: translate(-50%, -50%);
+            font-size: 11px;
+            color: #333;
+            letter-spacing: .3em
+        }
+
+        @keyframes orbit {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        /* DRAW */
+        #draw {
+            padding: 120px 0;
+            background:
+                radial-gradient(circle at 82% 18%, rgba(255, 255, 255, .028), transparent 30%),
+                #0b0b0b
+        }
+
+        #draw:after {
+            content: "";
+            position: absolute;
+            inset: 0;
+            background-image: radial-gradient(circle, #fff 0 1px, transparent 1.5px);
+            background-size: 34px 34px;
+            opacity: .02;
+            pointer-events: none
+        }
+
+        .draw-copy {
+            position: relative;
+            z-index: 2;
+            max-width: 650px;
+            margin-bottom: 48px
+        }
+
+        .drawing-layout {
+            position: relative;
+            z-index: 2;
+            display: grid;
+            grid-template-columns: 1.4fr .8fr;
+            gap: 14px
+        }
+
+        .canvas-shell {
+            position: relative;
+            min-height: 420px;
+            border: 1px solid #303030;
+            background:
+                linear-gradient(rgba(255, 255, 255, .018) 1px, transparent 1px),
+                linear-gradient(90deg, rgba(255, 255, 255, .018) 1px, transparent 1px),
+                #121212;
+            background-size: 28px 28px;
+            touch-action: none;
+            overflow: hidden
+        }
+
+        .canvas-shell:before {
+            content: "DRAW HERE";
+            position: absolute;
+            left: 18px;
+            top: 15px;
+            color: #383838;
+            font-size: 7px;
+            letter-spacing: .16em;
+            z-index: 4;
+            pointer-events: none
+        }
+
+        .canvas-shell:after {
+            content: "SAM ♥ SAMIDHA";
+            position: absolute;
+            right: 18px;
+            bottom: 15px;
+            color: #303030;
+            font-size: 7px;
+            letter-spacing: .13em;
+            z-index: 4;
+            pointer-events: none
+        }
+
+        #drawCanvas {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            cursor: crosshair
+        }
+
+        .canvas-tools {
+            position: absolute;
+            right: 14px;
+            top: 14px;
+            display: flex;
+            gap: 7px;
+            z-index: 5
+        }
+
+        .canvas-tool {
+            width: 32px;
+            height: 28px;
+            border: 1px solid #333;
+            background: rgba(12, 12, 12, .8);
+            color: #777;
+            cursor: pointer;
+            font-size: 10px;
+            transition: .2s ease
+        }
+
+        .canvas-tool:hover,
+        .canvas-tool:focus-visible {
+            color: #eee;
+            border-color: #777;
+            outline: none
+        }
+
+        .canvas-placeholder {
+            position: absolute;
+            left: 20px;
+            bottom: 34px;
+            color: #3e3e3e;
+            font-size: 8px;
+            line-height: 1.8;
+            letter-spacing: .12em;
+            text-transform: uppercase;
+            pointer-events: none;
+            transition: opacity .2s ease;
+            z-index: 3
+        }
+
+        .drawing-info {
+            border: 1px solid #292929;
+            background: #111;
+            padding: 26px;
+            display: flex;
+            flex-direction: column;
+            justify-content: space-between
+        }
+
+        .drawing-info h3 {
+            margin-bottom: 14px;
+            font-size: 24px;
+            font-weight: 300;
+            letter-spacing: -.03em
+        }
+
+        .drawing-info p {
+            color: #6e6e6e;
+            font-size: 9px;
+            line-height: 1.9;
+            letter-spacing: .03em
+        }
+
+        .pattern-preview {
+            position: relative;
+            min-height: 110px;
+            margin: 22px 0;
+            border: 1px solid #272727;
+            overflow: hidden;
+            background: #0d0d0d;
+            display: grid;
+            place-items: center
+        }
+
+        .pattern-preview:before {
+            content: "PATTERN PREVIEW";
+            position: absolute;
+            left: 10px;
+            bottom: 8px;
+            color: #343434;
+            font-size: 7px;
+            letter-spacing: .12em
+        }
+
+        .pattern-preview img {
+            display: none;
+            width: 100%;
+            height: 100%;
+            min-height: 110px;
+            object-fit: contain;
+            opacity: .8
+        }
+
+        .pattern-preview.has-image img {
+            display: block
+        }
+
+        .drawing-actions {
+            display: flex;
+            gap: 7px;
+            flex-wrap: wrap
+        }
+
+        .small-button {
+            border: 1px solid #333;
+            background: transparent;
+            color: #888;
+            padding: 10px 14px;
+            cursor: pointer;
+            font-size: 8px;
+            letter-spacing: .13em;
+            text-transform: uppercase;
+            transition: .2s ease
+        }
+
+        .small-button:hover,
+        .small-button:focus-visible {
+            border-color: #777;
+            color: #eee;
+            background: #171717;
+            outline: none
+        }
+
+        @media(max-width:800px) {
+            .drawing-layout {
+                grid-template-columns: 1fr
+            }
+
+            .canvas-shell {
+                min-height: 360px
+            }
+        }
+
+        /* TIME MACHINE */
+        #time-machine {
+            display: flex;
+            align-items: center;
+            padding: 110px 0
+        }
+
+        .tv-wrap {
+            display: grid;
+            grid-template-columns: 1fr 1.15fr;
+            gap: clamp(30px, 7vw, 100px);
+            align-items: center
+        }
+
+        .tv {
+            width: min(100%, 650px);
+            margin: auto
+        }
+
+        .tv-shell {
+            position: relative;
+            background: #242424;
+            border: 1px solid #3a3a3a;
+            border-radius: 9% 9% 11% 11%;
+            padding: 5%;
+            box-shadow: 0 28px 70px rgba(0, 0, 0, .35)
+        }
+
+        .tv-screen {
+            position: relative;
+            aspect-ratio: 1.42;
+            background: #050505;
+            border-radius: 12%;
+            overflow: hidden;
+            border: 7px solid #161616;
+            box-shadow: inset 0 0 35px #000
+        }
+
+        .tv-screen canvas {
+            width: 100%;
+            height: 100%;
+            display: block
+        }
+
+        .tv-scan {
+            position: absolute;
+            inset: 0;
+            background: repeating-linear-gradient(to bottom, transparent 0 3px, rgba(255, 255, 255, .045) 4px);
+            pointer-events: none
+        }
+
+        .tv-noise {
+            position: absolute;
+            inset: -20%;
+            opacity: .08;
+            background-image: url("data:image/svg+xml,%3Csvg xmlns='http://www.w3.org/2000/svg' width='120' height='120'%3E%3Cfilter id='n'%3E%3CfeTurbulence type='fractalNoise' baseFrequency='.8' numOctaves='3' stitchTiles='stitch'/%3E%3C/filter%3E%3Crect width='100%25' height='100%25' filter='url(%23n)'/%3E%3C/svg%3E");
+            animation: noise .18s steps(2) infinite;
+            pointer-events: none
+        }
+
+        @keyframes noise {
+            to {
+                transform: translate(3%, -2%)
+            }
+        }
+
+        .tv-vignette {
+            position: absolute;
+            inset: 0;
+            box-shadow: inset 0 0 80px #000;
+            pointer-events: none
+        }
+
+        .tv-controls {
+            display: flex;
+            justify-content: center;
+            gap: 20px;
+            padding: 18px 5% 3px
+        }
+
+        .knob {
+            width: 34px;
+            height: 34px;
+            border-radius: 50%;
+            border: 1px solid #444;
+            background: #191919;
+            cursor: pointer;
+            box-shadow: inset 0 0 0 5px #202020
+        }
+
+        .tv-caption {
+            margin-top: 15px;
+            display: flex;
+            justify-content: space-between;
+            color: #555;
+            font-size: 8px;
+            letter-spacing: .15em;
+            text-transform: uppercase
+        }
+
+        .glitch {
+            animation: glitch .25s steps(2) 2
+        }
+
+        @keyframes glitch {
+            20% {
+                transform: translateX(5px)
+            }
+
+            40% {
+                filter: contrast(2)
+            }
+
+            60% {
+                transform: translateX(-5px)
+            }
+        }
+
+        /* INDEX */
+        #index {
+            display: flex;
+            align-items: center;
+            padding: 120px 0
+        }
+
+        .index-head {
+            display: flex;
+            justify-content: space-between;
+            align-items: flex-end;
+            margin-bottom: 70px
+        }
+
+        .index-list {
+            border-top: 1px solid #303030
+        }
+
+        .index-item {
+            display: grid;
+            grid-template-columns: 80px 1fr auto;
+            gap: 25px;
+            padding: 27px 0;
+            border-bottom: 1px solid #262626;
+            transition: padding .35s var(--ease)
+        }
+
+        .index-item:hover {
+            padding-left: 18px;
+            padding-right: 18px;
+            background: #131313
+        }
+
+        .index-item .num {
+            color: #4e4e4e;
+            font-size: 9px
+        }
+
+        .index-item h3 {
+            font-size: clamp(18px, 2.3vw, 30px);
+            font-weight: 300
+        }
+
+        .index-item p {
+            color: #666;
+            font-size: 9px;
+            letter-spacing: .08em;
+            align-self: center
+        }
+
+        .index-item.active h3 {
+            font-style: italic
+        }
+
+        /* LITTLE THINGS */
+        #little-things {
+            display: flex;
+            align-items: center;
+            padding: 110px 0
+        }
+
+        .notes {
+            position: relative;
+            height: 620px;
+            max-width: 1000px;
+            margin: 0 auto
+        }
+
+        .note {
+            position: absolute;
+            width: clamp(190px, 24vw, 270px);
+            padding: 28px;
+            background: #171717;
+            border: 1px solid #303030;
+            box-shadow: 0 22px 50px rgba(0, 0, 0, .2);
+            cursor: grab;
+            user-select: none;
+            touch-action: none;
+            will-change: transform
+        }
+
+        .note:active {
+            cursor: grabbing
+        }
+
+        .note.dragging {
+            transition: none;
+            box-shadow: 0 30px 70px rgba(0, 0, 0, .4);
+            z-index: 50
+        }
+
+        .note:nth-child(1) {
+            left: 5%;
+            top: 5%
+        }
+
+        .note:nth-child(2) {
+            right: 7%;
+            top: 13%
+        }
+
+        .note:nth-child(3) {
+            left: 29%;
+            top: 42%
+        }
+
+        .note:nth-child(4) {
+            right: 18%;
+            bottom: 3%
+        }
+
+        .note small {
+            color: #555;
+            font-size: 7px;
+            letter-spacing: .18em;
+            text-transform: uppercase
+        }
+
+        .note h3 {
+            font-size: 20px;
+            font-weight: 300;
+            margin: 20px 0 12px
+        }
+
+        .note p {
+            font-size: 9px;
+            color: #777;
+            line-height: 1.8
+        }
+
+        /* SIGNAL */
+        #signal {
+            display: flex;
+            align-items: center;
+            padding: 110px 0
+        }
+
+        .signal-box {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 70px;
+            align-items: center
+        }
+
+        .signal-orb {
+            position: relative;
+            aspect-ratio: 1;
+            max-width: 500px;
+            border: 1px solid #292929;
+            border-radius: 50%;
+            margin: auto;
+            display: grid;
+            place-items: center
+        }
+
+        .signal-orb:before,
+        .signal-orb:after {
+            content: "";
+            position: absolute;
+            border: 1px solid #232323;
+            border-top-color: #777;
+            border-radius: 50%;
+            inset: 13%;
+            animation: signalOrbit 7s linear infinite
+        }
+
+        .signal-orb:after {
+            inset: 28%;
+            border-top-color: #999;
+            animation-duration: 4s;
+            animation-direction: reverse
+        }
+
+        @keyframes signalOrbit {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .signal-core {
+            width: 17px;
+            height: 17px;
+            border-radius: 50%;
+            background: #ddd;
+            box-shadow: 0 0 40px rgba(255, 255, 255, .18)
+        }
+
+        .signal-btn {
+            margin-top: 35px;
+            border: 1px solid #3a3a3a;
+            padding: 14px 20px;
+            color: #bbb;
+            letter-spacing: .16em;
+            font-size: 8px;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: .3s
+        }
+
+        .signal-btn:hover {
+            background: #eee;
+            color: #111
+        }
+
+        .signal-status {
+            margin-top: 18px;
+            color: #555;
+            font-size: 8px;
+            letter-spacing: .1em;
+            min-height: 16px
+        }
+
+        /* FOR YOU */
+        #for-you {
+            min-height: 100svh;
+            display: flex;
+            align-items: center;
+            padding: 110px 0
+        }
+
+        .for-you {
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: clamp(35px, 8vw, 120px);
+            align-items: center
+        }
+
+        .sticker-stage {
+            position: relative;
+            min-height: 560px;
+            display: grid;
+            place-items: center;
+            border: 1px solid #282828;
+            background: radial-gradient(circle at center, #181818 0, #111 58%, #101010 100%);
+            overflow: hidden
+        }
+
+        .sticker-stage:before {
+            content: "";
+            position: absolute;
+            width: 75%;
+            aspect-ratio: 1;
+            border: 1px solid #242424;
+            border-radius: 50%;
+            animation: slowspin 28s linear infinite
+        }
+
+        @keyframes slowspin {
+            to {
+                transform: rotate(360deg)
+            }
+        }
+
+        .sticker-stage img {
+            position: relative;
+            z-index: 2;
+            display: block;
+            max-width: 78%;
+            max-height: 76%;
+            object-fit: contain;
+            filter: drop-shadow(0 25px 25px rgba(0, 0, 0, .4))
+        }
+
+        .sticker-placeholder {
+            position: relative;
+            z-index: 2;
+            text-align: center;
+            color: #4e4e4e;
+            font-size: 8px;
+            letter-spacing: .16em;
+            line-height: 2;
+            text-transform: uppercase
+        }
+
+        .for-you-title {
+            font-size: clamp(54px, 8vw, 118px);
+            line-height: .85;
+            font-weight: 300;
+            letter-spacing: -.07em
+        }
+
+        .for-you-date {
+            margin-top: 38px;
+            color: #666;
+            font-size: 9px;
+            line-height: 2;
+            letter-spacing: .14em;
+            text-transform: uppercase
+        }
+
+        /* FOOTER */
+        footer {
+            padding: 35px var(--pad);
+            border-top: 1px solid #292929;
+            display: flex;
+            justify-content: space-between;
+            color: #444;
+            font-size: 7px;
+            letter-spacing: .18em;
+            text-transform: uppercase
+        }
+
+
+        /* TV IMAGE SLIDESHOW */
+        .tv-screen #tvImage {
+            position: absolute;
+            inset: 0;
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            opacity: 0;
+            transition: opacity .35s ease;
+            filter: grayscale(1) contrast(1.12) brightness(.78)
+        }
+
+        .tv-screen #tvImage.visible {
+            opacity: 1
+        }
+
+        .tv-placeholder {
+            position: absolute;
+            inset: 0;
+            display: grid;
+            place-items: center;
+            text-align: center;
+            color: #555;
+            font-size: clamp(16px, 3vw, 28px);
+            line-height: 1.2;
+            letter-spacing: .18em;
+            z-index: 1
+        }
+
+        .tv-placeholder.hidden {
+            display: none
+        }
+
+        .tv-glitch {
+            position: absolute;
+            inset: 0;
+            opacity: 0;
+            background: repeating-linear-gradient(to bottom, transparent 0 7px, rgba(255, 255, 255, .12) 8px 10px);
+            mix-blend-mode: screen;
+            pointer-events: none
+        }
+
+        .tv-screen.glitch .tv-glitch {
+            opacity: 1;
+            animation: tvGlitch .4s steps(3)
+        }
+
+        .tv-screen.glitch #tvImage {
+            animation: tvImageGlitch .4s steps(3)
+        }
+
+        @keyframes tvGlitch {
+            20% {
+                transform: translateX(-8px)
+            }
+
+            40% {
+                transform: translateX(12px);
+                opacity: .7
+            }
+
+            65% {
+                transform: translateX(-4px)
+            }
+        }
+
+        @keyframes tvImageGlitch {
+            20% {
+                clip-path: inset(15% 0 65% 0);
+                transform: translateX(8px)
+            }
+
+            45% {
+                clip-path: inset(55% 0 15% 0);
+                transform: translateX(-7px)
+            }
+
+            75% {
+                clip-path: none
+            }
+        }
+
+        /* FOR YOU FAMILY */
+        .sticker-stage {
+            isolation: isolate
+        }
+
+        .orbit-ring {
+            position: absolute;
+            border: 1px solid #292929;
+            border-top-color: #4a4a4a;
+            border-radius: 50%;
+            pointer-events: none
+        }
+
+        .ring-one {
+            inset: 12%;
+            animation: slowspin 28s linear infinite
+        }
+
+        .ring-two {
+            inset: 25%;
+            border-top-color: #5c5c5c;
+            animation: slowspin 19s linear infinite reverse
+        }
+
+        .family-photo-grid {
+            position: relative;
+            z-index: 3;
+            width: min(92%, 540px);
+            display: grid;
+            grid-template-columns: 1fr 1fr;
+            gap: 20px
+        }
+
+        .person-card {
+            position: relative;
+            aspect-ratio: 1;
+            background: #141414;
+            border: 1px solid #2c2c2c;
+            padding: 10px;
+            cursor: pointer;
+            overflow: hidden;
+            transition: transform .4s var(--ease), border-color .3s, background .3s
+        }
+
+        .person-card:nth-child(1) {
+            transform: rotate(-3deg)
+        }
+
+        .person-card:nth-child(2) {
+            transform: rotate(3deg)
+        }
+
+        .person-card:nth-child(3) {
+            transform: rotate(2deg)
+        }
+
+        .person-card:nth-child(4) {
+            transform: rotate(-3deg)
+        }
+
+        .person-card:hover,
+        .person-card.active {
+            border-color: #666;
+            background: #1a1a1a;
+            transform: translateY(-8px) rotate(0)
+        }
+
+        .person-card img {
+            width: 100%;
+            height: 100%;
+            object-fit: contain;
+            filter: grayscale(1);
+            opacity: .8;
+            transition: filter .4s, opacity .4s, transform .4s
+        }
+
+        .person-card:hover img,
+        .person-card.active img {
+            filter: grayscale(0);
+            opacity: 1;
+            transform: scale(1.04)
+        }
+
+        .person-card span {
+            position: absolute;
+            left: 17px;
+            bottom: 14px;
+            color: #ddd;
+            font-size: 8px;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            text-shadow: 0 1px 7px #000
+        }
+
+        .family-caption {
+            position: absolute;
+            z-index: 4;
+            bottom: 19px;
+            right: 22px;
+            color: #555;
+            font-size: 8px;
+            letter-spacing: .16em;
+            text-transform: uppercase
+        }
+
+        .family-hint {
+            margin-top: 30px;
+            color: #444;
+            font-size: 8px;
+            letter-spacing: .15em;
+            text-transform: uppercase
+        }
+
+        @media(max-width:800px) {
+            .family-photo-grid {
+                width: 100%;
+                gap: 10px
+            }
+
+            .family-caption {
+                position: relative;
+                right: auto;
+                bottom: auto;
+                margin: 20px auto 0;
+                text-align: center
+            }
+        }
+
+        /* RESPONSIVE */
+        @media(max-width:800px) {
+            .nav {
+                height: 60px
+            }
+
+            .nav-brand {
+                display: none
+            }
+
+            .nav-links {
+                width: 100%;
+                justify-content: flex-start;
+                gap: 22px
+            }
+
+            #home {
+                padding-top: 60px
+            }
+
+            .home-orbit {
+                right: -18%;
+                top: 30%;
+                width: 55vw
+            }
+
+            .home-ghost {
+                font-size: 58vw
+            }
+
+            .home-bottom {
+                display: block
+            }
+
+            .home-note {
+                text-align: left;
+                margin-top: 30px
+            }
+
+            .drawing-layout,
+            .tv-wrap,
+            .signal-box,
+            .for-you {
+                grid-template-columns: 1fr
+            }
+
+            .draw-copy {
+                margin-bottom: 20px
+            }
+
+            .tv-wrap .copy {
+                order: -1
+            }
+
+            .index-head {
+                display: block;
+                margin-bottom: 45px
+            }
+
+            .index-head .copy {
+                margin-top: 25px
+            }
+
+            .index-item {
+                grid-template-columns: 45px 1fr
+            }
+
+            .index-item p {
+                display: none
+            }
+
+            .motion-frame {
+                min-height: 500px;
+                height: 65vh
+            }
+
+            .motion-center .distance {
+                font-size: 13vw
+            }
+
+            .notes {
+                height: 700px
+            }
+
+            .note:nth-child(1) {
+                left: 0
+            }
+
+            .note:nth-child(2) {
+                right: 0
+            }
+
+            .note:nth-child(3) {
+                left: 14%;
+                top: 37%
+            }
+
+            .note:nth-child(4) {
+                right: 4%;
+                bottom: 5%
+            }
+
+            .sticker-stage {
+                min-height: 380px;
+                padding: 24px 0
+            }
+
+            .for-you-title {
+                font-size: clamp(34px, 11vw, 64px)
+            }
+
+            .for-you-date {
+                margin-top: 26px
+            }
+
+            #for-you {
+                padding: 70px 0
+            }
+        }
+
+        /* PASSWORD GATE */
+        html:not(.gate-unlocked) body>:not(#gateOverlay) {
+            display: none !important
+        }
+
+        html.gate-unlocked #gateOverlay {
+            display: none
+        }
+
+        #gateOverlay {
+            position: fixed;
+            inset: 0;
+            z-index: 9999;
+            display: flex;
+            align-items: center;
+            justify-content: center;
+            padding: 24px;
+            background: #0a0a0a
+        }
+
+        .gate-box {
+            width: min(320px, 100%);
+            text-align: center
+        }
+
+        .gate-label {
+            color: #666;
+            font-size: 9px;
+            letter-spacing: .23em;
+            text-transform: uppercase;
+            margin-bottom: 22px
+        }
+
+        .gate-title {
+            font-size: clamp(28px, 6vw, 42px);
+            font-weight: 300;
+            line-height: .95;
+            letter-spacing: -.045em;
+            margin-bottom: 34px
+        }
+
+        .gate-input {
+            width: 100%;
+            background: transparent;
+            border: 1px solid #333;
+            color: var(--fg);
+            font-family: inherit;
+            font-size: 13px;
+            letter-spacing: .12em;
+            text-align: center;
+            padding: 14px 16px;
+            outline: none;
+            transition: border-color .25s
+        }
+
+        .gate-input:focus {
+            border-color: #777
+        }
+
+        .gate-submit {
+            width: 100%;
+            margin-top: 14px;
+            border: 1px solid #3a3a3a;
+            padding: 13px;
+            color: #bbb;
+            font-size: 9px;
+            letter-spacing: .18em;
+            text-transform: uppercase;
+            cursor: pointer;
+            transition: .3s
+        }
+
+        .gate-submit:hover {
+            background: #eee;
+            color: #111
+        }
+
+        .gate-error {
+            margin-top: 16px;
+            min-height: 14px;
+            color: #a66;
+            font-size: 9px;
+            letter-spacing: .09em
+        }
+
+        @media(prefers-reduced-motion:reduce) {
+            html {
+                scroll-behavior: auto
+            }
+
+            *,
+            *:before,
+            *:after {
+                animation: none !important;
+                transition: none !important
+            }
+        }
+    </style>
+</head>
+
+<body>
+
+    <div id="gateOverlay">
+        <div class="gate-box">
+            <div class="gate-label">Private</div>
+            <h1 class="gate-title">Enter the<br>password.</h1>
+            <form id="gateForm" autocomplete="off">
+                <input class="gate-input" id="gatePassword" type="password" placeholder="password"
+                    aria-label="Password" autofocus>
+                <button class="gate-submit" type="submit">unlock →</button>
+            </form>
+            <div class="gate-error" id="gateError"></div>
+        </div>
+    </div>
+
+    <div id="globalPatternBg" aria-hidden="true"></div>
+
+    <nav class="nav" aria-label="Main navigation">
+        <a class="nav-brand" href="#home" aria-label="Today">
+            <span class="brand-date" id="navDate">27 / 09 / 26</span>
+            <span class="brand-love">SAM ♥</span>
+        </a>
+        <ul class="nav-links">
+            <li><a class="active" href="#home">I. Home</a></li>
+            <li><a href="#draw">II. Draw</a></li>
+            <li><a href="#time-machine">III. Time Machine</a></li>
+            <li><a href="#little-things">IV. Little Things</a></li>
+            <li><a href="#signal">V. Signal</a></li>
+            <li><a href="#for-you">VI. For You</a></li>
+        </ul>
+    </nav>
+
+    <main>
+        <!-- I HOME -->
+        <section id="home">
+            <div class="home-grid"></div>
+            <div class="home-ghost">VIII</div>
+            <div class="home-orbit" aria-hidden="true"></div>
+            <div class="home-content">
+                <div class="home-topline">
+                    <span class="live-dot"><i></i> our little place on this world</span>
+                    <span class="mono-small" style="color:#444">27 — 09 — 2026</span>
+                </div>
+                <div class="home-date" id="homeDate">27.09.2026</div>
+                <h1 class="home-headline">IS IT<br><em>THURSDAY?</em></h1>
+                <div class="home-bottom">
+                    <div class="countdown" aria-label="Countdown to 29 October 2026">
+                        <div class="count"><strong id="days">--</strong><span>days</span></div>
+                        <div class="count"><strong id="hours">--</strong><span>hours</span></div>
+                        <div class="count"><strong id="minutes">--</strong><span>minutes</span></div>
+                        <div class="count"><strong id="seconds">--</strong><span>seconds</span></div>
+                    </div>
+                    <p class="home-note">This eight month were very special for me,
+                        Now, knowing that the next time I'm going to meet you on is a Thursday is making it even more
+                        special</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- II DRAW -->
+        <section id="draw">
+            <div class="section-inner">
+                <div class="draw-copy">
+                    <div class="label">II. Draw</div>
+                    <h2 class="title">Leave me<br>a little something.</h2>
+                    <p class="copy" style="margin-top:32px">Draw whatever your heart feel like expressing. Show the
+                        inner createive side you got.</p>
+                </div>
+                <div class="drawing-layout">
+                    <div class="canvas-shell" id="drawBoard">
+                        <canvas id="drawCanvas" aria-label="Drawing canvas"></canvas>
+                        <div class="canvas-tools">
+                            <button class="canvas-tool" id="undo" type="button" aria-label="Undo">↶</button>
+                            <button class="canvas-tool" id="clear" type="button" aria-label="Clear">×</button>
+                        </div>
+                        <p class="canvas-placeholder" id="canvasPlaceholder">touch / drag / make something<br>it
+                            becomes a pattern on the page</p>
+                    </div>
+                    <aside class="drawing-info">
+                        <div>
+                            <h3>What your,<br>heart expressed</h3>
+                            <p>Your art is even better than ...<br>Da Vinci or Picaso</p>
+                        </div>
+                        <div class="pattern-preview" id="patternPreview"><img id="patternPreviewImage" alt=""></div>
+                        <div class="drawing-actions">
+                            <button class="small-button" id="keep" type="button">keep it here</button>
+                            <button class="small-button" id="letGo" type="button">let it go</button>
+                        </div>
+                    </aside>
+                </div>
+            </div>
+        </section>
+
+        <!-- III TIME MACHINE -->
+        <section id="time-machine">
+            <div class="section-inner tv-wrap">
+                <div class="tv">
+                    <div class="tv-shell">
+                        <div class="tv-screen" id="tvScreen">
+                            <img id="tvImage" src="" alt="" aria-hidden="true">
+                            <div class="tv-placeholder" id="tvPlaceholder">INSERT<br>MEMORIES</div>
+                            <div class="tv-scan"></div>
+                            <div class="tv-noise"></div>
+                            <div class="tv-vignette"></div>
+                            <div class="tv-glitch"></div>
+                        </div>
+                        <div class="tv-controls">
+                            <button class="knob" id="prevChannel" aria-label="Previous photo"></button>
+                            <button class="knob" id="nextChannel" aria-label="Next photo"></button>
+                            <button class="knob" id="glitchButton" aria-label="Glitch television"></button>
+                        </div>
+                    </div>
+                    <div class="tv-caption"><span id="channelLabel">CH 00</span><span id="channelTime">Now
+                            Playing</span></div>
+                </div>
+                <div>
+                    <div class="label">III. The Time Machine</div>
+                    <h2 class="title">Let's go<br>back.</h2>
+                    <p class="copy" style="margin-top:32px">Every picture has its own little story. Let's rewatch
+                        some of the beautiful memories we have created in last 8 months.
+                        I'll be eagerly waiting for the wedding story, the family story and every other story with you
+                    </p>
+                    <p class="copy" style="margin-top:24px;color:#555">Until then let's rewind it again and again . . .
+                    </p>
+                </div>
+            </div>
+        </section>
+
+        <!-- IV LITTLE THINGS -->
+        <section id="little-things">
+            <div class="section-inner">
+                <div class="label">IV. Little Things</div>
+                <h2 class="title">A few things<br>about you.</h2>
+                <div class="notes" id="notes">
+                    <article class="note"><small>01 / favourite</small>
+                        <h3>Your laugh.</h3>
+                        <p>The one I can recognise even when I can't see you.</p>
+                    </article>
+                    <article class="note"><small>02 / apparently</small>
+                        <h3>You are my favourite notification.</h3>
+                        <p>Yes, even when the message is just “okay” or "hmm hmm".</p>
+                    </article>
+                    <article class="note"><small>03 / us</small>
+                        <h3>We make nonsense memorable.</h3>
+                        <p>That might be one of my favourite things about you.</p>
+                    </article>
+                    <article class="note"><small>04 / pending</small>
+                        <h3>One more sleep.</h3>
+                        <p>And then this whole long-distance chapter gets a little shorter.</p>
+                    </article>
+                </div>
+            </div>
+        </section>
+
+        <!-- V SIGNAL -->
+        <section id="signal">
+            <div class="section-inner signal-box">
+                <div class="signal-orb">
+                    <div class="signal-core"></div>
+                </div>
+                <div>
+                    <div class="label">V. Signal</div>
+                    <h2 class="title">Thinking<br>of you.</h2>
+                    <p class="copy" style="margin-top:32px">Send a tiny signal from wherever you are. It opens to your favorite destination
+                        with a special message that would remind me about you!</p>
+                    <button class="signal-btn" id="sendSignal">send signal →</button>
+                    <div class="signal-status" id="signalStatus"></div>
+                </div>
+            </div>
+        </section>
+
+        <!-- VI FOR YOU -->
+        <section id="for-you">
+            <div class="section-inner for-you">
+                <div class="sticker-stage" id="stickerStage">
+                    <div class="orbit-ring ring-one"></div>
+                    <div class="orbit-ring ring-two"></div>
+                    <div class="family-photo-grid">
+                        <button class="person-card" data-person="me"><img src="assets/image/me.png"
+                                alt=""><span>me</span></button>
+                        <button class="person-card" data-person="her"><img src="assets/image/her.png"
+                                alt=""><span>her</span></button>
+                        <button class="person-card" data-person="snoopy"><img src="assets/image/snoopy.png"
+                                alt=""><span>snoopy</span></button>
+                        <button class="person-card" data-person="mochi"><img src="assets/image/mochi.png"
+                                alt=""><span>mochi</span></button>
+                    </div>
+                    <div class="family-caption" id="familyCaption">four little reasons to smile</div>
+                </div>
+                <div>
+                    <div class="label">VI. For You</div>
+                    <h2 class="for-you-title">Our short family,<br>We both love</h2>
+                    <p class="copy" style="margin-top:32px">You, me, Snoopy and Mochi. Four tiny pieces of our world.</p>
+                    <p class="for-you-date">29.10.2026<br><span style="color:#3e3e3e">Waiting for you.</span></p>
+                    <div class="family-hint">Come home soon we are waiting for you/div>
+                </div>
+            </div>
+        </section>
+
+    </main>
+
+    <footer><span>Happy 8th Months</span><span>I Love You</span><span>Forever</span></footer>
+
+    <script>
+        /* PASSWORD GATE */
+        (function () {
+            const GATE_PASSWORD = "5AM!7_";
+            const form = document.getElementById('gateForm');
+            const input = document.getElementById('gatePassword');
+            const error = document.getElementById('gateError');
+            if (document.documentElement.classList.contains('gate-unlocked')) return;
+            form?.addEventListener('submit', function (e) {
+                e.preventDefault();
+                if (input.value === GATE_PASSWORD) {
+                    try { localStorage.setItem('stillUsUnlocked', 'yes'); } catch (e) { }
+                    document.documentElement.classList.add('gate-unlocked');
+                } else {
+                    error.textContent = "that's not it — try again.";
+                    input.value = '';
+                    input.focus();
+                }
+            });
+        })();
+
+        /* SETTINGS */
+        const WHATSAPP_NUMBER = "919022692190";
+        const RETURN_DATE = new Date("2026-10-29T00:00:00");
+
+        const pad = n => String(n).padStart(2, "0");
+        function updateDate() {
+            const now = new Date();
+            const pretty = `${pad(now.getDate())}.${pad(now.getMonth() + 1)}.${now.getFullYear()}`;
+            const short = `${pad(now.getDate())} / ${pad(now.getMonth() + 1)} / ${String(now.getFullYear()).slice(-2)}`;
+            ["homeDate"].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = pretty; });
+            ["navDate", "routeDate"].forEach(id => { const el = document.getElementById(id); if (el) el.textContent = short; });
+            let diff = Math.max(0, RETURN_DATE - now);
+            const vals = [Math.floor(diff / 86400000)]; diff %= 86400000;
+            vals.push(Math.floor(diff / 3600000)); diff %= 3600000;
+            vals.push(Math.floor(diff / 60000)); diff %= 60000;
+            vals.push(Math.floor(diff / 1000));
+            ["days", "hours", "minutes", "seconds"].forEach((id, i) => { const el = document.getElementById(id); if (el) el.textContent = i ? pad(vals[i]) : vals[i] });
+        }
+        updateDate(); setInterval(updateDate, 1000);
+
+        /* REVEAL — quiet fade/rise as each section enters view */
+        const revealObserver = new IntersectionObserver(entries => {
+            entries.forEach(entry => { if (entry.isIntersecting) { entry.target.classList.add('in-view'); revealObserver.unobserve(entry.target); } });
+        }, { threshold: .12, rootMargin: '0px 0px -8% 0px' });
+        document.querySelectorAll('main section:not(#home)').forEach(section => revealObserver.observe(section));
+
+        /* NAVIGATION — one active item, based on the section closest to the viewport center */
+        const navLinks = [...document.querySelectorAll('.nav-links a')];
+        const sections = [...document.querySelectorAll('main section[id]')];
+        let navTick = false;
+        function updateActiveNav() {
+            navTick = false;
+            const center = window.scrollY + window.innerHeight * .42;
+            let current = sections[0];
+            for (const section of sections) {
+                if (section.offsetTop <= center) current = section; else break;
+            }
+            navLinks.forEach(link => link.classList.toggle('active', link.getAttribute('href') === '#' + current.id));
+        }
+        window.addEventListener('scroll', () => { if (!navTick) { navTick = true; requestAnimationFrame(updateActiveNav) } }, { passive: true });
+        window.addEventListener('resize', updateActiveNav);
+        navLinks.forEach(link => link.addEventListener('click', () => {
+            navLinks.forEach(a => a.classList.remove('active')); link.classList.add('active');
+        }));
+        requestAnimationFrame(updateActiveNav);
+
+        /* DRAWING — robust touch/mouse canvas, live pattern preview panel, global page backdrop */
+        const board = document.getElementById('drawBoard');
+        const canvas = document.getElementById('drawCanvas');
+        const ctx = canvas.getContext('2d');
+        const canvasPlaceholder = document.getElementById('canvasPlaceholder');
+        const patternPreview = document.getElementById('patternPreview');
+        const patternPreviewImage = document.getElementById('patternPreviewImage');
+        let strokes = [], current = null, drawing = false, cssW = 0, cssH = 0;
+        function configureContext() {
+            ctx.lineCap = 'round'; ctx.lineJoin = 'round'; ctx.strokeStyle = '#ededed'; ctx.lineWidth = 2.2;
+        }
+        // strokes are stored as points in NORMALIZED (0-1) space so they stay correct across any resize
+        function redraw() {
+            const d = Math.min(window.devicePixelRatio || 1, 2);
+            ctx.setTransform(d, 0, 0, d, 0, 0);
+            ctx.clearRect(0, 0, cssW, cssH);
+            configureContext();
+            for (const stroke of strokes) {
+                if (!stroke.length) continue;
+                ctx.beginPath(); ctx.moveTo(stroke[0].x * cssW, stroke[0].y * cssH);
+                for (let i = 1; i < stroke.length; i++)ctx.lineTo(stroke[i].x * cssW, stroke[i].y * cssH);
+                ctx.stroke();
+            }
+        }
+        function resizeCanvas() {
+            if (!board) return;
+            const r = board.getBoundingClientRect(); if (!r.width || !r.height) return;
+            cssW = r.width; cssH = r.height;
+            const d = Math.min(window.devicePixelRatio || 1, 2);
+            canvas.width = Math.round(cssW * d); canvas.height = Math.round(cssH * d);
+            canvas.style.width = cssW + 'px'; canvas.style.height = cssH + 'px';
+            redraw();
+        }
+        if (board) { new ResizeObserver(resizeCanvas).observe(board); window.addEventListener('load', resizeCanvas); resizeCanvas(); }
+        function getPoint(e) { const r = canvas.getBoundingClientRect(); return { x: (e.clientX - r.left) / r.width, y: (e.clientY - r.top) / r.height }; }
+        function startDraw(e) {
+            if (e.pointerType === 'mouse' && e.button !== 0) return;
+            drawing = true; current = [getPoint(e)]; canvas.setPointerCapture?.(e.pointerId);
+            configureContext();
+            const p = current[0]; ctx.beginPath(); ctx.moveTo(p.x * cssW, p.y * cssH); e.preventDefault();
+            if (canvasPlaceholder) canvasPlaceholder.style.opacity = 0;
+        }
+        function moveDraw(e) {
+            if (!drawing || !current) return;
+            const p = getPoint(e); const prev = current[current.length - 1];
+            if (Math.hypot((p.x - prev.x) * cssW, (p.y - prev.y) * cssH) < 0.5) return;
+            current.push(p); ctx.lineTo(p.x * cssW, p.y * cssH); ctx.stroke(); e.preventDefault();
+        }
+        function endDraw(e) {
+            if (!drawing) return; drawing = false;
+            if (current && current.length) { strokes.push(current); makePattern(); }
+            current = null; try { canvas.releasePointerCapture?.(e.pointerId) } catch { }
+        }
+        canvas.addEventListener('pointerdown', startDraw, { passive: false });
+        canvas.addEventListener('pointermove', moveDraw, { passive: false });
+        canvas.addEventListener('pointerup', endDraw); canvas.addEventListener('pointercancel', endDraw); canvas.addEventListener('lostpointercapture', () => { if (drawing) { drawing = false; if (current?.length) { strokes.push(current); makePattern(); } current = null } });
+        function applyGlobalBackground(dataUrl) {
+            const bg = document.getElementById('globalPatternBg');
+            if (!bg) return;
+            if (dataUrl) { bg.style.backgroundImage = `url(${dataUrl})`; bg.classList.add('visible'); }
+            else { bg.classList.remove('visible'); bg.style.backgroundImage = ''; }
+        }
+        function makePattern() {
+            if (!strokes.length) { patternPreview.classList.remove('has-image'); patternPreviewImage.removeAttribute('src'); localStorage.removeItem('ourDrawingPattern'); applyGlobalBackground(null); return; }
+            const size = 220, d = 2, off = document.createElement('canvas'); off.width = size * d; off.height = size * d;
+            const c = off.getContext('2d'); c.scale(d, d); c.strokeStyle = '#fff'; c.lineWidth = 2; c.lineCap = 'round'; c.lineJoin = 'round';
+            for (const st of strokes) { if (!st.length) continue; c.beginPath(); st.forEach((p, i) => { const x = p.x * size, y = p.y * size; i ? c.lineTo(x, y) : c.moveTo(x, y) }); c.stroke(); }
+            const data = off.toDataURL('image/png');
+            patternPreviewImage.src = data; patternPreview.classList.add('has-image');
+            localStorage.setItem('ourDrawingPattern', data);
+            applyGlobalBackground(data);
+        }
+        document.getElementById('undo')?.addEventListener('click', () => { strokes.pop(); redraw(); if (!strokes.length && canvasPlaceholder) canvasPlaceholder.style.opacity = 1; makePattern() });
+        document.getElementById('clear')?.addEventListener('click', () => { strokes = []; redraw(); if (canvasPlaceholder) canvasPlaceholder.style.opacity = 1; makePattern() });
+        document.getElementById('keep')?.addEventListener('click', makePattern);
+        document.getElementById('letGo')?.addEventListener('click', () => { patternPreview.classList.remove('has-image'); patternPreviewImage.removeAttribute('src'); localStorage.removeItem('ourDrawingPattern'); applyGlobalBackground(null); });
+        const savedPattern = localStorage.getItem('ourDrawingPattern');
+        if (savedPattern) { patternPreviewImage.src = savedPattern; patternPreview.classList.add('has-image'); applyGlobalBackground(savedPattern); }
+
+        /* TIME MACHINE — loads assets/image/01...20 */
+        const tvImages = [];
+        for (let n = 1; n <= 20; n++) { const id = String(n).padStart(2, '0');['jpg', 'jpeg', 'png', 'webp'].forEach(ext => tvImages.push(`/assets/image/${id}.${ext}`)); }
+        let tvLoaded = [], tvIndex = 0;
+        const tvImg = document.getElementById('tvImage'), tvPlaceholder = document.getElementById('tvPlaceholder'), tvScreen = document.getElementById('tvScreen');
+        function showTV(index) {
+            if (!tvLoaded.length) { tvPlaceholder?.classList.remove('hidden'); return; }
+            tvIndex = (index + tvLoaded.length) % tvLoaded.length; tvImg.src = tvLoaded[tvIndex]; tvImg.classList.add('visible'); tvPlaceholder?.classList.add('hidden');
+            const label = document.getElementById('channelLabel'); if (label) label.textContent = `MEMORY ${String(tvIndex + 1).padStart(2, '0')}`;
+            tvScreen?.classList.remove('glitch'); void tvScreen?.offsetWidth; tvScreen?.classList.add('glitch');
+        }
+        tvImages.forEach(src => { const im = new Image(); im.onload = () => { if (!tvLoaded.includes(src)) { tvLoaded.push(src); if (tvLoaded.length === 1) showTV(0) } }; im.src = src; });
+        document.getElementById('prevChannel')?.addEventListener('click', () => showTV(tvIndex - 1));
+        document.getElementById('nextChannel')?.addEventListener('click', () => showTV(tvIndex + 1));
+        document.getElementById('glitchButton')?.addEventListener('click', () => { tvScreen?.classList.remove('glitch'); void tvScreen?.offsetWidth; tvScreen?.classList.add('glitch') });
+        setInterval(() => { if (tvLoaded.length > 1) showTV(tvIndex + 1) }, 6000);
+
+        /* LITTLE THINGS — true pointer drag, preserves each card's original rotation.
+           Position/rotation are applied as an inline style so they always win over
+           the nth-child CSS rules (inline styles beat class-selector specificity). */
+        const notes = [...document.querySelectorAll('.note')];
+        const noteBaseRotation = [-4, 3, -2, 5];
+        notes.forEach((note, index) => {
+            let dragging = false, startX = 0, startY = 0, baseX = 0, baseY = 0;
+            let x = 0, y = 0;
+            const rot = noteBaseRotation[index] || 0;
+            function render() { note.style.transform = `translate(${x}px, ${y}px) rotate(${rot}deg)`; }
+            render();
+            note.addEventListener('pointerdown', e => {
+                if (e.pointerType === 'mouse' && e.button !== 0) return;
+                dragging = true; startX = e.clientX; startY = e.clientY; baseX = x; baseY = y; note.setPointerCapture?.(e.pointerId); note.classList.add('dragging'); e.preventDefault();
+            }, { passive: false });
+            note.addEventListener('pointermove', e => { if (!dragging) return; x = baseX + e.clientX - startX; y = baseY + e.clientY - startY; render(); e.preventDefault(); }, { passive: false });
+            function stop(e) { if (!dragging) return; dragging = false; try { note.releasePointerCapture?.(e.pointerId) } catch { } note.classList.remove('dragging'); }
+            note.addEventListener('pointerup', stop); note.addEventListener('pointercancel', stop); note.addEventListener('lostpointercapture', () => dragging = false);
+        });
+
+        /* FOR YOU */
+        const familyCopy = { me: 'the one who misses you', her: 'the one this is all for', snoopy: 'professional cuddle supervisor', mochi: 'small, soft, important' };
+        document.querySelectorAll('.person-card').forEach(card => card.addEventListener('click', () => { document.querySelectorAll('.person-card').forEach(c => c.classList.remove('active')); card.classList.add('active'); const cap = document.getElementById('familyCaption'); if (cap) cap.textContent = familyCopy[card.dataset.person] }));
+        const stage = document.getElementById('stickerStage');
+        stage?.addEventListener('pointermove', e => { const r = stage.getBoundingClientRect(), x = (e.clientX - r.left) / r.width - .5, y = (e.clientY - r.top) / r.height - .5; document.querySelectorAll('.person-card').forEach((card, i) => { card.style.setProperty('--mx', x * (i + 1) * 7 + 'px'); card.style.setProperty('--my', y * (i + 1) * 7 + 'px') }) });
+        stage?.addEventListener('pointerleave', () => document.querySelectorAll('.person-card').forEach(c => { c.style.setProperty('--mx', '0px'); c.style.setProperty('--my', '0px') }));
+
+        /* SIGNAL */
+        document.getElementById('sendSignal')?.addEventListener('click', () => { const msg = 'Hey, your signal is received. I miss you tooo ♥'; const status = document.getElementById('signalStatus'); if (WHATSAPP_NUMBER === 'YOUR_NUMBER_HERE') { status.textContent = 'add her number in WHATSAPP_NUMBER first.'; return; } window.open(`https://wa.me/${WHATSAPP_NUMBER}?text=${encodeURIComponent(msg)}`, '_blank', 'noopener'); status.textContent = 'signal prepared — send it when WhatsApp opens.' });
+
+        /* HOME PARALLAX */
+        const home = document.getElementById('home'), orbit = document.querySelector('.home-orbit');
+        home?.addEventListener('pointermove', e => { if (matchMedia('(prefers-reduced-motion: reduce)').matches) return; const r = home.getBoundingClientRect(), x = e.clientX / r.width - .5, y = e.clientY / r.height - .5; if (orbit) { orbit.style.marginLeft = `${x * 18}px`; orbit.style.marginTop = `${y * 12}px` } });
+    </script>
+</body>
+
+</html>
