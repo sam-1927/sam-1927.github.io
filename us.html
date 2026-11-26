@@ -243,7 +243,10 @@
       position: relative;
       overflow: hidden;
       border-radius: 0.5rem;
-      background-color: #FCE7EC;
+      background-color: #FDF8F5;
+      display: flex;
+      align-items: center;
+      justify-content: center;
     }
     .pastel-photo-wrap::after {
       content: '';
@@ -906,8 +909,8 @@
         <!-- Left Page: Photo Memory -->
         <div class="md:col-span-5 flex justify-center">
           <div class="bg-milk p-3 pb-7 rounded-xl shadow-polaroid border border-blush-100 max-w-xs w-full -rotate-1">
-            <div class="pastel-photo-wrap">
-              <img id="bookPhoto" src="assets/image/00.png" onerror="this.src='https://placehold.co/400x400/FCE7EC/523E3E?text=Chapter+Memory'" alt="Chapter Photo" class="pastel-photo w-full h-56 sm:h-64 object-cover rounded-lg bg-blush-50" />
+            <div class="pastel-photo-wrap aspect-[4/5] w-full">
+              <img id="bookPhoto" src="assets/6.jpeg" onerror="this.src='https://placehold.co/400x400/FCE7EC/523E3E?text=Chapter+Memory'" alt="Chapter Photo" class="pastel-photo w-full h-full object-contain rounded-lg" />
             </div>
             <p id="bookDateTag" class="font-script text-xl text-center text-cocoa mt-3">Month 01 • Feb 2026</p>
           </div>
@@ -938,6 +941,7 @@
           <h3 class="font-serif text-3xl sm:text-4xl font-semibold text-cocoa">Your Dream Storefront</h3>
           <p class="text-xs sm:text-sm text-cocoa-light mt-1 max-w-2xl">
             One day, we’re going to stand right outside these doors for real.
+          </p>
         </div>
         <span class="inline-flex items-center gap-1.5 px-3.5 py-1.5 rounded-full bg-blush-50 border border-blush-200 text-xs font-bold text-cocoa">
           <i data-lucide="sparkles" class="w-3.5 h-3.5 text-gold"></i>
@@ -1223,6 +1227,29 @@
   </section>
 
   <!-- =========================================================
+       SECTION 4.5: LOOPING ANIMATED MEMORY VIDEO
+       ========================================================= -->
+  <section id="memory-reel" class="max-w-4xl mx-auto px-4 pt-4 pb-2">
+    <div class="bg-milk border-2 border-blush-200 rounded-[2rem] p-4 sm:p-6 shadow-card text-center">
+      <div class="inline-flex items-center gap-1.5 px-3.5 py-1 rounded-full bg-blush-50 border border-blush-200 text-[11px] font-bold uppercase tracking-widest text-cocoa-light mb-4">
+        <i data-lucide="film" class="w-3.5 h-3.5 text-blush-400"></i>
+        <span>A Little Moment of Us</span>
+      </div>
+      <div class="relative overflow-hidden rounded-2xl border border-blush-200/80 bg-cream flex items-center justify-center">
+        <video
+          src="assets/1 (1).mp4"
+          autoplay
+          loop
+          muted
+          playsinline
+          disablepictureinpicture
+          class="w-full max-h-[65vh] object-contain rounded-2xl pointer-events-none"
+        ></video>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
        SECTION 5: 10-MONTH ANNIVERSARY LETTER & WISH CANDLE
        ========================================================= -->
   <section id="anniversary-letter" class="max-w-4xl mx-auto px-4 py-16">
@@ -1458,7 +1485,7 @@
       { ch: '03', date: 'Month 03 • Apr 2026', title: 'Springtime Blooms', img: 'assets/2.jpeg', color: '#EEF4EE', story: 'Like flowers opening in April, everything felt brighter with you by my side, unicorn.' },
       { ch: '04', date: 'Month 04 • May 2026', title: 'Coffee & Sweet Cravings', img: 'assets/1 (4).jpeg', color: '#F4DFB6', story: 'Dreaming about cozy cafés, warm hot chocolate, hazelnut pastries, and spending every lazy afternoon together.' },
       { ch: '05', date: 'Month 05 • Jun 2026', title: 'Rainy Day Comfort', img: 'assets/1 (9).jpeg', color: '#F7D1DA', story: 'You became my favorite safe place, baby — warm, gentle, and always home.' },
-      { ch: '06', date: 'Month 06 • Jul 2026', title: 'Half a Year of Magic', img: 'assets1 (10).jpeg', color: '#DFD2EC', story: 'Six whole months of holding hands, cheering each other on, and falling deeper in love with my little unicorn.' },
+      { ch: '06', date: 'Month 06 • Jul 2026', title: 'Half a Year of Magic', img: 'assets/1 (10).jpeg', color: '#DFD2EC', story: 'Six whole months of holding hands, cheering each other on, and falling deeper in love with my little unicorn.' },
       { ch: '07', date: 'Month 07 • Aug 2026', title: 'Golden Little Moments', img: 'assets/1 (7).jpeg', color: '#D8E6D9', story: 'Even the simplest days turned into my favorite memories just because you were in them, bunny.' },
       { ch: '08', date: 'Month 08 • Sep 2026', title: 'Pages & Daydreams', img: 'assets/1 (6).jpeg', color: '#FCE7EC', story: 'Talking about your future bakery, flower shop, and bookstore — and picturing myself right beside you helping run it.' },
       { ch: '09', date: 'Month 09 • Oct 2026', title: 'Cozy Autumn Glow', img: 'assets/image/10.jpg', color: '#F4DFB6', story: 'Nine months in and my heart still skips a beat every time I see your smile, baby.' },
@@ -2242,8 +2269,8 @@
         <div onclick="openPhotoLightbox('${p.img}', '${p.caption.replace(/'/g, "\\'")}', ${i})" class="polaroid-card bg-milk p-3 pb-5 rounded-xl shadow-polaroid border border-blush-100 cursor-pointer relative" style="transform: rotate(${p.tilt})">
           <!-- Cute Pastel Washi Tape -->
           <div class="w-14 h-4 bg-blush-200/70 absolute -top-2 left-1/2 -translate-x-1/2 rounded-sm rotate-1"></div>
-          <div class="pastel-photo-wrap">
-            <img src="${p.img}" onerror="this.src='https://placehold.co/360x360/FCE7EC/523E3E?text=Memory+${i + 1}'" alt="${p.caption}" class="pastel-photo w-full h-44 sm:h-52 object-cover rounded-lg bg-cream" />
+          <div class="pastel-photo-wrap aspect-[4/5] w-full">
+            <img src="${p.img}" onerror="this.src='https://placehold.co/360x360/FCE7EC/523E3E?text=Memory+${i + 1}'" alt="${p.caption}" class="pastel-photo w-full h-full object-contain rounded-lg" />
           </div>
           <div class="mt-3 flex items-center justify-between px-1">
             <span class="font-script text-xl sm:text-2xl text-cocoa">${p.caption}</span>
