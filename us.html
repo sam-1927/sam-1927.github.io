@@ -1,0 +1,2082 @@
+<!DOCTYPE html>
+<html lang="en" class="scroll-smooth">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Unicorn Bakes by Samidha</title>
+
+  <!-- Google Fonts matching the logo's refined serif + delicate script aesthetic -->
+  <link rel="preconnect" href="https://fonts.googleapis.com" />
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin />
+  <link href="https://fonts.googleapis.com/css2?family=Cormorant+Garamond:ital,wght@0,400;0,500;0,600;0,700;1,400;1,600&family=Dancing+Script:wght@500;600;700&family=Quicksand:wght@400;500;600;700&display=swap" rel="stylesheet" />
+
+  <!-- Tailwind CSS -->
+  <script src="https://cdn.tailwindcss.com"></script>
+
+  <!-- Lucide Icons for crisp, dainty boutique iconography -->
+  <script src="https://unpkg.com/lucide@latest"></script>
+
+  <!-- Tone.js for gentle music-box chimes & bakery sound effects -->
+  <script src="https://cdnjs.cloudflare.com/ajax/libs/tone/14.8.49/Tone.js"></script>
+
+  <!-- Tailwind Custom Palette matching Unicorn Bakes logo -->
+  <script>
+    tailwind.config = {
+      theme: {
+        extend: {
+          colors: {
+            cream: '#FDF8F5',
+            milk: '#FFFDFB',
+            cocoa: {
+              DEFAULT: '#523E3E',
+              light: '#876B6B',
+              dark: '#3D2C2C',
+            },
+            blush: {
+              50: '#FFF5F7',
+              100: '#FCE7EC',
+              200: '#F7D1DA',
+              300: '#F0B2C1',
+              400: '#E58FA5',
+            },
+            lavender: {
+              100: '#F1EBF7',
+              200: '#DFD2EC',
+              300: '#C8B4DF',
+            },
+            gold: {
+              light: '#F4DFB6',
+              DEFAULT: '#DFB36B',
+              dark: '#B88940',
+            },
+            sage: {
+              100: '#EEF4EE',
+              200: '#D8E6D9',
+              300: '#A9C4AC',
+            }
+          },
+          fontFamily: {
+            serif: ['"Cormorant Garamond"', 'Georgia', 'serif'],
+            script: ['"Dancing Script"', 'cursive'],
+            sans: ['"Quicksand"', 'sans-serif'],
+          },
+          boxShadow: {
+            soft: '0 10px 30px -10px rgba(82, 62, 62, 0.12)',
+            card: '0 14px 35px -12px rgba(229, 143, 165, 0.22)',
+            polaroid: '0 12px 26px -6px rgba(82, 62, 62, 0.18)',
+          }
+        }
+      }
+    };
+  </script>
+
+  <style>
+    body {
+      background-color: #FDF8F5;
+      color: #523E3E;
+      font-family: 'Quicksand', sans-serif;
+      overflow-x: hidden;
+    }
+
+    /* Subtle Pastel Polka Dot Wallpaper */
+    .bakery-bg {
+      background-image: radial-gradient(rgba(240, 178, 193, 0.28) 1.4px, transparent 1.4px);
+      background-size: 26px 26px;
+    }
+
+    /* Boutique Awning Stripes */
+    .awning-stripes {
+      background: repeating-linear-gradient(
+        90deg,
+        #FCE7EC 0px,
+        #FCE7EC 36px,
+        #FFFDFB 36px,
+        #FFFDFB 72px
+      );
+    }
+
+    /* Floating Dessert Cutout Animation */
+    @keyframes gentleFloat {
+      0%, 100% { transform: translateY(0px) rotate(-3deg); }
+      50% { transform: translateY(-10px) rotate(3deg); }
+    }
+    .float-slow { animation: gentleFloat 5.2s ease-in-out infinite; }
+    .float-med { animation: gentleFloat 4.2s ease-in-out infinite 0.7s; }
+    .float-fast { animation: gentleFloat 3.8s ease-in-out infinite 1.3s; }
+
+    /* Hanging Shop Sign Swing */
+    @keyframes gentleSwing {
+      0%, 100% { transform: rotate(-1.5deg); }
+      50% { transform: rotate(1.5deg); }
+    }
+    .sign-swing {
+      transform-origin: top center;
+      animation: gentleSwing 4s ease-in-out infinite;
+    }
+
+    /* Candle Flicker */
+    @keyframes candleFlicker {
+      0%, 100% { transform: scale(1) rotate(-2deg); opacity: 0.95; }
+      50% { transform: scale(1.08, 0.94) rotate(2deg); opacity: 1; }
+    }
+    .flame-flicker {
+      transform-origin: center bottom;
+      animation: candleFlicker 0.9s ease-in-out infinite;
+    }
+
+    /* 3D Flip Card for Memory Match Game */
+    .perspective-1000 { perspective: 1000px; }
+    .flip-card-inner {
+      position: relative;
+      width: 100%;
+      height: 100%;
+      transition: transform 0.55s cubic-bezier(0.22, 1, 0.36, 1);
+      transform-style: preserve-3d;
+    }
+    .flip-card.flipped .flip-card-inner {
+      transform: rotateY(180deg);
+    }
+    .flip-card-front,
+    .flip-card-back {
+      position: absolute;
+      inset: 0;
+      backface-visibility: hidden;
+      -webkit-backface-visibility: hidden;
+    }
+    .flip-card-back {
+      transform: rotateY(180deg);
+    }
+
+    /* Bookshelf Spine Hover */
+    .book-spine {
+      transition: transform 0.25s ease, box-shadow 0.25s ease;
+    }
+    .book-spine:hover,
+    .book-spine.active-book {
+      transform: translateY(-10px);
+      box-shadow: 0 12px 20px -6px rgba(82, 62, 62, 0.22);
+    }
+
+    /* Polaroid Tilt Hover */
+    .polaroid-card {
+      transition: transform 0.35s cubic-bezier(0.22, 1, 0.36, 1), box-shadow 0.35s ease;
+    }
+    .polaroid-card:hover {
+      transform: rotate(0deg) scale(1.04) !important;
+      z-index: 20;
+      box-shadow: 0 18px 36px -8px rgba(82, 62, 62, 0.25);
+    }
+
+    /* Floating Sparkle Pop on Click */
+    @keyframes sparklePop {
+      0% { transform: translate(-50%, -50%) scale(0.5); opacity: 1; }
+      100% { transform: translate(-50%, -140%) scale(1.3); opacity: 0; }
+    }
+    .sparkle-pop {
+      position: fixed;
+      pointer-events: none;
+      z-index: 9999;
+      animation: sparklePop 0.85s ease-out forwards;
+    }
+
+    /* Confetti Particle */
+    @keyframes confettiFall {
+      0% { transform: translateY(-10vh) rotate(0deg); opacity: 1; }
+      100% { transform: translateY(105vh) rotate(720deg); opacity: 0.2; }
+    }
+    .confetti-piece {
+      position: fixed;
+      top: 0;
+      z-index: 9998;
+      pointer-events: none;
+      animation: confettiFall linear forwards;
+    }
+
+    /* Gentle Wiggle for Wrong Recipe Attempt */
+    @keyframes gentleWiggle {
+      0%, 100% { transform: translateX(0); }
+      20% { transform: translateX(-8px); }
+      40% { transform: translateX(8px); }
+      60% { transform: translateX(-5px); }
+      80% { transform: translateX(5px); }
+    }
+    .animate-wiggle {
+      animation: gentleWiggle 0.45s ease-in-out;
+    }
+
+    /* Auth Gate Smooth Open Transition */
+    #authGate {
+      transition: opacity 0.7s ease, transform 0.7s cubic-bezier(0.22, 1, 0.36, 1);
+    }
+    #authGate.auth-unlocked {
+      opacity: 0;
+      transform: scale(1.04);
+      pointer-events: none;
+    }
+
+    /* Patisserie Steam & Dewdrop Animations */
+    @keyframes steamRise {
+      0% { transform: translateY(4px); opacity: 0.2; }
+      50% { opacity: 0.85; }
+      100% { transform: translateY(-10px); opacity: 0; }
+    }
+    .steam-line { animation: steamRise 2.2s ease-in-out infinite; }
+
+    @keyframes stampPop {
+      0% { transform: scale(2.2) rotate(-18deg); opacity: 0; }
+      70% { transform: scale(0.92) rotate(4deg); opacity: 1; }
+      100% { transform: scale(1) rotate(-4deg); opacity: 1; }
+    }
+    .stamp-pop { animation: stampPop 0.45s cubic-bezier(0.22, 1, 0.36, 1) forwards; }
+
+    /* Draggable Bouquet Stems */
+    .draggable-flower {
+      cursor: grab;
+      transition: transform 0.2s ease;
+    }
+    .draggable-flower:active {
+      cursor: grabbing;
+    }
+  </style>
+</head>
+<body class="bakery-bg min-h-screen selection:bg-blush-200 selection:text-cocoa-dark">
+
+  <!-- =========================================================
+       UNIQUE BOUTIQUE AUTHENTICATION: THE SECRET RECIPE GATE
+       ========================================================= -->
+  <div id="authGate" class="fixed inset-0 z-50 bg-cream/95 bakery-bg backdrop-blur-md flex items-center justify-center p-4 overflow-y-auto">
+    <div class="max-w-lg w-full bg-milk border-2 border-blush-200 rounded-[2rem] shadow-2xl overflow-hidden my-auto">
+      <!-- Mini Pastel Awning Top Trim -->
+      <div class="h-6 w-full awning-stripes border-b-2 border-blush-200"></div>
+
+      <div class="p-6 sm:p-8 text-center">
+        <!-- Real Logo Medallion -->
+        <div class="w-24 h-24 mx-auto rounded-full bg-cream border-2 border-blush-200 p-1.5 shadow-soft overflow-hidden flex items-center justify-center">
+          <img src="assets/logo.png" onerror="if(!this.dataset.triedRoot){this.dataset.triedRoot='1';this.src='logo.png';}else{this.src='https://placehold.co/160x160/FDF8F5/523E3E?text=Unicorn+Bakes';}" alt="Unicorn Bakes Logo" class="w-full h-full object-contain rounded-full" />
+        </div>
+
+        <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-blush-50 border border-blush-200 text-[11px] font-bold uppercase tracking-widest text-cocoa-light mt-4">
+          <i data-lucide="key-round" class="w-3.5 h-3.5 text-blush-400"></i>
+          Owner's Private Entrance
+        </span>
+
+        <h2 class="font-serif text-3xl sm:text-4xl font-semibold text-cocoa mt-2">Mix the Secret Recipe</h2>
+        <p class="text-xs sm:text-sm text-cocoa-light mt-1">
+          Select the <strong>3 secret ingredients of us</strong> to unlock the doors of <em>Unicorn Bakes by Samidha</em>.
+        </p>
+
+        <!-- Porcelain Mixing Bowl Slots -->
+        <div id="authBowlWrap" class="mt-5 bg-cream border-2 border-dashed border-blush-200 rounded-2xl p-4">
+          <div class="flex items-center justify-center gap-2 sm:gap-3">
+            <div id="bowlSlot-0" class="w-24 h-12 rounded-xl bg-milk border border-blush-200 flex items-center justify-center text-xs font-semibold text-cocoa-light/60 shadow-inner">Slot 1</div>
+            <i data-lucide="plus" class="w-4 h-4 text-blush-300 shrink-0"></i>
+            <div id="bowlSlot-1" class="w-24 h-12 rounded-xl bg-milk border border-blush-200 flex items-center justify-center text-xs font-semibold text-cocoa-light/60 shadow-inner">Slot 2</div>
+            <i data-lucide="plus" class="w-4 h-4 text-blush-300 shrink-0"></i>
+            <div id="bowlSlot-2" class="w-24 h-12 rounded-xl bg-milk border border-blush-200 flex items-center justify-center text-xs font-semibold text-cocoa-light/60 shadow-inner">Slot 3</div>
+          </div>
+          <p id="authFeedback" class="text-xs text-cocoa-light mt-2.5 min-h-[18px]">Tap 3 ingredients below to add them to the bowl.</p>
+        </div>
+
+        <!-- 6 Illustrated Pastel Ingredient Tiles -->
+        <div id="authIngredientsGrid" class="grid grid-cols-2 sm:grid-cols-3 gap-2.5 mt-4">
+          <button onclick="selectAuthIngredient('day27', '27th Day', this)" data-ing="day27" class="auth-ing-btn p-3 rounded-2xl bg-cream border border-blush-200 hover:bg-blush-50 hover:-translate-y-0.5 transition flex flex-col items-center gap-1.5 text-cocoa">
+            <i data-lucide="calendar-heart" class="w-5 h-5 text-blush-400"></i>
+            <span class="text-xs font-bold">27th Day</span>
+          </button>
+          <button onclick="selectAuthIngredient('salt', 'Pinch of Salt', this)" data-ing="salt" class="auth-ing-btn p-3 rounded-2xl bg-cream border border-blush-200 hover:bg-blush-50 hover:-translate-y-0.5 transition flex flex-col items-center gap-1.5 text-cocoa">
+            <i data-lucide="droplets" class="w-5 h-5 text-cocoa-light"></i>
+            <span class="text-xs font-bold">Pinch of Salt</span>
+          </button>
+          <button onclick="selectAuthIngredient('months10', '10 Months', this)" data-ing="months10" class="auth-ing-btn p-3 rounded-2xl bg-cream border border-blush-200 hover:bg-blush-50 hover:-translate-y-0.5 transition flex flex-col items-center gap-1.5 text-cocoa">
+            <i data-lucide="heart" class="w-5 h-5 text-blush-400"></i>
+            <span class="text-xs font-bold">10 Months</span>
+          </button>
+          <button onclick="selectAuthIngredient('espresso', 'Extra Espresso', this)" data-ing="espresso" class="auth-ing-btn p-3 rounded-2xl bg-cream border border-blush-200 hover:bg-blush-50 hover:-translate-y-0.5 transition flex flex-col items-center gap-1.5 text-cocoa">
+            <i data-lucide="coffee" class="w-5 h-5 text-cocoa-light"></i>
+            <span class="text-xs font-bold">Extra Espresso</span>
+          </button>
+          <button onclick="selectAuthIngredient('unicorn', 'Unicorn Magic', this)" data-ing="unicorn" class="auth-ing-btn p-3 rounded-2xl bg-cream border border-blush-200 hover:bg-blush-50 hover:-translate-y-0.5 transition flex flex-col items-center gap-1.5 text-cocoa">
+            <i data-lucide="sparkles" class="w-5 h-5 text-gold"></i>
+            <span class="text-xs font-bold">Unicorn Magic</span>
+          </button>
+          <button onclick="selectAuthIngredient('rain', 'Midnight Rain', this)" data-ing="rain" class="auth-ing-btn p-3 rounded-2xl bg-cream border border-blush-200 hover:bg-blush-50 hover:-translate-y-0.5 transition flex flex-col items-center gap-1.5 text-cocoa">
+            <i data-lucide="cloud-rain" class="w-5 h-5 text-lavender-300"></i>
+            <span class="text-xs font-bold">Midnight Rain</span>
+          </button>
+        </div>
+
+        <!-- Hint & Reset Row -->
+        <div class="mt-4 flex items-center justify-between text-xs">
+          <button onclick="toggleAuthHint()" class="inline-flex items-center gap-1 text-cocoa-light hover:text-cocoa font-semibold transition">
+            <i data-lucide="lightbulb" class="w-3.5 h-3.5 text-gold"></i>
+            Need a hint?
+          </button>
+          <button onclick="resetAuthBowl()" class="inline-flex items-center gap-1 text-cocoa-light hover:text-cocoa font-semibold transition">
+            <i data-lucide="rotate-ccw" class="w-3.5 h-3.5"></i>
+            Clear Bowl
+          </button>
+        </div>
+        <p id="authHintText" class="hidden mt-2 text-xs text-cocoa bg-blush-50 border border-blush-200 rounded-xl px-3 py-2">
+          Hint: Combine <strong>our anniversary date</strong>, <strong>how many months we're celebrating</strong>, and the <strong>magic behind your bakery's name</strong>!
+        </p>
+      </div>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       STICKY BOUTIQUE HEADER & OWNER DASHBOARD BAR
+       ========================================================= -->
+  <header class="sticky top-0 z-40 bg-milk/90 backdrop-blur-md border-b border-blush-200/70 shadow-sm">
+    <div class="max-w-6xl mx-auto px-4 py-2.5 flex items-center justify-between gap-3">
+      <!-- Mini Brand with Real Logo -->
+      <a href="#storefront" class="flex items-center gap-2.5 group">
+        <div class="w-10 h-10 rounded-full bg-cream border border-blush-200 flex items-center justify-center shadow-sm overflow-hidden group-hover:scale-105 transition p-0.5">
+          <img src="assets/logo.png" onerror="if(!this.dataset.triedRoot){this.dataset.triedRoot='1';this.src='logo.png';}else{this.src='https://placehold.co/80x80/FDF8F5/523E3E?text=UB';}" alt="Unicorn Bakes" class="w-full h-full object-contain rounded-full" />
+        </div>
+        <div class="leading-tight">
+          <span class="font-serif text-lg sm:text-xl font-semibold tracking-wide text-cocoa block">Unicorn Bakes</span>
+          <span class="font-script text-sm text-cocoa-light -mt-1 block">by Samidha</span>
+        </div>
+      </a>
+
+      <!-- Desktop Navigation -->
+      <nav class="hidden md:flex items-center gap-1 text-sm font-medium text-cocoa-light">
+        <a href="#bakery" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-blush-100 hover:text-cocoa transition">
+          <i data-lucide="cake-slice" class="w-4 h-4 text-blush-400"></i> Bakery
+        </a>
+        <a href="#florist" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-blush-100 hover:text-cocoa transition">
+          <i data-lucide="flower-2" class="w-4 h-4 text-blush-400"></i> Florist
+        </a>
+        <a href="#bookstore" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-blush-100 hover:text-cocoa transition">
+          <i data-lucide="book-open" class="w-4 h-4 text-lavender-300"></i> Bookstore
+        </a>
+        <a href="#memories" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-blush-100 hover:text-cocoa transition">
+          <i data-lucide="camera" class="w-4 h-4 text-gold"></i> Gallery
+        </a>
+        <a href="#anniversary-letter" class="inline-flex items-center gap-1.5 px-3 py-1.5 rounded-full hover:bg-blush-100 hover:text-cocoa transition">
+          <i data-lucide="mail-heart" class="w-4 h-4 text-blush-400"></i> 10 Months
+        </a>
+      </nav>
+
+      <!-- Owner Status & Controls -->
+      <div class="flex items-center gap-2">
+        <!-- Milestone Tracker Pill -->
+        <button id="ownerBadgesBtn" class="flex items-center gap-1.5 px-3 py-1.5 rounded-full bg-blush-50 border border-blush-200 text-xs sm:text-sm font-semibold text-cocoa hover:bg-blush-100 transition" title="View your Owner Milestones">
+          <i data-lucide="sparkles" class="w-4 h-4 text-gold"></i>
+          <span id="badgeCountText">0/4</span>
+          <span class="hidden sm:inline">Badges</span>
+        </button>
+
+        <!-- Sound Toggle -->
+        <button id="soundToggleBtn" class="w-9 h-9 rounded-full bg-cream border border-blush-200 flex items-center justify-center text-cocoa hover:bg-blush-100 transition" title="Toggle Bakery Chimes" aria-label="Toggle Sound">
+          <i id="soundIcon" data-lucide="bell" class="w-4 h-4 text-cocoa"></i>
+        </button>
+
+        <!-- Re-lock Shop Button -->
+        <button onclick="lockShop()" class="w-9 h-9 rounded-full bg-cream border border-blush-200 flex items-center justify-center text-cocoa hover:bg-blush-100 transition" title="Lock Shop Doors" aria-label="Lock Shop Doors">
+          <i data-lucide="lock" class="w-4 h-4 text-cocoa-light"></i>
+        </button>
+      </div>
+    </div>
+  </header>
+
+  <!-- =========================================================
+       HERO STOREFRONT: AWNING, LOGO MEDALLION & OPEN SIGN
+       ========================================================= -->
+  <section id="storefront" class="relative pb-16 overflow-hidden">
+    <!-- Scalloped Pastel Cafe Awning -->
+    <div class="w-full h-10 sm:h-12 awning-stripes border-b-2 border-blush-200 shadow-sm relative">
+      <div class="absolute -bottom-3 inset-x-0 flex justify-around overflow-hidden pointer-events-none">
+        <div class="w-full h-6" style="background: radial-gradient(circle at 18px 0, #FCE7EC 16px, transparent 17px) repeat-x; background-size: 36px 24px;"></div>
+      </div>
+    </div>
+
+    <!-- Floating Clickable Dessert Cutouts (Desktop & Tablet) -->
+    <button onclick="popDessertCutout(event, 'Sweet like your laugh!')" class="hidden md:block absolute top-24 left-8 lg:left-16 float-slow hover:scale-110 transition cursor-pointer focus:outline-none" aria-label="Macaron Cutout">
+      <svg viewBox="0 0 80 80" class="w-16 h-16 drop-shadow-sm" fill="none">
+        <ellipse cx="40" cy="30" rx="28" ry="12" fill="#F7D1DA" stroke="#523E3E" stroke-width="2"/>
+        <rect x="13" y="34" width="54" height="10" rx="5" fill="#FFFDFB" stroke="#523E3E" stroke-width="2"/>
+        <ellipse cx="40" cy="48" rx="28" ry="11" fill="#F7D1DA" stroke="#523E3E" stroke-width="2"/>
+      </svg>
+    </button>
+    <button onclick="popDessertCutout(event, 'Baked fresh with love!')" class="hidden md:block absolute top-28 right-8 lg:right-16 float-med hover:scale-110 transition cursor-pointer focus:outline-none" aria-label="Cupcake Cutout">
+      <svg viewBox="0 0 80 80" class="w-16 h-16 drop-shadow-sm" fill="none">
+        <path d="M22 44L27 68H53L58 44H22Z" fill="#F4DFB6" stroke="#523E3E" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M18 44C18 30 28 24 40 24C52 24 62 30 62 44H18Z" fill="#DFD2EC" stroke="#523E3E" stroke-width="2"/>
+        <circle cx="40" cy="18" r="6" fill="#E58FA5" stroke="#523E3E" stroke-width="2"/>
+      </svg>
+    </button>
+    <button onclick="popDessertCutout(event, 'Our favorite café dates!')" class="hidden lg:block absolute bottom-24 left-14 float-fast hover:scale-110 transition cursor-pointer focus:outline-none" aria-label="Croissant Cutout">
+      <svg viewBox="0 0 80 80" class="w-16 h-16 drop-shadow-sm" fill="none">
+        <path d="M15 48C18 28 62 28 65 48C66 56 54 58 40 54C26 58 14 56 15 48Z" fill="#F4DFB6" stroke="#523E3E" stroke-width="2"/>
+        <path d="M30 35C32 42 32 48 30 55M50 35C48 42 48 48 50 55" stroke="#523E3E" stroke-width="1.8" stroke-linecap="round"/>
+      </svg>
+    </button>
+    <button onclick="popDessertCutout(event, '10 sweet months together!')" class="hidden lg:block absolute bottom-24 right-14 float-slow hover:scale-110 transition cursor-pointer focus:outline-none" aria-label="Strawberry Shortcake Cutout">
+      <svg viewBox="0 0 80 80" class="w-16 h-16 drop-shadow-sm" fill="none">
+        <path d="M16 58L22 30L64 42L60 58H16Z" fill="#FFFDFB" stroke="#523E3E" stroke-width="2" stroke-linejoin="round"/>
+        <path d="M18 48H62" stroke="#F0B2C1" stroke-width="5"/>
+        <circle cx="34" cy="24" r="7" fill="#E58FA5" stroke="#523E3E" stroke-width="2"/>
+      </svg>
+    </button>
+
+    <!-- Main Centered Storefront Card -->
+    <div class="max-w-4xl mx-auto px-4 pt-10 text-center relative z-10">
+      <!-- Anniversary Ribbon Badge -->
+      <div class="inline-flex items-center gap-2 px-4 py-1.5 rounded-full bg-milk border border-blush-200 shadow-sm text-xs sm:text-sm font-semibold text-cocoa-light mb-6">
+        <i data-lucide="heart" class="w-3.5 h-3.5 text-blush-400 fill-blush-300"></i>
+        <span>27 January 2026 — 27 November 2026 • 10 Months of Us</span>
+        <i data-lucide="heart" class="w-3.5 h-3.5 text-blush-400 fill-blush-300"></i>
+      </div>
+
+      <!-- Real Brand Logo Medallion -->
+      <div class="mx-auto w-52 h-52 sm:w-60 sm:h-60 rounded-full bg-milk border-4 border-blush-200/80 shadow-card p-3 flex items-center justify-center relative">
+        <div class="absolute inset-2 rounded-full border border-dashed border-gold/60 pointer-events-none"></div>
+        <img src="assets/logo.png" onerror="if(!this.dataset.triedRoot){this.dataset.triedRoot='1';this.src='logo.png';}else{this.src='https://placehold.co/320x320/FDF8F5/523E3E?text=Unicorn+Bakes';}" alt="Unicorn Bakes by Samidha Official Logo" class="w-full h-full object-contain rounded-full" />
+      </div>
+
+      <!-- Brand Typography Matching Logo -->
+      <h1 class="font-serif text-5xl sm:text-6xl font-medium tracking-wider text-cocoa mt-4">
+        Unicorn Bakes
+      </h1>
+      <div class="flex items-center justify-center gap-3 my-2">
+        <span class="h-px w-12 bg-gold"></span>
+        <i data-lucide="heart" class="w-3.5 h-3.5 text-blush-400 fill-blush-400"></i>
+        <span class="h-px w-12 bg-gold"></span>
+      </div>
+      <p class="font-script text-3xl sm:text-4xl text-cocoa-light">by Samidha</p>
+
+      <p class="max-w-xl mx-auto text-cocoa-light text-sm sm:text-base mt-4 leading-relaxed">
+        Welcome to your very own dream corner of the world!
+      </p>
+
+      <!-- Interactive Hanging Door Sign: Flip to OPEN the Shop! -->
+      <div class="mt-8 flex flex-col items-center">
+        <div class="w-1 h-6 bg-gold/80 rounded-full"></div>
+        <button id="shopSignBtn" onclick="toggleShopOpen()" class="sign-swing group relative bg-milk border-2 border-blush-300 rounded-2xl px-8 py-4 shadow-card hover:shadow-lg transition-all cursor-pointer">
+          <div class="absolute -top-2 left-1/2 -translate-x-1/2 w-3 h-3 rounded-full bg-gold border-2 border-milk"></div>
+          <span id="signStatusSmall" class="block text-[11px] uppercase tracking-[0.25em] text-cocoa-light font-semibold">Tap to flip sign</span>
+          <span id="signStatusBig" class="block font-serif text-3xl font-bold tracking-widest text-blush-400 mt-0.5">CLOSED</span>
+          <span id="signSubtext" class="inline-flex items-center justify-center gap-1 text-xs text-cocoa-light mt-1">
+            Ring the bell &amp; open your shop
+            <i data-lucide="sparkles" class="w-3.5 h-3.5 text-gold"></i>
+          </span>
+        </button>
+      </div>
+
+      <!-- Cute Sticker Crew Welcome Strip -->
+      <div class="mt-10 bg-milk/80 border border-blush-200/80 rounded-3xl p-4 sm:p-5 shadow-soft max-w-2xl mx-auto">
+        <p class="text-xs uppercase tracking-widest text-cocoa-light font-semibold mb-3">Tap the Shop Crew to Say Hi!</p>
+        <div class="grid grid-cols-5 gap-2 sm:gap-4 items-end">
+          <button onclick="crewSpeak('Samidha (Owner)', 'Today’s special: Unlimited love, warm croissants & fresh blooms!')" class="flex flex-col items-center group focus:outline-none">
+            <img src="assets/her.png" onerror="this.src='https://placehold.co/100x100/FCE7EC/523E3E?text=Her'" alt="Samidha Sticker" class="w-14 h-14 sm:w-16 sm:h-16 object-contain rounded-2xl group-hover:-translate-y-2 transition-transform" />
+            <span class="text-[11px] font-semibold text-cocoa mt-1">Owner</span>
+          </button>
+          <button onclick="crewSpeak('Your #1 Customer', 'I’ll take everything on the menu, and also your heart forever!')" class="flex flex-col items-center group focus:outline-none">
+            <img src="assets/me.png" onerror="this.src='https://placehold.co/100x100/F1EBF7/523E3E?text=Me'" alt="My Sticker" class="w-14 h-14 sm:w-16 sm:h-16 object-contain rounded-2xl group-hover:-translate-y-2 transition-transform" />
+            <span class="text-[11px] font-semibold text-cocoa mt-1">Barista</span>
+          </button>
+          <button onclick="crewSpeak('Mochi the Bear', 'Head Taste-Tester reporting! The frosting is 10/10!')" class="flex flex-col items-center group focus:outline-none">
+            <img src="assets/mochi.png" onerror="this.src='https://placehold.co/100x100/F4DFB6/523E3E?text=Mochi'" alt="Mochi Bear Sticker" class="w-14 h-14 sm:w-16 sm:h-16 object-contain rounded-2xl group-hover:-translate-y-2 transition-transform" />
+            <span class="text-[11px] font-semibold text-cocoa mt-1">Mochi</span>
+          </button>
+          <button onclick="crewSpeak('Snoopy the Penguin', 'Keeping the iced lattes chilled & the bookstore cozy!')" class="flex flex-col items-center group focus:outline-none">
+            <img src="assets/snoopy.png" onerror="this.src='https://placehold.co/100x100/D8E6D9/523E3E?text=Snoopy'" alt="Snoopy Penguin Sticker" class="w-14 h-14 sm:w-16 sm:h-16 object-contain rounded-2xl group-hover:-translate-y-2 transition-transform" />
+            <span class="text-[11px] font-semibold text-cocoa mt-1">Snoopy</span>
+          </button>
+          <button onclick="crewSpeak('Us Forever', '10 months down, a whole lifetime of cozy dates to go!')" class="flex flex-col items-center group focus:outline-none">
+            <img src="assets/us.png" onerror="this.src='https://placehold.co/100x100/F7D1DA/523E3E?text=Us'" alt="Us Sticker" class="w-14 h-14 sm:w-16 sm:h-16 object-contain rounded-2xl group-hover:-translate-y-2 transition-transform" />
+            <span class="text-[11px] font-semibold text-cocoa mt-1 inline-flex items-center gap-0.5">Us <i data-lucide="heart" class="w-2.5 h-2.5 text-blush-400 fill-blush-400"></i></span>
+          </button>
+        </div>
+        <div id="crewSpeechBubble" class="mt-3 px-4 py-2 rounded-2xl bg-blush-50 border border-blush-200/70 text-xs sm:text-sm text-cocoa min-h-[38px] flex items-center justify-center">
+          <em>Tap any crew member above for a sweet note!</em>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SECTION 1: WING 1 — THE BAKERY & CAFÉ
+       ========================================================= -->
+  <section id="bakery" class="max-w-6xl mx-auto px-4 py-14">
+    <!-- Section Title -->
+    <div class="text-center mb-10">
+      <span class="inline-block px-3.5 py-1 rounded-full bg-blush-100 text-cocoa text-xs font-bold uppercase tracking-widest mb-2">Wing 01 • The Bakery &amp; Café</span>
+      <h2 class="font-serif text-4xl sm:text-5xl font-semibold text-cocoa">Unicorn Bake's Pastry Counter</h2>
+      <p class="text-cocoa-light text-sm sm:text-base mt-2 max-w-xl mx-auto">
+        Tap your favorite handmade dessert to design your storefront window cake, and run <strong>The Patisserie Order Counter</strong>!
+      </p>
+    </div>
+
+    <!-- Interactive Glass Display Case (Small Dessert Cutouts) -->
+    <div class="bg-milk border-2 border-blush-200/80 rounded-3xl p-5 sm:p-7 shadow-soft mb-10">
+      <div class="flex flex-wrap items-center justify-between gap-2 mb-5">
+        <h3 class="font-serif text-2xl font-semibold text-cocoa flex items-center gap-2">
+          <i data-lucide="cake-slice" class="w-5 h-5 text-blush-400"></i> Today's Glass Display Counter
+        </h3>
+        <span class="text-xs font-semibold px-3 py-1 rounded-full bg-cream border border-blush-200 text-cocoa-light">
+          Treats Tasted: <span id="treatsTastedCount" class="text-blush-400 font-bold">0</span>/6
+        </span>
+      </div>
+
+      <div id="pastryGrid" class="grid grid-cols-2 sm:grid-cols-3 lg:grid-cols-6 gap-4">
+        <!-- Populated dynamically by JS with crisp SVG dessert cutouts -->
+      </div>
+    </div>
+
+    <!-- Two-Column Interactive Studio: Custom Cake Designer + Mini-Game 1 -->
+    <div class="grid grid-cols-1 lg:grid-cols-12 gap-8">
+      <!-- Left: Custom Window Cake Designer (5 cols) -->
+      <div class="lg:col-span-5 bg-milk border-2 border-blush-200/80 rounded-3xl p-6 shadow-soft flex flex-col justify-between">
+        <div>
+          <h3 class="font-serif text-2xl font-semibold text-cocoa">Design Your Window Cake</h3>
+          <p class="text-xs text-cocoa-light mt-1">Customize today's showstopper cake for the storefront!</p>
+
+          <!-- Live Cake Preview SVG -->
+          <div class="my-5 bg-cream rounded-2xl border border-blush-100 p-4 flex items-center justify-center">
+            <svg id="customCakeSvg" viewBox="0 0 220 200" class="w-48 h-44" fill="none">
+              <!-- Cake Stand -->
+              <ellipse cx="110" cy="176" rx="74" ry="12" fill="#FFFDFB" stroke="#E58FA5" stroke-width="2"/>
+              <path d="M98 176L94 192H126L122 176" fill="#FCE7EC" stroke="#E58FA5" stroke-width="1.8"/>
+              <!-- Cake Base -->
+              <rect id="cakeBaseRect" x="50" y="92" width="120" height="80" rx="14" fill="#FFFDFB" stroke="#523E3E" stroke-width="2.5"/>
+              <!-- Drip Glaze -->
+              <path id="cakeDripPath" d="M50 104C50 94 58 92 64 92H156C162 92 170 94 170 104V118C164 118 162 110 156 110C150 110 148 128 142 128C136 128 134 114 128 114C122 114 120 132 112 132C104 132 102 112 94 112C86 112 84 126 78 126C72 126 70 110 62 110C56 110 54 120 50 118V104Z" fill="#F7D1DA"/>
+              <!-- Sprinkles -->
+              <g id="cakeSprinklesGroup">
+                <line x1="68" y1="145" x2="74" y2="149" stroke="#DFB36B" stroke-width="3" stroke-linecap="round"/>
+                <line x1="92" y1="154" x2="98" y2="150" stroke="#C8B4DF" stroke-width="3" stroke-linecap="round"/>
+                <line x1="122" y1="148" x2="128" y2="154" stroke="#E58FA5" stroke-width="3" stroke-linecap="round"/>
+                <line x1="146" y1="155" x2="152" y2="149" stroke="#DFB36B" stroke-width="3" stroke-linecap="round"/>
+              </g>
+              <!-- Topper Group -->
+              <g id="cakeTopperGroup">
+                <!-- Default: Unicorn Horn & Ears -->
+                <path d="M110 30L98 92H122L110 30Z" fill="#F4DFB6" stroke="#B88940" stroke-width="2"/>
+                <path d="M104 56L116 52M101 72L119 67" stroke="#B88940" stroke-width="1.6"/>
+                <path d="M74 92L82 64L96 92Z" fill="#FFFDFB" stroke="#523E3E" stroke-width="2"/>
+                <path d="M146 92L138 64L124 92Z" fill="#FFFDFB" stroke="#523E3E" stroke-width="2"/>
+              </g>
+            </svg>
+          </div>
+
+          <!-- Controls -->
+          <div class="space-y-3">
+            <div>
+              <span class="text-xs font-semibold text-cocoa-light block mb-1.5">Sponge &amp; Frosting Base</span>
+              <div class="flex flex-wrap gap-2">
+                <button onclick="setCakeBase('#FFFDFB')" class="px-3 py-1.5 text-xs rounded-full border border-blush-200 bg-milk hover:bg-blush-50 transition font-medium">Vanilla Bean</button>
+                <button onclick="setCakeBase('#FCE7EC')" class="px-3 py-1.5 text-xs rounded-full border border-blush-200 bg-blush-100 hover:brightness-95 transition font-medium">Strawberry</button>
+                <button onclick="setCakeBase('#F1EBF7')" class="px-3 py-1.5 text-xs rounded-full border border-lavender-200 bg-lavender-100 hover:brightness-95 transition font-medium">Lavender</button>
+                <button onclick="setCakeBase('#F4DFB6')" class="px-3 py-1.5 text-xs rounded-full border border-gold bg-gold-light hover:brightness-95 transition font-medium">Biscoff</button>
+              </div>
+            </div>
+
+            <div>
+              <span class="text-xs font-semibold text-cocoa-light block mb-1.5">Drip Glaze</span>
+              <div class="flex flex-wrap gap-2">
+                <button onclick="setCakeDrip('#F7D1DA')" class="px-3 py-1.5 text-xs rounded-full border border-blush-200 bg-blush-100 hover:brightness-95 transition font-medium">Rose Pink</button>
+                <button onclick="setCakeDrip('#DFD2EC')" class="px-3 py-1.5 text-xs rounded-full border border-lavender-200 bg-lavender-100 hover:brightness-95 transition font-medium">Lilac Cream</button>
+                <button onclick="setCakeDrip('#8C6A5D')" class="px-3 py-1.5 text-xs rounded-full border border-cocoa/30 bg-cocoa/10 hover:bg-cocoa/20 transition font-medium">Belgian Choco</button>
+              </div>
+            </div>
+
+            <div>
+              <span class="text-xs font-semibold text-cocoa-light block mb-1.5">Signature Topper</span>
+              <div class="flex flex-wrap gap-2">
+                <button onclick="setCakeTopper('unicorn')" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-full border border-blush-200 bg-cream hover:bg-blush-100 transition font-medium">
+                  <i data-lucide="sparkles" class="w-3.5 h-3.5 text-gold"></i> Unicorn
+                </button>
+                <button onclick="setCakeTopper('berries')" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-full border border-blush-200 bg-cream hover:bg-blush-100 transition font-medium">
+                  <i data-lucide="cherry" class="w-3.5 h-3.5 text-blush-400"></i> Berries
+                </button>
+                <button onclick="setCakeTopper('candle10')" class="inline-flex items-center gap-1.5 px-3 py-1.5 text-xs rounded-full border border-blush-200 bg-cream hover:bg-blush-100 transition font-medium">
+                  <i data-lucide="flame" class="w-3.5 h-3.5 text-gold"></i> "10" Candle
+                </button>
+              </div>
+            </div>
+          </div>
+        </div>
+
+        <button onclick="featureCakeInWindow()" class="mt-5 w-full py-2.5 rounded-2xl bg-gradient-to-r from-blush-300 to-blush-400 text-milk font-semibold text-sm shadow-card hover:brightness-105 active:scale-[0.99] transition inline-flex items-center justify-center gap-2">
+          <i data-lucide="sparkles" class="w-4 h-4"></i> Put Cake in Front Window
+        </button>
+      </div>
+
+      <!-- Right: Extraordinary Mini-Game 1 — The Patisserie Order Counter (7 cols) -->
+      <div class="lg:col-span-7 bg-milk border-2 border-blush-200/80 rounded-3xl p-6 shadow-soft flex flex-col justify-between">
+        <div>
+          <div class="flex flex-wrap items-center justify-between gap-2 mb-3">
+            <div>
+              <span class="text-[11px] uppercase tracking-widest font-bold text-blush-400">Mini-Game 01 • Live Patisserie</span>
+              <h3 class="font-serif text-2xl font-semibold text-cocoa">The Patisserie Order Counter</h3>
+            </div>
+            <div class="flex items-center gap-2 text-xs sm:text-sm font-bold">
+              <span class="px-3 py-1 rounded-full bg-blush-50 border border-blush-200 text-cocoa">Orders: <span id="patisserieOrderNum" class="text-blush-400">1</span>/4</span>
+              <span class="inline-flex items-center gap-1 px-3 py-1 rounded-full bg-cream border border-blush-200 text-cocoa">
+                <i data-lucide="star" class="w-3.5 h-3.5 text-gold fill-gold"></i>
+                <span id="patisserieStars">0</span>
+              </span>
+            </div>
+          </div>
+
+          <!-- Customer Ticket Bar -->
+          <div class="bg-cream border border-blush-200 rounded-2xl p-3 flex items-center gap-3 mb-4">
+            <img id="patisserieCustomerImg" src="assets/mochi.png" onerror="this.src='https://placehold.co/80x80/F4DFB6/523E3E?text=Guest'" alt="Customer" class="w-12 h-12 rounded-xl object-contain bg-milk border border-blush-100 p-1 shrink-0" />
+            <div class="flex-1 min-w-0">
+              <div class="flex items-center justify-between gap-2">
+                <span id="patisserieCustomerName" class="text-xs font-bold uppercase tracking-wider text-blush-400">Mochi's Order</span>
+                <span id="patisserieStepBadge" class="text-[11px] font-bold px-2 py-0.5 rounded-full bg-blush-100 text-cocoa">Step 1 of 3</span>
+              </div>
+              <p id="patisserieOrderTitle" class="font-serif text-xl font-semibold text-cocoa truncate">Strawberry Nutella Cheesecake</p>
+              <p id="patisserieCustomerQuote" class="text-xs text-cocoa-light truncate">“Extra Nutella swirl and a glossy strawberry on top, please!”</p>
+            </div>
+          </div>
+
+          <!-- Live Dessert Assembly Stage -->
+          <div class="relative w-full h-52 sm:h-56 rounded-2xl border-2 border-blush-200 bg-gradient-to-b from-blush-50/70 to-cream flex items-center justify-center overflow-hidden">
+            <svg id="patisserieStageSvg" viewBox="0 0 260 190" class="w-60 h-48" fill="none">
+              <!-- Porcelain Serving Plate -->
+              <ellipse cx="130" cy="158" rx="92" ry="16" fill="#FFFDFB" stroke="#E58FA5" stroke-width="2"/>
+              <ellipse cx="130" cy="156" rx="68" ry="9" fill="#FCE7EC" opacity="0.45"/>
+              <!-- Dynamic Dessert Layers -->
+              <g id="patisserieLayersGroup"></g>
+            </svg>
+
+            <!-- Complete Overlay (Hidden until all 4 orders served) -->
+            <div id="patisserieCompleteOverlay" class="hidden absolute inset-0 bg-milk/90 backdrop-blur-[2px] flex flex-col items-center justify-center p-5 text-center">
+              <div class="w-12 h-12 rounded-2xl bg-blush-100 border border-blush-200 flex items-center justify-center mb-2">
+                <i data-lucide="chef-hat" class="w-6 h-6 text-blush-400"></i>
+              </div>
+              <h4 class="font-serif text-3xl font-semibold text-cocoa">5-Star Patissier!</h4>
+              <p id="patisserieFinalSub" class="text-xs sm:text-sm text-cocoa-light mt-1">All 4 of Samidha's signature favorites crafted to perfection!</p>
+              <button onclick="resetPatisserieGame()" class="mt-3 px-6 py-2 rounded-full bg-gradient-to-r from-blush-300 to-blush-400 text-milk font-bold text-xs shadow-card hover:scale-105 transition">
+                Open Next Shift
+              </button>
+            </div>
+          </div>
+
+          <!-- Step 1-2: Ingredient Prep Buttons -->
+          <div id="patisseriePrepControls" class="mt-4">
+            <p class="text-[11px] uppercase tracking-widest font-bold text-cocoa-light mb-2">Choose the Next Step on the Recipe Ticket:</p>
+            <div id="patisserieChoiceGrid" class="grid grid-cols-1 sm:grid-cols-3 gap-2">
+              <!-- Populated dynamically by JS -->
+            </div>
+          </div>
+
+          <!-- Step 3: Golden Sweet-Spot Finishing Bar -->
+          <div id="patisserieFinishControls" class="hidden mt-4 bg-blush-50 border border-blush-200 rounded-2xl p-3.5">
+            <div class="flex items-center justify-between mb-2">
+              <span class="text-xs font-bold text-cocoa inline-flex items-center gap-1.5">
+                <i data-lucide="sparkles" class="w-3.5 h-3.5 text-gold"></i>
+                Final Touch: Tap in the Golden Sweet Spot!
+              </span>
+              <span id="patisserieFinishLabel" class="text-[11px] font-semibold text-blush-400">Drizzle &amp; Serve</span>
+            </div>
+            <div class="relative w-full h-7 rounded-full bg-milk border-2 border-blush-200 overflow-hidden shadow-inner">
+              <!-- Golden Target Zone -->
+              <div id="patisserieSweetZone" class="absolute top-0 bottom-0 bg-gold-light/90 border-x-2 border-gold" style="left: 38%; width: 24%;"></div>
+              <!-- Moving Cursor -->
+              <div id="patisserieCursor" class="absolute top-0.5 bottom-0.5 w-3 rounded-full bg-blush-400 border border-milk shadow" style="left: 0%;"></div>
+            </div>
+            <button onclick="triggerPatisserieFinish()" class="mt-3 w-full py-2 rounded-xl bg-gradient-to-r from-blush-300 to-blush-400 text-milk font-bold text-xs shadow-sm hover:brightness-105 active:scale-[0.99] transition">
+              Drizzle &amp; Serve Order!
+            </button>
+          </div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SECTION 2: WING 2 — THE FLOWER BOUTIQUE (MINI-GAME 2)
+       ========================================================= -->
+  <section id="florist" class="max-w-6xl mx-auto px-4 py-14">
+    <div class="text-center mb-10">
+      <span class="inline-block px-3.5 py-1 rounded-full bg-sage-200 text-cocoa text-xs font-bold uppercase tracking-widest mb-2">Wing 02 • The Flower Shop</span>
+      <h2 class="font-serif text-4xl sm:text-5xl font-semibold text-cocoa">Samidha's Bouquet Atelier</h2>
+      <p class="text-cocoa-light text-sm sm:text-base mt-2 max-w-xl mx-auto">
+        Pick fresh blooms, <strong>drag &amp; arrange them freely</strong> inside the wrap, mist them with sparkling dewdrops to bloom, and write a custom love tag!
+      </p>
+    </div>
+
+    <div class="bg-milk border-2 border-blush-200/80 rounded-3xl p-6 sm:p-8 shadow-soft grid grid-cols-1 lg:grid-cols-12 gap-8 items-center">
+      <!-- Left: Interactive Freeform Drag Bouquet Canvas (6 cols) -->
+      <div class="lg:col-span-6 flex flex-col items-center">
+        <div class="relative w-full max-w-md h-80 sm:h-96 bg-gradient-to-b from-sage-100/70 via-cream to-blush-50 rounded-3xl border-2 border-blush-100 flex items-center justify-center overflow-hidden shadow-inner select-none">
+          <!-- Bouquet SVG Assembly -->
+          <svg id="bouquetSvg" viewBox="0 0 300 320" class="w-full h-full touch-none" fill="none">
+            <!-- Wrapping Paper Back -->
+            <path id="wrapBack" d="M70 150L150 295L230 150L192 115H108L70 150Z" fill="#FCE7EC" stroke="#523E3E" stroke-width="2" stroke-linejoin="round"/>
+            <!-- Dynamic Draggable Flowers Group -->
+            <g id="bouquetFlowersLayer"></g>
+            <!-- Dewdrop Sparkles Layer -->
+            <g id="bouquetDewLayer"></g>
+            <!-- Wrapping Paper Front Fold -->
+            <path id="wrapFront" d="M84 188L150 295L216 188L150 220L84 188Z" fill="#F7D1DA" stroke="#523E3E" stroke-width="2" stroke-linejoin="round" pointer-events="none"/>
+            <!-- Ribbon Bow -->
+            <g id="bouquetRibbon" pointer-events="none">
+              <path d="M132 238C115 225 112 252 134 248" fill="#E58FA5" stroke="#523E3E" stroke-width="1.8"/>
+              <path d="M168 238C185 225 188 252 166 248" fill="#E58FA5" stroke="#523E3E" stroke-width="1.8"/>
+              <circle cx="150" cy="243" r="7" fill="#E58FA5" stroke="#523E3E" stroke-width="1.8"/>
+            </g>
+            <!-- Hanging Custom Parchment Tag -->
+            <g id="bouquetTagGroup" transform="translate(158 248) rotate(8)" pointer-events="none">
+              <line x1="0" y1="0" x2="14" y2="12" stroke="#B88940" stroke-width="1.5"/>
+              <rect x="10" y="10" width="96" height="28" rx="6" fill="#FFFDFB" stroke="#DFB36B" stroke-width="1.5"/>
+              <circle cx="17" cy="24" r="2.2" fill="#DFB36B"/>
+              <text id="bouquetTagText" x="62" y="28" text-anchor="middle" font-family="Dancing Script, cursive" font-size="14" fill="#523E3E">For Us ♡</text>
+            </g>
+          </svg>
+
+          <!-- Empty State Hint -->
+          <div id="bouquetEmptyHint" class="absolute top-5 inset-x-4 text-center pointer-events-none">
+            <span class="inline-flex items-center gap-1.5 px-3 py-1 rounded-full bg-milk/90 border border-blush-200 text-xs text-cocoa-light font-medium">
+              <i data-lucide="move" class="w-3.5 h-3.5 text-blush-400"></i>
+              Add flowers &amp; drag any bloom to arrange!
+            </span>
+          </div>
+        </div>
+
+        <!-- Florist Commission Checklist -->
+        <div class="mt-4 w-full max-w-md bg-cream border border-blush-200 rounded-2xl p-3 flex items-center justify-around text-[11px] font-semibold text-cocoa-light">
+          <span id="chkStems" class="inline-flex items-center gap-1"><i data-lucide="circle" class="w-3.5 h-3.5 text-blush-300"></i> 5+ Blooms</span>
+          <span id="chkMist" class="inline-flex items-center gap-1"><i data-lucide="circle" class="w-3.5 h-3.5 text-blush-300"></i> Mist &amp; Bloom</span>
+          <span id="chkTag" class="inline-flex items-center gap-1"><i data-lucide="circle" class="w-3.5 h-3.5 text-blush-300"></i> Custom Tag</span>
+        </div>
+
+        <!-- Flower Meaning Note -->
+        <div id="flowerMeaningBox" class="mt-2.5 w-full max-w-md px-4 py-2.5 rounded-2xl bg-blush-50 border border-blush-200/70 text-center text-xs sm:text-sm text-cocoa">
+          <em>Complete the 3 steps above &amp; tie your bouquet to earn the <strong>Head Florist Badge</strong>!</em>
+        </div>
+      </div>
+
+      <!-- Right: Florist Controls (6 cols) -->
+      <div class="lg:col-span-6 space-y-4">
+        <div>
+          <div class="flex items-center justify-between mb-2">
+            <span class="text-xs uppercase tracking-widest font-bold text-cocoa-light">1. Pick &amp; Drag Fresh Stems</span>
+            <span class="text-xs font-semibold text-cocoa">Stems: <span id="stemCount" class="text-blush-400 font-bold">0</span>/12</span>
+          </div>
+          <div class="grid grid-cols-2 sm:grid-cols-3 gap-2.5">
+            <button onclick="addFlower('rose')" class="p-3 rounded-2xl bg-cream border border-blush-200 hover:bg-blush-50 hover:-translate-y-0.5 transition text-left">
+              <svg viewBox="0 0 36 36" class="w-8 h-8" fill="none"><circle cx="18" cy="18" r="12" fill="#F0B2C1" stroke="#523E3E" stroke-width="1.6"/><path d="M18 11C22 11 24 14 23 18C22 22 16 23 13 20C11 17 13 13 17 14C19 14.5 20 17 18 18" stroke="#523E3E" stroke-width="1.5" stroke-linecap="round"/></svg>
+              <span class="text-xs font-bold text-cocoa block mt-1.5">Blush Rose</span>
+              <span class="text-[11px] text-cocoa-light">Deep admiration</span>
+            </button>
+            <button onclick="addFlower('tulip')" class="p-3 rounded-2xl bg-cream border border-blush-200 hover:bg-blush-50 hover:-translate-y-0.5 transition text-left">
+              <svg viewBox="0 0 36 36" class="w-8 h-8" fill="none"><path d="M18 24V32" stroke="#7A9B7E" stroke-width="2" stroke-linecap="round"/><path d="M9 11C9 19 13 24 18 24C23 24 27 19 27 11L22 15L18 9L14 15L9 11Z" fill="#F7D1DA" stroke="#523E3E" stroke-width="1.6" stroke-linejoin="round"/></svg>
+              <span class="text-xs font-bold text-cocoa block mt-1.5">Pink Tulip</span>
+              <span class="text-[11px] text-cocoa-light">Perfect love</span>
+            </button>
+            <button onclick="addFlower('lavender')" class="p-3 rounded-2xl bg-cream border border-blush-200 hover:bg-blush-50 hover:-translate-y-0.5 transition text-left">
+              <svg viewBox="0 0 36 36" class="w-8 h-8" fill="none"><path d="M18 8V32" stroke="#7A9B7E" stroke-width="2" stroke-linecap="round"/><ellipse cx="14" cy="13" rx="3" ry="2" fill="#C8B4DF" stroke="#523E3E" stroke-width="1.2"/><ellipse cx="22" cy="15" rx="3" ry="2" fill="#C8B4DF" stroke="#523E3E" stroke-width="1.2"/><ellipse cx="14" cy="19" rx="3" ry="2" fill="#DFD2EC" stroke="#523E3E" stroke-width="1.2"/><ellipse cx="22" cy="21" rx="3" ry="2" fill="#DFD2EC" stroke="#523E3E" stroke-width="1.2"/><circle cx="18" cy="9" r="2.5" fill="#C8B4DF" stroke="#523E3E" stroke-width="1.2"/></svg>
+              <span class="text-xs font-bold text-cocoa block mt-1.5">Lavender</span>
+              <span class="text-[11px] text-cocoa-light">Calm &amp; devotion</span>
+            </button>
+            <button onclick="addFlower('daisy')" class="p-3 rounded-2xl bg-cream border border-blush-200 hover:bg-blush-50 hover:-translate-y-0.5 transition text-left">
+              <svg viewBox="0 0 36 36" class="w-8 h-8" fill="none"><circle cx="18" cy="10" r="4" fill="#FFFDFB" stroke="#523E3E" stroke-width="1.3"/><circle cx="18" cy="26" r="4" fill="#FFFDFB" stroke="#523E3E" stroke-width="1.3"/><circle cx="10" cy="18" r="4" fill="#FFFDFB" stroke="#523E3E" stroke-width="1.3"/><circle cx="26" cy="18" r="4" fill="#FFFDFB" stroke="#523E3E" stroke-width="1.3"/><circle cx="18" cy="18" r="5" fill="#F4DFB6" stroke="#523E3E" stroke-width="1.5"/></svg>
+              <span class="text-xs font-bold text-cocoa block mt-1.5">Sweet Daisy</span>
+              <span class="text-[11px] text-cocoa-light">Pure happiness</span>
+            </button>
+            <button onclick="addFlower('sunflower')" class="p-3 rounded-2xl bg-cream border border-blush-200 hover:bg-blush-50 hover:-translate-y-0.5 transition text-left">
+              <svg viewBox="0 0 36 36" class="w-8 h-8" fill="none"><circle cx="18" cy="18" r="11" fill="#F4DFB6" stroke="#DFB36B" stroke-width="2.5" stroke-dasharray="4 2"/><circle cx="18" cy="18" r="5.5" fill="#8C6A5D" stroke="#523E3E" stroke-width="1.5"/></svg>
+              <span class="text-xs font-bold text-cocoa block mt-1.5">Sunflower</span>
+              <span class="text-[11px] text-cocoa-light">My sunshine</span>
+            </button>
+            <button onclick="addFlower('babysbreath')" class="p-3 rounded-2xl bg-cream border border-blush-200 hover:bg-blush-50 hover:-translate-y-0.5 transition text-left">
+              <svg viewBox="0 0 36 36" class="w-8 h-8" fill="none"><path d="M18 14V32M18 22L11 16M18 20L25 14" stroke="#7A9B7E" stroke-width="1.6" stroke-linecap="round"/><circle cx="18" cy="11" r="3" fill="#FFFDFB" stroke="#523E3E" stroke-width="1.2"/><circle cx="10" cy="15" r="3" fill="#FFFDFB" stroke="#523E3E" stroke-width="1.2"/><circle cx="26" cy="13" r="3" fill="#FFFDFB" stroke="#523E3E" stroke-width="1.2"/></svg>
+              <span class="text-xs font-bold text-cocoa block mt-1.5">Baby's Breath</span>
+              <span class="text-[11px] text-cocoa-light">Everlasting love</span>
+            </button>
+          </div>
+        </div>
+
+        <!-- Wrapping Paper & Mist Spritzer Row -->
+        <div class="grid grid-cols-1 sm:grid-cols-2 gap-3">
+          <div>
+            <span class="text-xs uppercase tracking-widest font-bold text-cocoa-light block mb-2">2. Wrapping Paper</span>
+            <div class="flex flex-wrap gap-1.5">
+              <button onclick="setBouquetWrap('#FCE7EC', '#F7D1DA')" class="px-3 py-1.5 rounded-full text-xs font-semibold bg-blush-100 border border-blush-200 hover:brightness-95 transition">Blush</button>
+              <button onclick="setBouquetWrap('#F1EBF7', '#DFD2EC')" class="px-3 py-1.5 rounded-full text-xs font-semibold bg-lavender-100 border border-lavender-200 hover:brightness-95 transition">Lilac</button>
+              <button onclick="setBouquetWrap('#F4DFB6', '#E8CB96')" class="px-3 py-1.5 rounded-full text-xs font-semibold bg-gold-light border border-gold hover:brightness-95 transition">Kraft</button>
+              <button onclick="setBouquetWrap('#EEF4EE', '#D8E6D9')" class="px-3 py-1.5 rounded-full text-xs font-semibold bg-sage-100 border border-sage-200 hover:brightness-95 transition">Sage</button>
+            </div>
+          </div>
+          <div>
+            <span class="text-xs uppercase tracking-widest font-bold text-cocoa-light block mb-2">3. Dewdrop Care</span>
+            <button onclick="mistBouquet()" class="w-full py-1.5 px-3 rounded-full text-xs font-bold bg-sage-100 border border-sage-300 text-cocoa hover:bg-sage-200 transition inline-flex items-center justify-center gap-1.5">
+              <i data-lucide="droplets" class="w-3.5 h-3.5 text-emerald-600"></i> Mist &amp; Bloom Petals
+            </button>
+          </div>
+        </div>
+
+        <!-- Custom Ribbon Note Input -->
+        <div>
+          <label for="bouquetTagInput" class="text-xs uppercase tracking-widest font-bold text-cocoa-light block mb-1.5">4. Write Your Ribbon Tag</label>
+          <input id="bouquetTagInput" type="text" maxlength="18" placeholder="e.g. 10 Months of Us" oninput="updateBouquetTag(this.value)" class="w-full px-4 py-2 rounded-xl bg-cream border border-blush-200 text-sm text-cocoa focus:outline-none focus:border-blush-400" />
+        </div>
+
+        <!-- Bouquet Actions -->
+        <div class="flex flex-wrap gap-3 pt-1">
+          <button onclick="tieAndDisplayBouquet()" class="flex-1 py-3 px-5 rounded-2xl bg-gradient-to-r from-blush-300 to-blush-400 text-milk font-bold text-sm shadow-card hover:brightness-105 active:scale-[0.99] transition inline-flex items-center justify-center gap-2">
+            <i data-lucide="gift" class="w-4 h-4"></i> Tie Ribbon &amp; Display in Shop
+          </button>
+          <button onclick="clearBouquet()" class="py-3 px-4 rounded-2xl bg-cream border border-blush-200 text-cocoa-light font-semibold text-sm hover:bg-blush-50 transition">
+            Clear
+          </button>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SECTION 3: WING 3 — THE BOOKSTORE & SOMMELIER GAME (MINI-GAME 3)
+       ========================================================= -->
+  <section id="bookstore" class="max-w-6xl mx-auto px-4 py-14">
+    <div class="text-center mb-10">
+      <span class="inline-block px-3.5 py-1 rounded-full bg-lavender-100 text-cocoa text-xs font-bold uppercase tracking-widest mb-2">Wing 03 • The Bookstore</span>
+      <h2 class="font-serif text-4xl sm:text-5xl font-semibold text-cocoa">Chapters of Us — 10 Books</h2>
+      <p class="text-cocoa-light text-sm sm:text-base mt-2 max-w-xl mx-auto">
+        Every month we've shared sits on your favorite wooden shelf. Pull any book from the shelf to read our chapter &amp; see our memory inside!
+      </p>
+    </div>
+
+    <!-- Interactive 10-Month Bookshelf -->
+    <div class="bg-milk border-2 border-blush-200/80 rounded-3xl p-5 sm:p-8 shadow-soft mb-10">
+      <div class="flex items-center justify-between mb-4">
+        <h3 class="font-serif text-2xl font-semibold text-cocoa inline-flex items-center gap-2">
+          <i data-lucide="book-heart" class="w-5 h-5 text-blush-400"></i> The 10-Month Collection
+        </h3>
+        <span class="text-xs text-cocoa-light font-medium">Tap a book spine to open</span>
+      </div>
+
+      <!-- Bookshelf Spines Row -->
+      <div id="bookshelfRow" class="flex items-end justify-start sm:justify-center gap-2 sm:gap-3 overflow-x-auto pb-3 pt-4 px-2 border-b-8 border-gold/50 rounded-b-xl">
+        <!-- Populated dynamically by JS -->
+      </div>
+
+      <!-- Open Book Reader View -->
+      <div id="openBookReader" class="mt-6 bg-cream border border-blush-200 rounded-2xl p-5 sm:p-7 grid grid-cols-1 md:grid-cols-12 gap-6 items-center">
+        <!-- Left Page: Photo Memory -->
+        <div class="md:col-span-5 flex justify-center">
+          <div class="bg-milk p-3 pb-7 rounded-xl shadow-polaroid border border-blush-100 max-w-xs w-full -rotate-1">
+            <img id="bookPhoto" src="assets/00.png" onerror="this.src='https://placehold.co/400x400/FCE7EC/523E3E?text=Chapter+Memory'" alt="Chapter Photo" class="w-full h-56 sm:h-64 object-cover rounded-lg bg-blush-50" />
+            <p id="bookDateTag" class="font-script text-xl text-center text-cocoa mt-3">Month 01 • Feb 2026</p>
+          </div>
+        </div>
+        <!-- Right Page: Story Note -->
+        <div class="md:col-span-7 text-left">
+          <span id="bookChapterLabel" class="text-xs uppercase tracking-[0.2em] font-bold text-blush-400">Chapter 01</span>
+          <h4 id="bookTitle" class="font-serif text-3xl sm:text-4xl font-semibold text-cocoa mt-1">Where Our Story Began</h4>
+          <p id="bookStory" class="text-sm sm:text-base text-cocoa-light leading-relaxed mt-3">
+            Loading our favorite chapter...
+          </p>
+          <div class="mt-5 flex items-center gap-3">
+            <button onclick="stepBook(-1)" class="px-4 py-2 rounded-xl bg-milk border border-blush-200 text-xs font-bold text-cocoa hover:bg-blush-50 transition">Prev Chapter</button>
+            <button onclick="stepBook(1)" class="px-4 py-2 rounded-xl bg-blush-200/70 hover:bg-blush-200 text-xs font-bold text-cocoa transition">Next Chapter</button>
+          </div>
+        </div>
+      </div>
+    </div>
+
+    <!-- Extraordinary Mini-Game 3: The Reading Nook Sommelier -->
+    <div class="bg-milk border-2 border-blush-200/80 rounded-3xl p-6 sm:p-8 shadow-soft">
+      <div class="flex flex-wrap items-center justify-between gap-3 mb-5">
+        <div>
+          <span class="text-[11px] uppercase tracking-widest font-bold text-lavender-300">Mini-Game 03 • Book &amp; Dessert Pairing</span>
+          <h3 class="font-serif text-3xl font-semibold text-cocoa">The Reading Nook Sommelier</h3>
+          <p class="text-xs sm:text-sm text-cocoa-light mt-0.5">Read each cozy guest's poetic mood &amp; pair them with the <strong>perfect Book + Dessert</strong> to stamp your Bookstore Passport!</p>
+        </div>
+        <!-- Bookstore Passport Stamps -->
+        <div class="flex items-center gap-2 bg-cream border border-blush-200 rounded-2xl px-4 py-2">
+          <span class="text-[11px] font-bold uppercase tracking-wider text-cocoa-light mr-1">Passport:</span>
+          <div id="stampSlot-0" class="w-8 h-8 rounded-full border-2 border-dashed border-blush-200 flex items-center justify-center text-cocoa-light/40"><i data-lucide="stamp" class="w-4 h-4"></i></div>
+          <div id="stampSlot-1" class="w-8 h-8 rounded-full border-2 border-dashed border-blush-200 flex items-center justify-center text-cocoa-light/40"><i data-lucide="stamp" class="w-4 h-4"></i></div>
+          <div id="stampSlot-2" class="w-8 h-8 rounded-full border-2 border-dashed border-blush-200 flex items-center justify-center text-cocoa-light/40"><i data-lucide="stamp" class="w-4 h-4"></i></div>
+        </div>
+      </div>
+
+      <!-- Active Guest Mood Card -->
+      <div id="sommelierActiveBox" class="bg-cream border border-blush-200 rounded-2xl p-5 mb-5">
+        <div class="flex flex-col sm:flex-row items-center sm:items-start gap-4">
+          <img id="sommelierGuestImg" src="assets/snoopy.png" onerror="this.src='https://placehold.co/100x100/D8E6D9/523E3E?text=Guest'" alt="Reading Nook Guest" class="w-16 h-16 rounded-2xl object-contain bg-milk border border-blush-200 p-1.5 shrink-0" />
+          <div class="text-center sm:text-left flex-1">
+            <span id="sommelierGuestTag" class="inline-block text-[11px] font-bold uppercase tracking-widest text-blush-400">Guest 1 of 3 • Snoopy the Penguin</span>
+            <p id="sommelierClueText" class="font-serif text-xl sm:text-2xl italic text-cocoa mt-1 leading-snug">
+              “It's drizzling outside the bookshop window. I want a cozy winter romance and something warm, velvety, and topped with marshmallows to wrap my hands around.”
+            </p>
+          </div>
+        </div>
+
+        <!-- Two-Column Selection: Pick 1 Book + Pick 1 Dessert -->
+        <div class="grid grid-cols-1 md:grid-cols-2 gap-5 mt-5">
+          <div>
+            <p class="text-xs font-bold uppercase tracking-wider text-cocoa-light mb-2 flex items-center gap-1.5">
+              <i data-lucide="book-open" class="w-3.5 h-3.5 text-lavender-300"></i> 1. Choose Their Book
+            </p>
+            <div id="sommelierBooksList" class="space-y-2"></div>
+          </div>
+          <div>
+            <p class="text-xs font-bold uppercase tracking-wider text-cocoa-light mb-2 flex items-center gap-1.5">
+              <i data-lucide="utensils" class="w-3.5 h-3.5 text-blush-400"></i> 2. Choose Their Dessert Pairing
+            </p>
+            <div id="sommelierDessertsList" class="space-y-2"></div>
+          </div>
+        </div>
+
+        <div class="mt-5 flex flex-wrap items-center justify-between gap-3">
+          <p id="sommelierFeedback" class="text-xs sm:text-sm text-cocoa-light font-medium">Select 1 book and 1 dessert, then serve to the reading table!</p>
+          <button onclick="serveSommelierPairing()" class="px-6 py-2.5 rounded-full bg-gradient-to-r from-blush-300 to-blush-400 text-milk font-bold text-xs sm:text-sm shadow-card hover:brightness-105 active:scale-95 transition inline-flex items-center gap-2">
+            <i data-lucide="sparkles" class="w-4 h-4"></i> Serve Pairing
+          </button>
+        </div>
+      </div>
+
+      <!-- Completed Passport Celebration -->
+      <div id="sommelierCompleteBox" class="hidden bg-blush-50 border-2 border-blush-200 rounded-2xl p-6 text-center">
+        <i data-lucide="book-heart" class="w-10 h-10 text-blush-400 mx-auto mb-2"></i>
+        <h4 class="font-serif text-3xl font-semibold text-cocoa">Bookstore Passport Complete!</h4>
+        <p class="text-xs sm:text-sm text-cocoa-light mt-1 max-w-md mx-auto">
+          Every guest left with a full heart, a favorite book, and Samidha's signature dessert!
+        </p>
+        <button onclick="initSommelierGame()" class="mt-4 px-6 py-2 rounded-full bg-milk border border-blush-300 text-cocoa font-bold text-xs hover:bg-blush-100 transition">
+          Host Another Reading Evening
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SECTION 4: POLAROID MEMORY WALL (YOUR /assets/ PHOTOS)
+       ========================================================= -->
+  <section id="memories" class="max-w-6xl mx-auto px-4 py-14">
+    <div class="text-center mb-10">
+      <span class="inline-block px-3.5 py-1 rounded-full bg-gold-light text-cocoa text-xs font-bold uppercase tracking-widest mb-2">Shop Gallery Wall</span>
+      <h2 class="font-serif text-4xl sm:text-5xl font-semibold text-cocoa">Our Polaroid Corner</h2>
+      <p class="text-cocoa-light text-sm sm:text-base mt-2 max-w-xl mx-auto">
+        Every dreamy café needs a wall of favorite moments. Tap any Polaroid to view it up close!
+      </p>
+    </div>
+
+    <div id="polaroidWall" class="grid grid-cols-2 md:grid-cols-4 gap-6 sm:gap-7 px-2">
+      <!-- Populated dynamically by JS using your /assets/ photos -->
+    </div>
+  </section>
+
+  <!-- =========================================================
+       SECTION 5: 10-MONTH ANNIVERSARY LETTER & WISH CANDLE
+       ========================================================= -->
+  <section id="anniversary-letter" class="max-w-4xl mx-auto px-4 py-16">
+    <div class="bg-milk border-2 border-blush-200 rounded-[2rem] p-6 sm:p-10 shadow-card text-center relative overflow-hidden">
+      <!-- Subtle Corner Flourishes -->
+      <div class="absolute top-5 left-6 opacity-40 pointer-events-none">
+        <i data-lucide="flower-2" class="w-6 h-6 text-blush-400"></i>
+      </div>
+      <div class="absolute top-5 right-6 opacity-40 pointer-events-none">
+        <i data-lucide="sparkles" class="w-6 h-6 text-gold"></i>
+      </div>
+
+      <span class="inline-block px-4 py-1 rounded-full bg-blush-100 text-cocoa text-xs font-bold uppercase tracking-widest mb-3">
+        Happy 10-Month Anniversary • 27 Nov 2026
+      </span>
+      <h2 class="font-serif text-4xl sm:text-5xl font-semibold text-cocoa">A Secret Note for the Owner</h2>
+      <p class="text-cocoa-light text-sm mt-2">Tap the pink wax seal to open your anniversary letter.</p>
+
+      <!-- Interactive Sealed Envelope -->
+      <div id="sealedEnvelopeBox" class="mt-8 flex flex-col items-center">
+        <button onclick="openAnniversaryLetter()" class="group relative w-72 sm:w-80 h-44 bg-cream border-2 border-blush-200 rounded-2xl shadow-soft flex flex-col items-center justify-center hover:scale-105 transition-transform cursor-pointer">
+          <!-- Envelope Flap Triangle -->
+          <div class="absolute top-0 inset-x-0 h-20 bg-blush-100/70 rounded-t-2xl border-b border-blush-200" style="clip-path: polygon(0 0, 50% 100%, 100% 0);"></div>
+          <!-- Wax Seal -->
+          <div class="relative z-10 w-14 h-14 rounded-full bg-blush-400 text-milk flex items-center justify-center shadow-md border-4 border-blush-200 group-hover:rotate-12 transition-transform">
+            <i data-lucide="heart" class="w-6 h-6 fill-milk text-milk"></i>
+          </div>
+          <span class="relative z-10 mt-3 font-script text-2xl text-cocoa">For Samidha</span>
+        </button>
+      </div>
+
+      <!-- Opened Letter Content (Hidden until Wax Seal is tapped) -->
+      <div id="openedLetterBox" class="hidden mt-8 text-left bg-cream/80 border border-blush-200 rounded-3xl p-6 sm:p-9 max-w-2xl mx-auto shadow-inner">
+        <div class="flex items-center justify-between mb-4">
+          <p class="font-script text-3xl sm:text-4xl text-cocoa">My Dearest Samidha,</p>
+          <img src="assets/logo.png" onerror="if(!this.dataset.triedRoot){this.dataset.triedRoot='1';this.src='logo.png';}else{this.style.display='none';}" alt="Unicorn Bakes Seal" class="w-12 h-12 object-contain rounded-full border border-blush-200 bg-milk p-0.5" />
+        </div>
+        <div class="space-y-4 text-sm sm:text-base text-cocoa leading-relaxed">
+          <p>
+            Happy 10 months to us! From the very first day, you've filled my life with the exact warmth of a cozy bakery on a rainy afternoon — sweet, comforting, and impossible not to fall in love with every single day.
+          </p>
+          <p>
+            I still remember your eyes lighting up when you told me about your dream of opening your own café, paired with a flower boutique and a little bookstore right next door. Until the day we cut the real ribbon on <strong>Unicorn Bakes by Samidha</strong>, I wanted to build you this little corner of the internet so you can already feel what it's like to own it.
+          </p>
+          <p>
+            Thank you for every laugh, every sweet treat, every late-night talk, and for being my favorite person in the whole world. Here's to 10 magical months behind us, and a lifetime of baking, flowers, books, and adventures ahead.
+          </p>
+        </div>
+        <div class="mt-6 flex items-center justify-between flex-wrap gap-4 border-t border-blush-200 pt-4">
+          <div>
+            <p class="font-script text-3xl text-cocoa">Forever yours,</p>
+            <p class="text-xs text-cocoa-light font-semibold inline-flex items-center gap-1">
+              Your #1 Customer &amp; Forever Taste-Tester
+              <i data-lucide="heart" class="w-3 h-3 text-blush-400 fill-blush-400"></i>
+            </p>
+          </div>
+          <img src="assets/us.png" onerror="this.src='https://placehold.co/80x80/F7D1DA/523E3E?text=Us'" alt="Us Sticker" class="w-16 h-16 object-contain rounded-2xl" />
+        </div>
+      </div>
+
+      <!-- Interactive Blow-Out-The-Candle 10-Month Cake -->
+      <div class="mt-12 pt-8 border-t border-blush-200/70">
+        <h3 class="font-serif text-2xl sm:text-3xl font-semibold text-cocoa">Make a Wish for Month 10</h3>
+        <p id="wishPromptText" class="text-xs sm:text-sm text-cocoa-light mt-1">Tap the glowing unicorn candle flame to blow it out &amp; make a wish</p>
+
+        <button id="wishCandleBtn" onclick="blowOutCandle()" class="mt-4 mx-auto block group focus:outline-none cursor-pointer" aria-label="Blow out the 10-month anniversary candle">
+          <svg viewBox="0 0 200 180" class="w-48 h-44 mx-auto" fill="none">
+            <!-- Flame (toggled off when blown out) -->
+            <g id="wishCandleFlame" class="flame-flicker">
+              <path d="M100 10C107 24 109 32 100 40C91 32 93 24 100 10Z" fill="#F4DFB6" stroke="#DFB36B" stroke-width="2"/>
+              <path d="M100 22C103 28 104 33 100 37C96 33 97 28 100 22Z" fill="#E58FA5"/>
+            </g>
+            <!-- Smoke Puff (shown after blowing out) -->
+            <g id="wishCandleSmoke" class="hidden">
+              <path d="M100 38C96 28 106 22 100 12" stroke="#C8B4DF" stroke-width="2.5" stroke-linecap="round" stroke-dasharray="3 4"/>
+            </g>
+            <!-- Golden Twisted Unicorn Candle -->
+            <rect x="93" y="42" width="14" height="44" rx="5" fill="#F4DFB6" stroke="#B88940" stroke-width="2"/>
+            <path d="M93 54L107 49M93 66L107 61M93 78L107 73" stroke="#B88940" stroke-width="1.6"/>
+            <!-- Anniversary Mini Cake -->
+            <ellipse cx="100" cy="158" rx="68" ry="11" fill="#FFFDFB" stroke="#E58FA5" stroke-width="2"/>
+            <rect x="46" y="86" width="108" height="68" rx="14" fill="#FFFDFB" stroke="#523E3E" stroke-width="2.4"/>
+            <path d="M46 96C46 88 52 86 58 86H142C148 86 154 88 154 96V109C148 109 145 102 139 102C133 102 130 116 124 116C118 116 115 104 108 104C100 104 98 119 91 119C84 119 81 104 74 104C67 104 64 115 58 115C52 115 50 108 46 108V96Z" fill="#F7D1DA"/>
+            <text x="100" y="142" text-anchor="middle" font-family="Cormorant Garamond, serif" font-weight="700" font-size="22" fill="#523E3E">10 Months</text>
+          </svg>
+        </button>
+      </div>
+    </div>
+  </section>
+
+  <!-- Footer -->
+  <footer class="text-center py-8 px-4 border-t border-blush-200/70 bg-milk/70">
+    <img src="assets/logo.png" onerror="if(!this.dataset.triedRoot){this.dataset.triedRoot='1';this.src='logo.png';}else{this.style.display='none';}" alt="Unicorn Bakes Logo" class="w-12 h-12 mx-auto mb-2 object-contain rounded-full border border-blush-200 bg-cream p-0.5" />
+    <p class="font-serif text-xl text-cocoa inline-flex items-center justify-center gap-1.5">
+      Unicorn Bakes <i data-lucide="heart" class="w-4 h-4 text-blush-400 fill-blush-400"></i> by Samidha
+    </p>
+    <p class="text-xs text-cocoa-light mt-1">Crafted with endless love for our 10-Month Anniversary • 27 November 2026</p>
+  </footer>
+
+  <!-- =========================================================
+       MODALS & TOAST NOTIFICATIONS (NO alert() USED)
+       ========================================================= -->
+  <!-- Toast Notification -->
+  <div id="toastContainer" class="fixed bottom-5 right-5 z-50 flex flex-col gap-2 max-w-xs w-full pointer-events-none"></div>
+
+  <!-- Owner Badges Modal -->
+  <div id="badgesModal" class="hidden fixed inset-0 z-50 bg-cocoa-dark/40 backdrop-blur-sm flex items-center justify-center p-4">
+    <div class="bg-milk border-2 border-blush-200 rounded-3xl p-6 max-w-md w-full shadow-2xl relative">
+      <button onclick="closeModal('badgesModal')" class="absolute top-4 right-4 w-8 h-8 rounded-full bg-cream border border-blush-200 text-cocoa hover:bg-blush-100 flex items-center justify-center" aria-label="Close">
+        <i data-lucide="x" class="w-4 h-4"></i>
+      </button>
+      <h3 class="font-serif text-3xl font-semibold text-cocoa text-center">Owner's Milestones</h3>
+      <p class="text-xs text-cocoa-light text-center mt-1 mb-5">Complete all 4 activities to become the Official Grand Owner!</p>
+      <div id="badgesModalList" class="space-y-3"></div>
+    </div>
+  </div>
+
+  <!-- Photo Lightbox Modal -->
+  <div id="photoModal" class="hidden fixed inset-0 z-50 bg-cocoa-dark/60 backdrop-blur-sm flex items-center justify-center p-4" onclick="closeModal('photoModal')">
+    <div class="bg-milk p-4 pb-6 rounded-2xl max-w-md w-full shadow-2xl border-2 border-blush-200" onclick="event.stopPropagation()">
+      <div class="flex justify-end mb-2">
+        <button onclick="closeModal('photoModal')" class="w-8 h-8 rounded-full bg-cream border border-blush-200 text-cocoa hover:bg-blush-100 flex items-center justify-center" aria-label="Close">
+          <i data-lucide="x" class="w-4 h-4"></i>
+        </button>
+      </div>
+      <img id="modalPhotoImg" src="" alt="Enlarged Memory" class="w-full max-h-[65vh] object-contain rounded-xl bg-cream" />
+      <p id="modalPhotoCaption" class="font-script text-3xl text-cocoa text-center mt-3"></p>
+    </div>
+  </div>
+
+  <!-- =========================================================
+       INTERACTIVE JAVASCRIPT ENGINE
+       ========================================================= -->
+  <script>
+    /* ==========================================================
+       0. UNIQUE SECRET RECIPE AUTHENTICATION
+       ========================================================== */
+    const SECRET_RECIPE = ['day27', 'months10', 'unicorn'];
+    let selectedIngredients = [];
+
+    function refreshIcons() {
+      if (typeof lucide !== 'undefined') {
+        lucide.createIcons();
+      }
+    }
+
+    function initAuthGate() {
+      const gate = document.getElementById('authGate');
+      if (sessionStorage.getItem('unicornBakesUnlocked') === 'true') {
+        gate.classList.add('hidden');
+      } else {
+        document.body.style.overflow = 'hidden';
+      }
+    }
+
+    function selectAuthIngredient(id, label, btnEl) {
+      if (selectedIngredients.includes(id) || selectedIngredients.length >= 3) return;
+      selectedIngredients.push(id);
+      btnEl.classList.add('bg-blush-100', 'border-blush-400', 'ring-2', 'ring-blush-200');
+      playChime(['E5', 'G5']);
+
+      const slotIdx = selectedIngredients.length - 1;
+      const slotEl = document.getElementById(`bowlSlot-${slotIdx}`);
+      slotEl.textContent = label;
+      slotEl.classList.remove('text-cocoa-light/60');
+      slotEl.classList.add('text-cocoa', 'bg-blush-50', 'border-blush-300');
+
+      if (selectedIngredients.length === 3) {
+        const isCorrect = SECRET_RECIPE.every(req => selectedIngredients.includes(req));
+        const feedback = document.getElementById('authFeedback');
+        const bowlWrap = document.getElementById('authBowlWrap');
+
+        if (isCorrect) {
+          feedback.innerHTML = '<strong class="text-emerald-600">Perfect batter! Welcome home, Owner Samidha!</strong>';
+          playChime(['C5', 'E5', 'G5', 'C6']);
+          launchConfetti(45);
+          sessionStorage.setItem('unicornBakesUnlocked', 'true');
+          setTimeout(() => {
+            const gate = document.getElementById('authGate');
+            gate.classList.add('auth-unlocked');
+            document.body.style.overflow = '';
+            setTimeout(() => gate.classList.add('hidden'), 700);
+          }, 850);
+        } else {
+          feedback.innerHTML = '<span class="text-blush-400 font-semibold">Hmm, that batter tastes a little funny! Try our anniversary recipe.</span>';
+          bowlWrap.classList.add('animate-wiggle');
+          playChime(['D4', 'C4']);
+          setTimeout(() => {
+            bowlWrap.classList.remove('animate-wiggle');
+            resetAuthBowl(false);
+          }, 950);
+        }
+      }
+    }
+
+    function resetAuthBowl(clearFeedback = true) {
+      selectedIngredients = [];
+      for (let i = 0; i < 3; i++) {
+        const slotEl = document.getElementById(`bowlSlot-${i}`);
+        slotEl.textContent = `Slot ${i + 1}`;
+        slotEl.className = 'w-24 h-12 rounded-xl bg-milk border border-blush-200 flex items-center justify-center text-xs font-semibold text-cocoa-light/60 shadow-inner';
+      }
+      document.querySelectorAll('.auth-ing-btn').forEach(b => {
+        b.classList.remove('bg-blush-100', 'border-blush-400', 'ring-2', 'ring-blush-200');
+      });
+      if (clearFeedback) {
+        document.getElementById('authFeedback').textContent = 'Tap 3 ingredients below to add them to the bowl.';
+      }
+    }
+
+    function toggleAuthHint() {
+      document.getElementById('authHintText').classList.toggle('hidden');
+      playChime(['A5']);
+    }
+
+    function lockShop() {
+      sessionStorage.removeItem('unicornBakesUnlocked');
+      resetAuthBowl();
+      const gate = document.getElementById('authGate');
+      gate.classList.remove('hidden', 'auth-unlocked');
+      document.body.style.overflow = 'hidden';
+      playChime(['G4', 'E4']);
+    }
+
+    /* ==========================================================
+       1. CENTRALIZED ASSETS & STORY DATA
+       (Easy to edit captions or swap any photo from your /assets/ folder)
+       ========================================================== */
+    const CHAPTER_BOOKS = [
+      { ch: '01', date: 'Month 01 • Feb 2026', title: 'The Sweetest Beginning', img: 'assets/00.png', color: '#FCE7EC', story: 'The very first chapter of us — butterflies, endless conversations, and realizing how effortlessly happy we are together.' },
+      { ch: '02', date: 'Month 02 • Mar 2026', title: 'Warmth & First Laughs', img: 'assets/01.png', color: '#F1EBF7', story: 'Little inside jokes, long talks that felt like minutes, and discovering all the adorable things that make you, you.' },
+      { ch: '03', date: 'Month 03 • Apr 2026', title: 'Springtime Blooms', img: 'assets/02.jpg', color: '#EEF4EE', story: 'Like flowers opening in April, everything felt brighter with you by my side.' },
+      { ch: '04', date: 'Month 04 • May 2026', title: 'Coffee & Sweet Cravings', img: 'assets/03.jpg', color: '#F4DFB6', story: 'Dreaming about cozy cafés, fresh bakes, and spending every lazy afternoon together.' },
+      { ch: '05', date: 'Month 05 • Jun 2026', title: 'Rainy Day Comfort', img: 'assets/04.jpg', color: '#F7D1DA', story: 'You became my favorite safe place — warm, gentle, and always home.' },
+      { ch: '06', date: 'Month 06 • Jul 2026', title: 'Half a Year of Magic', img: 'assets/05.jpg', color: '#DFD2EC', story: 'Six whole months of holding hands, cheering each other on, and falling deeper in love.' },
+      { ch: '07', date: 'Month 07 • Aug 2026', title: 'Golden Little Moments', img: 'assets/07.jpg', color: '#D8E6D9', story: 'Even the simplest days turned into my favorite memories just because you were in them.' },
+      { ch: '08', date: 'Month 08 • Sep 2026', title: 'Pages & Daydreams', img: 'assets/09.jpg', color: '#FCE7EC', story: 'Talking about your future bakery, flower shop, and bookstore — and picturing myself right beside you helping run it.' },
+      { ch: '09', date: 'Month 09 • Oct 2026', title: 'Cozy Autumn Glow', img: 'assets/10.jpg', color: '#F4DFB6', story: 'Nine months in and my heart still skips a beat every time I see your smile.' },
+      { ch: '10', date: 'Month 10 • Nov 2026', title: '10 Months of Unicorn Bakes', img: 'assets/12.jpg', color: '#F0B2C1', story: '27th November 2026 — 10 wonderful months of us! Welcome to your very own dream shop, Samidha.' },
+    ];
+
+    const POLAROID_PHOTOS = [
+      { img: 'assets/02.png', caption: 'My favorite smile', tilt: '-2deg' },
+      { img: 'assets/03.png', caption: 'Sweetest moments', tilt: '2deg' },
+      { img: 'assets/13.jpg', caption: 'Always cozy with you', tilt: '-1.5deg' },
+      { img: 'assets/14.jpg', caption: 'Forever my person', tilt: '1.8deg' },
+      { img: 'assets/15.jpg', caption: '10 months & counting', tilt: '-2.2deg' },
+      { img: 'assets/04.jpg', caption: 'Best days together', tilt: '1.5deg' },
+      { img: 'assets/07.jpg', caption: 'Pure happiness', tilt: '-1deg' },
+      { img: 'assets/12.jpg', caption: 'Unicorn Bakes VIPs', tilt: '2.2deg' },
+    ];
+
+    /* ==========================================================
+       2. TONE.JS GENTLE MUSIC-BOX CHIMES (NO EXTERNAL AUDIO URLs)
+       ========================================================== */
+    let soundEnabled = true;
+    let chimeSynth = null;
+
+    function playChime(notes = ['C5', 'E5', 'G5']) {
+      if (!soundEnabled || typeof Tone === 'undefined') return;
+      try {
+        if (Tone.context.state !== 'running') {
+          Tone.start();
+        }
+        if (!chimeSynth) {
+          chimeSynth = new Tone.PolySynth(Tone.Synth, {
+            oscillator: { type: 'sine' },
+            envelope: { attack: 0.02, decay: 0.25, sustain: 0.1, release: 0.8 }
+          }).toDestination();
+          chimeSynth.volume.value = -14;
+        }
+        const now = Tone.now();
+        notes.forEach((n, idx) => {
+          chimeSynth.triggerAttackRelease(n, '8n', now + idx * 0.075);
+        });
+      } catch (err) {
+        // Silently ignore if browser blocks audio prior to gesture
+      }
+    }
+
+    document.getElementById('soundToggleBtn').addEventListener('click', () => {
+      soundEnabled = !soundEnabled;
+      const btn = document.getElementById('soundToggleBtn');
+      btn.innerHTML = `<i id="soundIcon" data-lucide="${soundEnabled ? 'bell' : 'bell-off'}" class="w-4 h-4 text-cocoa"></i>`;
+      refreshIcons();
+      showToast(soundEnabled ? 'Bakery chimes enabled' : 'Sound muted', soundEnabled ? 'bell' : 'bell-off');
+      if (soundEnabled) playChime(['E5', 'G5']);
+    });
+
+    /* ==========================================================
+       3. OWNER MILESTONE TRACKING & UI HELPERS
+       ========================================================== */
+    const milestones = {
+      openShop: { title: 'Grand Opening', desc: 'Flip the storefront sign to OPEN', done: false, icon: 'store' },
+      baker: { title: 'Master Baker', desc: 'Craft all 4 signature desserts at the Order Counter', done: false, icon: 'chef-hat' },
+      florist: { title: 'Head Florist', desc: 'Arrange, mist & tag a custom bouquet', done: false, icon: 'flower-2' },
+      bookworm: { title: 'Chief Bookworm', desc: 'Stamp all 3 seals in the Reading Nook Sommelier', done: false, icon: 'book-open' },
+    };
+
+    function unlockMilestone(key) {
+      if (!milestones[key] || milestones[key].done) return;
+      milestones[key].done = true;
+      updateBadgeUI();
+      playChime(['C5', 'E5', 'G5', 'C6']);
+      launchConfetti(35);
+      showToast(`Badge Unlocked: ${milestones[key].title}!`, milestones[key].icon);
+    }
+
+    function updateBadgeUI() {
+      const doneCount = Object.values(milestones).filter(m => m.done).length;
+      document.getElementById('badgeCountText').textContent = `${doneCount}/4`;
+    }
+
+    document.getElementById('ownerBadgesBtn').addEventListener('click', () => {
+      const list = document.getElementById('badgesModalList');
+      list.innerHTML = Object.values(milestones).map(m => `
+        <div class="flex items-center gap-3 p-3 rounded-2xl border ${m.done ? 'bg-blush-50 border-blush-300' : 'bg-cream border-blush-100 opacity-75'}">
+          <div class="w-10 h-10 rounded-xl ${m.done ? 'bg-blush-200 text-cocoa' : 'bg-milk text-cocoa-light'} flex items-center justify-center shrink-0">
+            <i data-lucide="${m.icon}" class="w-5 h-5"></i>
+          </div>
+          <div class="flex-1">
+            <p class="font-bold text-sm text-cocoa">${m.title}</p>
+            <p class="text-xs text-cocoa-light">${m.desc}</p>
+          </div>
+          <i data-lucide="${m.done ? 'check-circle-2' : 'circle'}" class="w-5 h-5 ${m.done ? 'text-emerald-600' : 'text-blush-200'}"></i>
+        </div>
+      `).join('');
+      document.getElementById('badgesModal').classList.remove('hidden');
+      refreshIcons();
+      playChime(['G5']);
+    });
+
+    function closeModal(id) {
+      document.getElementById(id).classList.add('hidden');
+    }
+
+    function showToast(msg, iconName = 'sparkles') {
+      const container = document.getElementById('toastContainer');
+      const el = document.createElement('div');
+      el.className = 'pointer-events-auto bg-milk border-2 border-blush-200 rounded-2xl px-4 py-3 shadow-card flex items-center gap-2.5 text-xs sm:text-sm font-semibold text-cocoa transition-all duration-300';
+      el.innerHTML = `<i data-lucide="${iconName}" class="w-4 h-4 text-blush-400 shrink-0"></i><span>${msg}</span>`;
+      container.appendChild(el);
+      refreshIcons();
+      setTimeout(() => {
+        el.style.opacity = '0';
+        el.style.transform = 'translateY(8px)';
+        setTimeout(() => el.remove(), 300);
+      }, 3200);
+    }
+
+    function spawnSparkle(x, y, iconName = 'sparkles') {
+      const el = document.createElement('div');
+      el.className = 'sparkle-pop text-blush-400';
+      el.style.left = `${x}px`;
+      el.style.top = `${y}px`;
+      el.innerHTML = `<i data-lucide="${iconName}" class="w-6 h-6 fill-blush-200"></i>`;
+      document.body.appendChild(el);
+      refreshIcons();
+      setTimeout(() => el.remove(), 850);
+    }
+
+    function launchConfetti(count = 35) {
+      const colors = ['#F7D1DA', '#E58FA5', '#DFD2EC', '#F4DFB6', '#D8E6D9'];
+      for (let i = 0; i < count; i++) {
+        const piece = document.createElement('div');
+        piece.className = 'confetti-piece rounded-sm';
+        piece.style.left = `${Math.random() * 100}vw`;
+        piece.style.width = `${6 + Math.random() * 6}px`;
+        piece.style.height = `${8 + Math.random() * 8}px`;
+        piece.style.backgroundColor = colors[Math.floor(Math.random() * colors.length)];
+        piece.style.animationDuration = `${2.2 + Math.random() * 2}s`;
+        piece.style.animationDelay = `${Math.random() * 0.4}s`;
+        document.body.appendChild(piece);
+        setTimeout(() => piece.remove(), 4600);
+      }
+    }
+
+    /* ==========================================================
+       4. STOREFRONT INTERACTIONS (OPEN SIGN, CREW, CUTOUTS)
+       ========================================================== */
+    let shopIsOpen = false;
+
+    function toggleShopOpen() {
+      shopIsOpen = !shopIsOpen;
+      const big = document.getElementById('signStatusBig');
+      const small = document.getElementById('signStatusSmall');
+      const sub = document.getElementById('signSubtext');
+      if (shopIsOpen) {
+        big.textContent = 'OPEN';
+        big.classList.remove('text-blush-400');
+        big.classList.add('text-emerald-600');
+        small.textContent = 'Now Serving Love & Sweets';
+        sub.innerHTML = 'Welcome inside, Owner Samidha! <i data-lucide="sparkles" class="w-3.5 h-3.5 text-gold"></i>';
+        unlockMilestone('openShop');
+      } else {
+        big.textContent = 'CLOSED';
+        big.classList.add('text-blush-400');
+        big.classList.remove('text-emerald-600');
+        small.textContent = 'Tap to flip sign';
+        sub.innerHTML = 'Ring the bell &amp; open Samidha\'s shop <i data-lucide="sparkles" class="w-3.5 h-3.5 text-gold"></i>';
+        playChime(['G4', 'E4']);
+      }
+      refreshIcons();
+    }
+
+    function crewSpeak(name, msg) {
+      document.getElementById('crewSpeechBubble').innerHTML = `<span><strong class="text-blush-400">${name}:</strong> “${msg}”</span>`;
+      playChime(['E5', 'A5']);
+    }
+
+    function popDessertCutout(e, msg) {
+      spawnSparkle(e.clientX, e.clientY, 'heart');
+      playChime(['F5', 'A5', 'C6']);
+      showToast(msg, 'cake-slice');
+    }
+
+    /* ==========================================================
+       5. WING 1: PASTRY COUNTER (FEATURING HER 4 FAVORITES!)
+       ========================================================== */
+    const PASTRY_MENU = [
+      {
+        name: 'Hazelnut Pastry',
+        price: '2 Kisses',
+        note: 'Flaky chocolate layers, roasted hazelnut praline & a whisper of gold!',
+        svg: `<svg viewBox="0 0 80 80" class="w-16 h-16 mx-auto" fill="none"><path d="M16 58L22 28H58L64 58H16Z" fill="#7D5A50" stroke="#523E3E" stroke-width="2" stroke-linejoin="round"/><rect x="19" y="38" width="42" height="6" fill="#E8CB96"/><rect x="18" y="48" width="44" height="5" fill="#F4DFB6"/><path d="M22 28C22 23 58 23 58 28Z" fill="#523E3E"/><circle cx="34" cy="24" r="4.5" fill="#DFB36B" stroke="#523E3E" stroke-width="1.6"/><circle cx="46" cy="24" r="4.5" fill="#DFB36B" stroke="#523E3E" stroke-width="1.6"/></svg>`
+      },
+      {
+        name: 'Hot Chocolate',
+        price: 'Warm Hug',
+        note: 'Rich velvety cocoa crowned with whipped cream & mini marshmallows!',
+        svg: `<svg viewBox="0 0 80 80" class="w-16 h-16 mx-auto" fill="none"><path d="M32 16C30 12 34 10 32 7M44 16C42 12 46 10 44 7" stroke="#DFB36B" stroke-width="1.8" stroke-linecap="round"/><path d="M22 30H54V56C54 62 49 66 43 66H33C27 66 22 62 22 56V30Z" fill="#FCE7EC" stroke="#523E3E" stroke-width="2"/><path d="M54 36H60C64 36 65 48 59 50H54" stroke="#523E3E" stroke-width="2" stroke-linecap="round"/><path d="M22 30C24 22 32 20 38 22C44 20 52 22 54 30Z" fill="#FFFDFB" stroke="#523E3E" stroke-width="1.8"/><rect x="30" y="23" width="6" height="5" rx="2" fill="#F7D1DA" stroke="#523E3E" stroke-width="1.2"/><rect x="40" y="22" width="6" height="5" rx="2" fill="#FFFDFB" stroke="#523E3E" stroke-width="1.2"/></svg>`
+      },
+      {
+        name: 'Choco Strawberry',
+        price: '10/10 Sweet',
+        note: 'Juicy ripe strawberry hand-dipped in Belgian chocolate & pink drizzle!',
+        svg: `<svg viewBox="0 0 80 80" class="w-16 h-16 mx-auto" fill="none"><path d="M40 66C24 54 20 34 28 24C34 18 46 18 52 24C60 34 56 54 40 66Z" fill="#E58FA5" stroke="#523E3E" stroke-width="2"/><path d="M25 40C31 36 36 42 41 38C46 34 51 40 55 39C53 50 47 60 40 66C33 60 27 50 25 40Z" fill="#5C4033" stroke="#523E3E" stroke-width="1.6"/><path d="M30 48L48 44M33 55L46 52" stroke="#F7D1DA" stroke-width="2" stroke-linecap="round"/><path d="M30 22L40 16L50 22L44 25L40 21L36 25L30 22Z" fill="#7A9B7E" stroke="#523E3E" stroke-width="1.5" stroke-linejoin="round"/></svg>`
+      },
+      {
+        name: 'Strawberry Nutella Cheesecake',
+        price: 'My Heart',
+        note: 'Biscuit crust, creamy cheesecake, thick Nutella glaze & fresh berries!',
+        svg: `<svg viewBox="0 0 80 80" class="w-16 h-16 mx-auto" fill="none"><path d="M16 56L22 32L64 42L60 56H16Z" fill="#FFFDFB" stroke="#523E3E" stroke-width="2" stroke-linejoin="round"/><path d="M16 56H60V62H16V56Z" fill="#DFB36B" stroke="#523E3E" stroke-width="1.8"/><path d="M22 32L64 42L62 48C54 46 50 42 42 44C34 46 28 40 20 40L22 32Z" fill="#6B4423"/><circle cx="34" cy="27" r="7" fill="#E58FA5" stroke="#523E3E" stroke-width="1.8"/><path d="M30 21L34 18L38 21" stroke="#7A9B7E" stroke-width="2" stroke-linecap="round"/></svg>`
+      },
+      {
+        name: 'Rose Macaron',
+        price: '1 Smile',
+        note: 'Crisp almond shell with rose buttercream — sweet like you!',
+        svg: `<svg viewBox="0 0 80 80" class="w-16 h-16 mx-auto" fill="none"><ellipse cx="40" cy="30" rx="26" ry="11" fill="#F7D1DA" stroke="#523E3E" stroke-width="2"/><rect x="15" y="34" width="50" height="9" rx="4.5" fill="#FFFDFB" stroke="#523E3E" stroke-width="2"/><ellipse cx="40" cy="48" rx="26" ry="10" fill="#F7D1DA" stroke="#523E3E" stroke-width="2"/></svg>`
+      },
+      {
+        name: 'Unicorn Cupcake',
+        price: 'Forever',
+        note: 'Lavender vanilla swirl topped with golden unicorn magic!',
+        svg: `<svg viewBox="0 0 80 80" class="w-16 h-16 mx-auto" fill="none"><path d="M23 45L28 67H52L57 45H23Z" fill="#F4DFB6" stroke="#523E3E" stroke-width="2" stroke-linejoin="round"/><path d="M20 45C20 31 29 25 40 25C51 25 60 31 60 45H20Z" fill="#DFD2EC" stroke="#523E3E" stroke-width="2"/><path d="M40 10L35 26H45L40 10Z" fill="#F4DFB6" stroke="#B88940" stroke-width="1.8"/></svg>`
+      },
+    ];
+
+    const tastedSet = new Set();
+
+    function renderPastryCounter() {
+      const grid = document.getElementById('pastryGrid');
+      grid.innerHTML = PASTRY_MENU.map((p, idx) => `
+        <button onclick="tastePastry(${idx}, event)" class="group bg-cream border border-blush-200/80 hover:border-blush-400 rounded-2xl p-3.5 text-center shadow-sm hover:-translate-y-1 transition-all cursor-pointer focus:outline-none">
+          <div class="group-hover:scale-110 transition-transform">${p.svg}</div>
+          <p class="font-serif text-lg font-semibold text-cocoa mt-2 leading-tight">${p.name}</p>
+          <span class="inline-block mt-1 text-[11px] font-bold px-2.5 py-0.5 rounded-full bg-blush-100 text-cocoa-light">${p.price}</span>
+        </button>
+      `).join('');
+    }
+
+    function tastePastry(idx, e) {
+      const p = PASTRY_MENU[idx];
+      tastedSet.add(idx);
+      document.getElementById('treatsTastedCount').textContent = tastedSet.size;
+      spawnSparkle(e.clientX, e.clientY, 'sparkles');
+      playChime(['C5', 'G5']);
+      showToast(`${p.name}: ${p.note}`, 'cake-slice');
+    }
+
+    function setCakeBase(hex) {
+      document.getElementById('cakeBaseRect').setAttribute('fill', hex);
+      playChime(['E5']);
+    }
+
+    function setCakeDrip(hex) {
+      document.getElementById('cakeDripPath').setAttribute('fill', hex);
+      playChime(['F5']);
+    }
+
+    function setCakeTopper(type) {
+      const g = document.getElementById('cakeTopperGroup');
+      playChime(['A5']);
+      if (type === 'unicorn') {
+        g.innerHTML = `
+          <path d="M110 30L98 92H122L110 30Z" fill="#F4DFB6" stroke="#B88940" stroke-width="2"/>
+          <path d="M104 56L116 52M101 72L119 67" stroke="#B88940" stroke-width="1.6"/>
+          <path d="M74 92L82 64L96 92Z" fill="#FFFDFB" stroke="#523E3E" stroke-width="2"/>
+          <path d="M146 92L138 64L124 92Z" fill="#FFFDFB" stroke="#523E3E" stroke-width="2"/>
+        `;
+      } else if (type === 'berries') {
+        g.innerHTML = `
+          <circle cx="85" cy="84" r="11" fill="#E58FA5" stroke="#523E3E" stroke-width="2"/>
+          <circle cx="110" cy="78" r="13" fill="#E58FA5" stroke="#523E3E" stroke-width="2"/>
+          <circle cx="135" cy="84" r="11" fill="#E58FA5" stroke="#523E3E" stroke-width="2"/>
+          <path d="M104 64L110 70L116 64" stroke="#7A9B7E" stroke-width="3" stroke-linecap="round"/>
+        `;
+      } else {
+        g.innerHTML = `
+          <text x="110" y="84" text-anchor="middle" font-family="Cormorant Garamond, serif" font-weight="700" font-size="44" fill="#DFB36B" stroke="#523E3E" stroke-width="1.2">10</text>
+          <path d="M110 22C116 32 116 38 110 44C104 38 104 32 110 22Z" fill="#F4DFB6" stroke="#DFB36B" stroke-width="1.8"/>
+        `;
+      }
+    }
+
+    function featureCakeInWindow() {
+      playChime(['C5', 'E5', 'G5', 'C6']);
+      launchConfetti(22);
+      showToast("Your custom cake is now featured in Unicorn Bakes' window!", 'cake');
+    }
+
+    /* ==========================================================
+       6. EXTRAORDINARY MINI-GAME 1: THE PATISSERIE ORDER COUNTER
+       (Craft Samidha's 4 Favorite Desserts + Golden Sweet-Spot Finish)
+       ========================================================== */
+    const PATISSERIE_ORDERS = [
+      {
+        id: 'cheesecake',
+        name: 'Strawberry Nutella Cheesecake',
+        customer: "Mochi's Order",
+        avatar: 'assets/mochi.png',
+        quote: '“Creamy cheesecake with a thick Nutella swirl and fresh strawberries!”',
+        steps: [
+          {
+            correct: 'Biscuit Crust & Cheesecake',
+            options: ['Biscuit Crust & Cheesecake', 'Puff Pastry Shell', 'Steamed Milk Mug'],
+            svg: `<path d="M62 142H198V154H62V142Z" fill="#DFB36B" stroke="#523E3E" stroke-width="2"/><path d="M66 142L78 86L194 112L190 142H66Z" fill="#FFFDFB" stroke="#523E3E" stroke-width="2.2" stroke-linejoin="round"/>`
+          },
+          {
+            correct: 'Swirl Rich Nutella Glaze',
+            options: ['Matcha Dusting', 'Swirl Rich Nutella Glaze', 'Lemon Curd'],
+            svg: `<path d="M78 86L194 112L192 124C174 120 164 108 144 114C124 120 108 104 75 104L78 86Z" fill="#6B4423" stroke="#523E3E" stroke-width="1.8"/>`
+          }
+        ],
+        finishLabel: 'Crown with Fresh Strawberries',
+        finishSvg: `<circle cx="106" cy="76" r="14" fill="#E58FA5" stroke="#523E3E" stroke-width="2"/><path d="M98 63L106 58L114 63" stroke="#7A9B7E" stroke-width="3" stroke-linecap="round"/><circle cx="136" cy="84" r="11" fill="#E58FA5" stroke="#523E3E" stroke-width="2"/>`
+      },
+      {
+        id: 'hotchoc',
+        name: 'Velvety Hot Chocolate',
+        customer: "Snoopy's Order",
+        avatar: 'assets/snoopy.png',
+        quote: '“Extra cozy cocoa with a whipped cream cloud and fluffy marshmallows!”',
+        steps: [
+          {
+            correct: 'Pour Warm Belgian Cocoa',
+            options: ['Iced Tonic Water', 'Pour Warm Belgian Cocoa', 'Almond Sponge'],
+            svg: `<path d="M88 76H168V136C168 148 158 156 144 156H112C98 156 88 148 88 136V76Z" fill="#FCE7EC" stroke="#523E3E" stroke-width="2.2"/><path d="M168 92H182C192 92 192 124 180 128H168" stroke="#523E3E" stroke-width="2.5" stroke-linecap="round"/><rect x="93" y="80" width="70" height="16" rx="6" fill="#6B4423"/>`
+          },
+          {
+            correct: 'Swirl Whipped Cream Cloud',
+            options: ['Swirl Whipped Cream Cloud', 'Caramelized Onions', 'Crushed Ice'],
+            svg: `<path d="M88 78C92 58 110 52 128 58C146 52 164 58 168 78Z" fill="#FFFDFB" stroke="#523E3E" stroke-width="2"/>`
+          }
+        ],
+        finishLabel: 'Top with Marshmallows & Steam',
+        finishSvg: `<rect x="108" y="54" width="14" height="11" rx="4" fill="#F7D1DA" stroke="#523E3E" stroke-width="1.6"/><rect x="132" y="52" width="14" height="11" rx="4" fill="#FFFDFB" stroke="#523E3E" stroke-width="1.6"/><path class="steam-line" d="M114 42C110 34 118 28 114 20" stroke="#DFB36B" stroke-width="2.2" stroke-linecap="round"/><path class="steam-line" d="M140 42C136 34 144 28 140 20" stroke="#DFB36B" stroke-width="2.2" stroke-linecap="round"/>`
+      },
+      {
+        id: 'hazelnut',
+        name: 'Hazelnut Praline Pastry',
+        customer: "Barista's Order",
+        avatar: 'assets/me.png',
+        quote: '“Layers of chocolate sponge, roasted hazelnut cream & golden crunch!”',
+        steps: [
+          {
+            correct: 'Layer Chocolate Sponge',
+            options: ['Layer Chocolate Sponge', 'Berry Tart Shell', 'Waffle Cone'],
+            svg: `<path d="M68 150L78 82H182L192 150H68Z" fill="#7D5A50" stroke="#523E3E" stroke-width="2.2" stroke-linejoin="round"/><rect x="73" y="106" width="114" height="10" fill="#E8CB96"/><rect x="71" y="128" width="118" height="10" fill="#F4DFB6"/>`
+          },
+          {
+            correct: 'Spread Roasted Hazelnut Cream',
+            options: ['Mint Frosting', 'Spread Roasted Hazelnut Cream', 'Blueberry Jam'],
+            svg: `<path d="M78 82C78 70 182 70 182 82Z" fill="#523E3E"/><path d="M78 82Q104 94 130 82T182 82" fill="#B88940" stroke="#523E3E" stroke-width="1.6"/>`
+          }
+        ],
+        finishLabel: 'Garnish with Roasted Hazelnuts',
+        finishSvg: `<circle cx="106" cy="70" r="9" fill="#DFB36B" stroke="#523E3E" stroke-width="2"/><circle cx="130" cy="66" r="10" fill="#DFB36B" stroke="#523E3E" stroke-width="2"/><circle cx="154" cy="70" r="9" fill="#DFB36B" stroke="#523E3E" stroke-width="2"/>`
+      },
+      {
+        id: 'chocostrawberry',
+        name: 'Chocolate Dipped Strawberry',
+        customer: "Samidha's Special",
+        avatar: 'assets/us.png',
+        quote: '“Our anniversary treat: plump strawberry, glossy chocolate & blush drizzle!”',
+        steps: [
+          {
+            correct: 'Pick Fresh Ripe Strawberry',
+            options: ['Pick Fresh Ripe Strawberry', 'Sliced Banana', 'Macaron Shell'],
+            svg: `<path d="M130 152C94 128 84 82 104 58C118 44 142 44 156 58C176 82 166 128 130 152Z" fill="#E58FA5" stroke="#523E3E" stroke-width="2.2"/><path d="M106 54L130 38L154 54L140 60L130 50L120 60L106 54Z" fill="#7A9B7E" stroke="#523E3E" stroke-width="2" stroke-linejoin="round"/>`
+          },
+          {
+            correct: 'Dip in Glossy Dark Chocolate',
+            options: ['Dip in Glossy Dark Chocolate', 'Sprinkle Sea Salt', 'Roll in Coconut'],
+            svg: `<path d="M96 96C110 88 122 102 134 92C146 84 156 96 164 94C160 118 148 138 130 152C112 138 100 118 96 96Z" fill="#5C4033" stroke="#523E3E" stroke-width="2"/>`
+          }
+        ],
+        finishLabel: 'Add Blush White-Choco Drizzle',
+        finishSvg: `<path d="M104 112L156 102M110 126L150 118M118 138L142 132" stroke="#F7D1DA" stroke-width="4" stroke-linecap="round"/>`
+      }
+    ];
+
+    let patOrderIdx = 0;
+    let patStepIdx = 0;
+    let patStars = 0;
+    let patBuiltSvg = '';
+    let patMeterPos = 0;
+    let patMeterDir = 1;
+    let patMeterAnim = null;
+
+    function initPatisserieGame() {
+      patOrderIdx = 0;
+      patStars = 0;
+      document.getElementById('patisserieStars').textContent = '0';
+      document.getElementById('patisserieCompleteOverlay').classList.add('hidden');
+      loadPatisserieOrder();
+    }
+
+    function resetPatisserieGame() {
+      if (patMeterAnim) cancelAnimationFrame(patMeterAnim);
+      initPatisserieGame();
+      playChime(['C5', 'E5']);
+    }
+
+    function loadPatisserieOrder() {
+      const order = PATISSERIE_ORDERS[patOrderIdx];
+      patStepIdx = 0;
+      patBuiltSvg = '';
+      document.getElementById('patisserieOrderNum').textContent = patOrderIdx + 1;
+      document.getElementById('patisserieCustomerName').textContent = order.customer;
+      document.getElementById('patisserieOrderTitle').textContent = order.name;
+      document.getElementById('patisserieCustomerQuote').textContent = order.quote;
+      const img = document.getElementById('patisserieCustomerImg');
+      img.src = order.avatar;
+      document.getElementById('patisserieLayersGroup').innerHTML = '';
+      document.getElementById('patisseriePrepControls').classList.remove('hidden');
+      document.getElementById('patisserieFinishControls').classList.add('hidden');
+      renderPatisserieChoices();
+    }
+
+    function renderPatisserieChoices() {
+      const order = PATISSERIE_ORDERS[patOrderIdx];
+      const step = order.steps[patStepIdx];
+      document.getElementById('patisserieStepBadge').textContent = `Step ${patStepIdx + 1} of 3`;
+      const grid = document.getElementById('patisserieChoiceGrid');
+      const shuffled = [...step.options].sort(() => Math.random() - 0.5);
+      grid.innerHTML = shuffled.map(opt => `
+        <button onclick="pickPatisserieStep('${opt.replace(/'/g, "\\'")}')" class="p-2.5 rounded-xl bg-cream border border-blush-200 hover:bg-blush-50 hover:border-blush-400 text-xs font-bold text-cocoa transition text-center">
+          ${opt}
+        </button>
+      `).join('');
+    }
+
+    function pickPatisserieStep(choice) {
+      const order = PATISSERIE_ORDERS[patOrderIdx];
+      const step = order.steps[patStepIdx];
+      if (choice === step.correct) {
+        patBuiltSvg += step.svg;
+        document.getElementById('patisserieLayersGroup').innerHTML = patBuiltSvg;
+        playChime(['E5', 'G5']);
+        patStepIdx++;
+        if (patStepIdx < order.steps.length) {
+          renderPatisserieChoices();
+        } else {
+          // Move to Step 3: Golden Sweet-Spot Finishing Bar
+          document.getElementById('patisserieStepBadge').textContent = 'Step 3 of 3 • Final Touch';
+          document.getElementById('patisseriePrepControls').classList.add('hidden');
+          document.getElementById('patisserieFinishControls').classList.remove('hidden');
+          document.getElementById('patisserieFinishLabel').textContent = order.finishLabel;
+          startPatisserieMeter();
+        }
+      } else {
+        playChime(['C4']);
+        showToast('Check the order ticket — try another ingredient!', 'chef-hat');
+      }
+    }
+
+    function startPatisserieMeter() {
+      patMeterPos = 0;
+      patMeterDir = 1;
+      const cursor = document.getElementById('patisserieCursor');
+      function stepMeter() {
+        patMeterPos += patMeterDir * 1.85;
+        if (patMeterPos >= 96) { patMeterPos = 96; patMeterDir = -1; }
+        if (patMeterPos <= 0) { patMeterPos = 0; patMeterDir = 1; }
+        cursor.style.left = `${patMeterPos}%`;
+        patMeterAnim = requestAnimationFrame(stepMeter);
+      }
+      if (patMeterAnim) cancelAnimationFrame(patMeterAnim);
+      patMeterAnim = requestAnimationFrame(stepMeter);
+    }
+
+    function triggerPatisserieFinish() {
+      if (patMeterAnim) cancelAnimationFrame(patMeterAnim);
+      const order = PATISSERIE_ORDERS[patOrderIdx];
+      const inGoldenZone = patMeterPos >= 36 && patMeterPos <= 62;
+      patBuiltSvg += order.finishSvg;
+      document.getElementById('patisserieLayersGroup').innerHTML = patBuiltSvg;
+
+      const earned = inGoldenZone ? 3 : 2;
+      patStars += earned;
+      document.getElementById('patisserieStars').textContent = patStars;
+      playChime(inGoldenZone ? ['C5', 'E5', 'G5', 'C6'] : ['E5', 'G5']);
+      showToast(inGoldenZone ? `Perfect Finish on ${order.name}! (+3 Stars)` : `Delicious ${order.name} served! (+2 Stars)`, 'sparkles');
+
+      setTimeout(() => {
+        patOrderIdx++;
+        if (patOrderIdx >= PATISSERIE_ORDERS.length) {
+          document.getElementById('patisserieFinishControls').classList.add('hidden');
+          document.getElementById('patisserieFinalSub').textContent = `You earned ${patStars}/12 Stars crafting all 4 of Samidha's favorites!`;
+          document.getElementById('patisserieCompleteOverlay').classList.remove('hidden');
+          unlockMilestone('baker');
+        } else {
+          loadPatisserieOrder();
+        }
+      }, 950);
+    }
+
+    /* ==========================================================
+       7. EXTRAORDINARY MINI-GAME 2: FREEFORM BOUQUET STUDIO
+       (Drag-to-Arrange + Dewdrop Mist & Bloom + Live Ribbon Tag)
+       ========================================================== */
+    const FLOWER_INFO = {
+      rose: {
+        meaning: 'Blush Rose: Deep admiration & how breathtaking you are to me.',
+        svg: `<circle cx="0" cy="0" r="15" fill="#F0B2C1" stroke="#523E3E" stroke-width="1.8"/><path d="M0 -8C5 -8 8 -4 6 1C4 6 -3 7 -7 3C-9 -1 -6 -6 -1 -5C2 -4 3 -1 0 1" stroke="#523E3E" stroke-width="1.6" stroke-linecap="round" fill="none"/>`
+      },
+      tulip: {
+        meaning: 'Pink Tulip: Perfect, gentle love that grows every month.',
+        svg: `<path d="M-13 -12C-13 2 -7 10 0 10C7 10 13 2 13 -12L6 -6L0 -15L-6 -6L-13 -12Z" fill="#F7D1DA" stroke="#523E3E" stroke-width="1.8" stroke-linejoin="round"/>`
+      },
+      lavender: {
+        meaning: 'Lavender: The calm & peace I feel whenever I am with you.',
+        svg: `<ellipse cx="-5" cy="-4" rx="4.5" ry="3" fill="#C8B4DF" stroke="#523E3E" stroke-width="1.4"/><ellipse cx="5" cy="-1" rx="4.5" ry="3" fill="#C8B4DF" stroke="#523E3E" stroke-width="1.4"/><ellipse cx="-5" cy="4" rx="4.5" ry="3" fill="#DFD2EC" stroke="#523E3E" stroke-width="1.4"/><ellipse cx="5" cy="7" rx="4.5" ry="3" fill="#DFD2EC" stroke="#523E3E" stroke-width="1.4"/><circle cx="0" cy="-10" r="3.5" fill="#C8B4DF" stroke="#523E3E" stroke-width="1.4"/>`
+      },
+      daisy: {
+        meaning: 'Sweet Daisy: Pure joy and all the giggles we share.',
+        svg: `<circle cx="0" cy="-11" r="5.5" fill="#FFFDFB" stroke="#523E3E" stroke-width="1.4"/><circle cx="0" cy="11" r="5.5" fill="#FFFDFB" stroke="#523E3E" stroke-width="1.4"/><circle cx="-11" cy="0" r="5.5" fill="#FFFDFB" stroke="#523E3E" stroke-width="1.4"/><circle cx="11" cy="0" r="5.5" fill="#FFFDFB" stroke="#523E3E" stroke-width="1.4"/><circle cx="0" cy="0" r="6.5" fill="#F4DFB6" stroke="#523E3E" stroke-width="1.6"/>`
+      },
+      sunflower: {
+        meaning: 'Sunflower: You are my sunshine on every cloudy day.',
+        svg: `<circle cx="0" cy="0" r="16" fill="#F4DFB6" stroke="#DFB36B" stroke-width="3" stroke-dasharray="5 3"/><circle cx="0" cy="0" r="8" fill="#8C6A5D" stroke="#523E3E" stroke-width="1.8"/>`
+      },
+      babysbreath: {
+        meaning: "Baby's Breath: Everlasting love & tiny sweet moments.",
+        svg: `<circle cx="-8" cy="-5" r="4.5" fill="#FFFDFB" stroke="#523E3E" stroke-width="1.3"/><circle cx="8" cy="-6" r="4.5" fill="#FFFDFB" stroke="#523E3E" stroke-width="1.3"/><circle cx="0" cy="2" r="4.5" fill="#FFFDFB" stroke="#523E3E" stroke-width="1.3"/><circle cx="0" cy="-12" r="3.5" fill="#FFFDFB" stroke="#523E3E" stroke-width="1.3"/>`
+      },
+    };
+
+    let currentBouquet = [];
+    let bouquetMisted = false;
+    let bouquetTagged = false;
+    let draggingFlowerIdx = null;
+
+    function updateFloristChecklist() {
+      const setCheck = (id, ok, text) => {
+        const el = document.getElementById(id);
+        el.innerHTML = `<i data-lucide="${ok ? 'check-circle-2' : 'circle'}" class="w-3.5 h-3.5 ${ok ? 'text-emerald-600' : 'text-blush-300'}"></i> ${text}`;
+        el.classList.toggle('text-cocoa', ok);
+      };
+      setCheck('chkStems', currentBouquet.length >= 5, '5+ Blooms');
+      setCheck('chkMist', bouquetMisted, 'Mist & Bloom');
+      setCheck('chkTag', bouquetTagged, 'Custom Tag');
+      refreshIcons();
+    }
+
+    function addFlower(type) {
+      if (currentBouquet.length >= 12) {
+        showToast('Your bouquet is lush & full! Drag stems or tap Tie Ribbon.', 'flower-2');
+        return;
+      }
+      const angle = (currentBouquet.length * 47) % 360;
+      const x = 150 + Math.cos(angle) * (20 + (currentBouquet.length % 3) * 20);
+      const y = 115 + Math.sin(angle) * 28;
+      currentBouquet.push({ type, x, y, rot: Math.round((x - 150) * 0.35), scale: bouquetMisted ? 1.12 : 1 });
+      renderBouquet();
+      updateFloristChecklist();
+      playChime(['E5', 'B5']);
+      document.getElementById('flowerMeaningBox').innerHTML = `<strong>${FLOWER_INFO[type].meaning}</strong>`;
+    }
+
+    function renderBouquet() {
+      const layer = document.getElementById('bouquetFlowersLayer');
+      document.getElementById('stemCount').textContent = currentBouquet.length;
+      document.getElementById('bouquetEmptyHint').style.display = currentBouquet.length ? 'none' : 'block';
+
+      layer.innerHTML = currentBouquet.map((f, idx) => `
+        <g class="draggable-flower" data-idx="${idx}" onpointerdown="startDragFlower(event, ${idx})">
+          <line x1="${f.x}" y1="${f.y + 8}" x2="150" y2="235" stroke="#7A9B7E" stroke-width="3.5" stroke-linecap="round"/>
+          <g transform="translate(${f.x} ${f.y}) rotate(${f.rot}) scale(${f.scale})">
+            ${FLOWER_INFO[f.type].svg}
+          </g>
+        </g>
+      `).join('');
+    }
+
+    function startDragFlower(e, idx) {
+      e.preventDefault();
+      draggingFlowerIdx = idx;
+      e.target.closest('svg').setPointerCapture(e.pointerId);
+    }
+
+    const bouquetSvgEl = document.getElementById('bouquetSvg');
+    bouquetSvgEl.addEventListener('pointermove', e => {
+      if (draggingFlowerIdx === null) return;
+      const rect = bouquetSvgEl.getBoundingClientRect();
+      const svgX = ((e.clientX - rect.left) / rect.width) * 300;
+      const svgY = ((e.clientY - rect.top) / rect.height) * 320;
+      const f = currentBouquet[draggingFlowerIdx];
+      f.x = Math.min(Math.max(svgX, 65), 235);
+      f.y = Math.min(Math.max(svgY, 55), 185);
+      f.rot = Math.round((f.x - 150) * 0.32);
+      renderBouquet();
+    });
+    bouquetSvgEl.addEventListener('pointerup', () => { draggingFlowerIdx = null; });
+    bouquetSvgEl.addEventListener('pointercancel', () => { draggingFlowerIdx = null; });
+
+    function mistBouquet() {
+      if (currentBouquet.length === 0) {
+        showToast('Add a few blooms first before misting!', 'droplets');
+        return;
+      }
+      bouquetMisted = true;
+      currentBouquet.forEach(f => { f.scale = 1.15; });
+      renderBouquet();
+      const dew = document.getElementById('bouquetDewLayer');
+      dew.innerHTML = currentBouquet.map(f => `<circle cx="${f.x + 8}" cy="${f.y - 8}" r="2.6" fill="#FFFDFB" stroke="#A9C4AC" stroke-width="1"/>`).join('');
+      updateFloristChecklist();
+      playChime(['G5', 'B5', 'D6']);
+      showToast('Sparkling dewdrops! Your petals bloomed fuller!', 'droplets');
+    }
+
+    function updateBouquetTag(val) {
+      const cleaned = val.trim();
+      document.getElementById('bouquetTagText').textContent = cleaned || 'For Us ♡';
+      bouquetTagged = cleaned.length > 0;
+      updateFloristChecklist();
+    }
+
+    function setBouquetWrap(backColor, frontColor) {
+      document.getElementById('wrapBack').setAttribute('fill', backColor);
+      document.getElementById('wrapFront').setAttribute('fill', frontColor);
+      playChime(['D5']);
+    }
+
+    function clearBouquet() {
+      currentBouquet = [];
+      bouquetMisted = false;
+      document.getElementById('bouquetDewLayer').innerHTML = '';
+      renderBouquet();
+      updateFloristChecklist();
+      document.getElementById('flowerMeaningBox').innerHTML = '<em>Fresh start! Pick &amp; drag blooms to arrange a new bouquet.</em>';
+    }
+
+    function tieAndDisplayBouquet() {
+      if (currentBouquet.length < 5) {
+        showToast('Add at least 5 blooms to tie a lush bouquet!', 'flower-2');
+        return;
+      }
+      if (!bouquetMisted || !bouquetTagged) {
+        showToast('Tip: Mist your blooms & write a custom ribbon tag to finish the commission!', 'sparkles');
+        return;
+      }
+      unlockMilestone('florist');
+      showToast('Custom bouquet tied & placed in your Florist Window!', 'gift');
+    }
+
+    /* ==========================================================
+       8. WING 3: BOOKSTORE ("CHAPTERS OF US") & READING NOOK SOMMELIER
+       ========================================================== */
+    let activeBookIndex = 0;
+
+    function renderBookshelf() {
+      const row = document.getElementById('bookshelfRow');
+      row.innerHTML = CHAPTER_BOOKS.map((b, i) => {
+        const heights = ['h-36', 'h-40', 'h-32', 'h-44', 'h-36', 'h-40', 'h-34', 'h-42', 'h-36', 'h-44'];
+        return `
+          <button onclick="openBook(${i})" id="bookSpine-${i}" class="book-spine ${heights[i % heights.length]} w-12 sm:w-14 rounded-t-lg rounded-b-sm border-2 border-cocoa/30 flex flex-col items-center justify-between py-2.5 px-1 shadow-sm cursor-pointer focus:outline-none" style="background-color: ${b.color}">
+            <span class="w-full h-1 bg-milk/70 rounded-full"></span>
+            <span class="font-serif text-xs font-bold text-cocoa [writing-mode:vertical-rl] rotate-180 tracking-wider">Ch. ${b.ch}</span>
+            <i data-lucide="heart" class="w-3 h-3 text-cocoa/60 fill-cocoa/30"></i>
+          </button>
+        `;
+      }).join('');
+      refreshIcons();
+      openBook(0, false);
+    }
+
+    function openBook(idx, withSound = true) {
+      activeBookIndex = idx;
+      const b = CHAPTER_BOOKS[idx];
+      document.querySelectorAll('.book-spine').forEach((el, i) => {
+        el.classList.toggle('active-book', i === idx);
+      });
+      const photoEl = document.getElementById('bookPhoto');
+      photoEl.src = b.img;
+      photoEl.onerror = function () {
+        this.src = `https://placehold.co/400x400/FCE7EC/523E3E?text=Chapter+${b.ch}`;
+      };
+      document.getElementById('bookDateTag').textContent = b.date;
+      document.getElementById('bookChapterLabel').textContent = `Chapter ${b.ch}`;
+      document.getElementById('bookTitle').textContent = b.title;
+      document.getElementById('bookStory').textContent = b.story;
+      if (withSound) playChime(['F5', 'A5']);
+    }
+
+    function stepBook(dir) {
+      const next = (activeBookIndex + dir + CHAPTER_BOOKS.length) % CHAPTER_BOOKS.length;
+      openBook(next);
+    }
+
+    /* --- EXTRAORDINARY MINI-GAME 3: THE READING NOOK SOMMELIER --- */
+    const SOMMELIER_ROUNDS = [
+      {
+        guest: 'Guest 1 of 3 • Snoopy the Penguin',
+        avatar: 'assets/snoopy.png',
+        clue: '“It’s drizzling outside the bookshop window. I want a cozy winter romance and something warm, velvety, and topped with marshmallows to wrap my hands around.”',
+        books: ['Midnight Fireplace Letters', 'Adventures in a Sunlit Orchard', 'A Parisian Baker’s Diary'],
+        desserts: ['Velvety Hot Chocolate', 'Chocolate Dipped Strawberry', 'Hazelnut Praline Pastry'],
+        answerBook: 'Midnight Fireplace Letters',
+        answerDessert: 'Velvety Hot Chocolate',
+        praise: 'Snoopy is purring with joy by the rainy window!'
+      },
+      {
+        guest: 'Guest 2 of 3 • Mochi the Bear',
+        avatar: 'assets/mochi.png',
+        clue: '“I’m craving a rich, nutty European patisserie memoir — paired with flaky chocolate layers and roasted hazelnut praline!”',
+        books: ['Starlight & Lavender Poems', 'A Parisian Baker’s Diary', 'Ten Months of Magic'],
+        desserts: ['Rose Macaron', 'Hazelnut Praline Pastry', 'Velvety Hot Chocolate'],
+        answerBook: 'A Parisian Baker’s Diary',
+        answerDessert: 'Hazelnut Praline Pastry',
+        praise: 'Mochi gave this pairing an enthusiastic 10/10 paw-stamp!'
+      },
+      {
+        guest: 'Guest 3 of 3 • Your #1 Customer',
+        avatar: 'assets/me.png',
+        clue: '“Today is 27th November! I want our favorite love story about 10 magical months, paired with Samidha’s ultimate Strawberry Nutella Cheesecake!”',
+        books: ['Ten Months of Magic', 'Rainy Day Crosswords', 'Botanical Sketchbook'],
+        desserts: ['Strawberry Nutella Cheesecake', 'Butter Croissant', 'Velvety Hot Chocolate'],
+        answerBook: 'Ten Months of Magic',
+        answerDessert: 'Strawberry Nutella Cheesecake',
+        praise: 'Best date night in the whole world — stamped with love!'
+      }
+    ];
+
+    let somRound = 0;
+    let somPickedBook = null;
+    let somPickedDessert = null;
+
+    function initSommelierGame() {
+      somRound = 0;
+      document.getElementById('sommelierActiveBox').classList.remove('hidden');
+      document.getElementById('sommelierCompleteBox').classList.add('hidden');
+      for (let i = 0; i < 3; i++) {
+        const s = document.getElementById(`stampSlot-${i}`);
+        s.className = 'w-8 h-8 rounded-full border-2 border-dashed border-blush-200 flex items-center justify-center text-cocoa-light/40';
+        s.innerHTML = '<i data-lucide="stamp" class="w-4 h-4"></i>';
+      }
+      refreshIcons();
+      loadSommelierRound();
+    }
+
+    function loadSommelierRound() {
+      const r = SOMMELIER_ROUNDS[somRound];
+      somPickedBook = null;
+      somPickedDessert = null;
+      document.getElementById('sommelierGuestTag').textContent = r.guest;
+      document.getElementById('sommelierGuestImg').src = r.avatar;
+      document.getElementById('sommelierClueText').textContent = r.clue;
+      document.getElementById('sommelierFeedback').textContent = 'Select 1 book and 1 dessert, then serve to the reading table!';
+
+      document.getElementById('sommelierBooksList').innerHTML = r.books.map(b => `
+        <button onclick="selectSomBook('${b.replace(/'/g, "\\'")}', this)" class="som-book-btn w-full text-left px-3.5 py-2.5 rounded-xl bg-milk border border-blush-200 text-xs sm:text-sm font-semibold text-cocoa hover:bg-lavender-100/60 transition">
+          ${b}
+        </button>
+      `).join('');
+
+      document.getElementById('sommelierDessertsList').innerHTML = r.desserts.map(d => `
+        <button onclick="selectSomDessert('${d.replace(/'/g, "\\'")}', this)" class="som-dessert-btn w-full text-left px-3.5 py-2.5 rounded-xl bg-milk border border-blush-200 text-xs sm:text-sm font-semibold text-cocoa hover:bg-blush-50 transition">
+          ${d}
+        </button>
+      `).join('');
+    }
+
+    function selectSomBook(val, btn) {
+      somPickedBook = val;
+      document.querySelectorAll('.som-book-btn').forEach(b => b.classList.remove('bg-lavender-100', 'border-lavender-300', 'ring-2', 'ring-lavender-200'));
+      btn.classList.add('bg-lavender-100', 'border-lavender-300', 'ring-2', 'ring-lavender-200');
+      playChime(['E5']);
+    }
+
+    function selectSomDessert(val, btn) {
+      somPickedDessert = val;
+      document.querySelectorAll('.som-dessert-btn').forEach(b => b.classList.remove('bg-blush-100', 'border-blush-400', 'ring-2', 'ring-blush-200'));
+      btn.classList.add('bg-blush-100', 'border-blush-400', 'ring-2', 'ring-blush-200');
+      playChime(['G5']);
+    }
+
+    function serveSommelierPairing() {
+      const r = SOMMELIER_ROUNDS[somRound];
+      if (!somPickedBook || !somPickedDessert) {
+        showToast('Pick both a Book and a Dessert pairing first!', 'book-open');
+        return;
+      }
+      if (somPickedBook === r.answerBook && somPickedDessert === r.answerDessert) {
+        const slot = document.getElementById(`stampSlot-${somRound}`);
+        slot.className = 'w-8 h-8 rounded-full bg-gold-light border-2 border-gold flex items-center justify-center text-cocoa stamp-pop shadow-sm';
+        slot.innerHTML = '<i data-lucide="award" class="w-4 h-4 text-gold-dark"></i>';
+        refreshIcons();
+        playChime(['C5', 'E5', 'G5', 'C6']);
+        showToast(r.praise, 'book-heart');
+
+        somRound++;
+        if (somRound >= SOMMELIER_ROUNDS.length) {
+          setTimeout(() => {
+            document.getElementById('sommelierActiveBox').classList.add('hidden');
+            document.getElementById('sommelierCompleteBox').classList.remove('hidden');
+            unlockMilestone('bookworm');
+          }, 600);
+        } else {
+          setTimeout(loadSommelierRound, 700);
+        }
+      } else {
+        playChime(['D4', 'C4']);
+        document.getElementById('sommelierFeedback').innerHTML = '<span class="text-blush-400 font-semibold">Almost! Re-read their cozy clue closely and try another pairing.</span>';
+      }
+    }
+
+    /* ==========================================================
+       9. POLAROID GALLERY WALL & LIGHTBOX
+       ========================================================== */
+    function renderPolaroidWall() {
+      const wall = document.getElementById('polaroidWall');
+      wall.innerHTML = POLAROID_PHOTOS.map((p, i) => `
+        <div onclick="openPhotoLightbox('${p.img}', '${p.caption.replace(/'/g, "\\'")}', ${i})" class="polaroid-card bg-milk p-3 pb-5 rounded-xl shadow-polaroid border border-blush-100 cursor-pointer relative" style="transform: rotate(${p.tilt})">
+          <!-- Cute Pastel Washi Tape -->
+          <div class="w-14 h-4 bg-blush-200/70 absolute -top-2 left-1/2 -translate-x-1/2 rounded-sm rotate-1"></div>
+          <img src="${p.img}" onerror="this.src='https://placehold.co/360x360/FCE7EC/523E3E?text=Memory+${i + 1}'" alt="${p.caption}" class="w-full h-44 sm:h-52 object-cover rounded-lg bg-cream" />
+          <div class="mt-3 flex items-center justify-between px-1">
+            <span class="font-script text-xl sm:text-2xl text-cocoa">${p.caption}</span>
+            <i data-lucide="heart" class="w-4 h-4 text-blush-400 fill-blush-300"></i>
+          </div>
+        </div>
+      `).join('');
+      refreshIcons();
+    }
+
+    function openPhotoLightbox(src, caption, idx) {
+      const img = document.getElementById('modalPhotoImg');
+      img.src = src;
+      img.onerror = function () {
+        this.src = `https://placehold.co/600x600/FCE7EC/523E3E?text=Memory+${idx + 1}`;
+      };
+      document.getElementById('modalPhotoCaption').textContent = caption;
+      document.getElementById('photoModal').classList.remove('hidden');
+      playChime(['A5']);
+    }
+
+    /* ==========================================================
+       10. ANNIVERSARY LETTER & WISH CANDLE
+       ========================================================== */
+    function openAnniversaryLetter() {
+      document.getElementById('sealedEnvelopeBox').classList.add('hidden');
+      document.getElementById('openedLetterBox').classList.remove('hidden');
+      playChime(['C5', 'E5', 'G5', 'B5', 'C6']);
+      launchConfetti(40);
+    }
+
+    let candleBlown = false;
+    function blowOutCandle() {
+      if (candleBlown) {
+        // Relight if tapped again!
+        candleBlown = false;
+        document.getElementById('wishCandleFlame').classList.remove('hidden');
+        document.getElementById('wishCandleSmoke').classList.add('hidden');
+        document.getElementById('wishPromptText').textContent = 'Candle relit! Tap to make another wish';
+        playChime(['G5']);
+        return;
+      }
+      candleBlown = true;
+      document.getElementById('wishCandleFlame').classList.add('hidden');
+      document.getElementById('wishCandleSmoke').classList.remove('hidden');
+      document.getElementById('wishPromptText').innerHTML = '<strong>Happy 10 Months, Samidha! May all your dreams come true!</strong> (Tap to relight)';
+      playChime(['C5', 'G5', 'C6', 'E6']);
+      launchConfetti(70);
+      showToast('Wish sent to the stars! Happy 10 Months!', 'sparkles');
+    }
+
+    /* ==========================================================
+       11. INITIALIZE EVERYTHING ON WINDOW LOAD
+       ========================================================== */
+    window.onload = function () {
+      initAuthGate();
+      renderPastryCounter();
+      initPatisserieGame();
+      updateFloristChecklist();
+      renderBookshelf();
+      initSommelierGame();
+      renderPolaroidWall();
+      refreshIcons();
+    };
+  </script>
+</body>
+</html>
